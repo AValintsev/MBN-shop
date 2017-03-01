@@ -1,0 +1,52 @@
+﻿<div class="header">
+    <div>
+        @Html.Widget("header")
+        <div class="header-upper">
+            <div class="container">
+                <div class="header-selectors-wrapper">
+                    @Html.Action("TaxTypeSelector", "Common")
+                    @Html.Action("CurrencySelector", "Common")
+                    @Html.Action("LanguageSelector", "Common")
+                    @Html.Widget("header_selectors")
+                </div>
+                <div class="header-links-wrapper">
+                    @Html.Action("HeaderLinks", "Common")
+                    @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+                </div>
+            </div>
+        </div>
+        <div class="header-lower">
+            <div class="header-logo">
+                @Html.Action("Logo", "Common")
+            </div>
+            <div class="header-tools">
+                <div class="blocks-wrapper clearfix">
+                    <div class="header-block">
+                        <div>
+                            <h3>Кошик</h3>
+                            <p><i class="fa fa-shopping-cart" aria-hidden="true"></i></p>
+                        </div>
+                    </div>
+                    <div class="header-block">
+                        <div>
+                            <h3>Контакти</h3>
+                            <p><i class="fa fa-address-card-o" aria-hidden="true"></i></p>
+                        </div>
+                    </div>
+                    <div class="header-block">
+                        <div>
+                            <h3>Наш Youtube канал</h3>
+                            <p><i class="fa fa-youtube" aria-hidden="true"></i></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-box store-search-box clearfix">
+                    @Html.Action("SearchBox", "Catalog")
+                </div>
+            </div>
+        </div>
+        <div class="header-menu">
+            @Html.Action("TopMenu", "Catalog")
+        </div>
+    </div>
+</div>

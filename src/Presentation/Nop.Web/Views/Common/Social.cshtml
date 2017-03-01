@@ -1,0 +1,29 @@
+﻿@model Nop.Web.Models.Common.SocialModel
+
+<ul class="networks">
+	@if (!string.IsNullOrEmpty(Model.FacebookLink))
+	{
+		<li><a href="@Model.FacebookLink" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+	}
+	@if (!string.IsNullOrEmpty(Model.TwitterLink))
+	{
+		<li><a href="@Model.TwitterLink" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+	}
+
+	@if (!string.IsNullOrEmpty(Model.YoutubeLink))
+	{
+		<li><a href="@Model.YoutubeLink" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+	}
+	@if (!string.IsNullOrEmpty(Model.GooglePlusLink))
+	{
+		<li><a href="@Model.GooglePlusLink" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+	}
+    @if (Model.NewsEnabled)
+    {
+        <li><a href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})"><i class="fa fa-vk" aria-hidden="true"></i></a></li>
+    }
+</ul>
+
+@*
+    instead of <i>
+    @T("Footer.FollowUs.GooglePlus")*@
