@@ -654,6 +654,9 @@
     <Content Include="Scripts\jquery.magnific-popup.js" />
     <Content Include="Scripts\jquery.magnific-popup.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\native.history.js" />
+    <Content Include="Scripts\numeral\numeral.js" />
+    <Content Include="Scripts\numeral\numeral.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\selectivizr.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -973,6 +976,7 @@
     <Content Include="Scripts\public.onepagecheckout.js" />
     <Content Include="Scripts\public.common.js" />
     <Content Include="Themes\DefaultClean\Content\css\print.css" />
+    <Content Include="Themes\NopElectro\Content\css\bootstrap-slider.css" />
     <Content Include="Themes\NopElectro\Content\css\bootstrap.css" />
     <Content Include="Themes\NopElectro\Content\css\color.css" />
     <Content Include="Themes\NopElectro\Content\css\ie8.css" />
@@ -1035,12 +1039,14 @@
     <Content Include="Themes\NopElectro\Content\images\vote-up.png" />
     <Content Include="Themes\NopElectro\Content\images\watch.png" />
     <Content Include="Themes\NopElectro\Content\images\wishlist-button.png" />
+    <Content Include="Themes\NopElectro\Content\js\bootstrap-slider.js" />
     <Content Include="Themes\NopElectro\Content\js\bootstrap.min.js" />
     <Content Include="Themes\NopElectro\Content\js\jquery.bpopup.min.js" />
     <Content Include="Themes\NopElectro\Content\js\jquery.dotdotdot.min.js" />
     <Content Include="Themes\NopElectro\Content\js\owl.carousel.min.js" />
     <Content Include="Themes\NopElectro\Content\js\public.common.js" />
     <Content Include="Themes\NopElectro\preview.jpg" />
+    <Content Include="Themes\NopElectro\Scripts\Catalog\catalog.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1120,6 +1126,11 @@
     <Content Include="Themes\NopElectro\Views\Shared\_Root.Head.cshtml" />
     <Content Include="Themes\NopElectro\Views\ShoppingCart\FlyoutShoppingCart.cshtml" />
     <Content Include="Themes\NopElectro\Views\Web.config" />
+    <Content Include="Themes\NopElectro\Views\Catalog\MBN.CategoryTemplate.ProductsInGridOrLines.cshtml" />
+    <Content Include="Themes\NopElectro\Views\Catalog\_FilterPriceBox.cshtml" />
+    <Content Include="Themes\NopElectro\Views\Catalog\_Partial.MBN.CategoryTemplate.ProductsInGridOrLines.cshtml" />
+    <Content Include="Themes\NopElectro\Views\Catalog\_CatalogSelectors.cshtml" />
+    <Content Include="Themes\NopElectro\Views\Catalog\_FilterSpecsBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
@@ -1336,7 +1347,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>15536</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://local.mbn</IISUrl>
+          <IISUrl>http://local.mbnpro.com.ua</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

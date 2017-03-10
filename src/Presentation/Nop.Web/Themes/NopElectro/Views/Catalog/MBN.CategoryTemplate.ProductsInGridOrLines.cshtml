@@ -1,0 +1,82 @@
+﻿@model CategoryModel
+@{
+	Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+	Html.AppendScriptParts("~/Scripts/native.history.js");
+	Html.AppendScriptParts("~/Scripts/numeral/numeral.min.js");	
+	Html.AppendScriptParts("~/Themes/NopElectro/Scripts/Catalog/catalog.js");
+	Html.AppendScriptParts("~/Themes/NopElectro/Content/js/bootstrap-slider.js");
+
+	Html.AppendCssFileParts("~/Themes/NopElectro/Content/css/bootstrap-slider.css");
+	
+	//title
+	Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+	//meta
+	Html.AddMetaDescriptionParts(Model.MetaDescription);
+	Html.AddMetaKeywordParts(Model.MetaKeywords);
+	//page class
+	Html.AppendPageCssClassParts("html-category-page");
+
+	var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
+	if (canonicalUrlsEnabled)
+	{
+		var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+		Html.AddCanonicalUrlParts(categoryUrl);
+	}
+
+	var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter;
+}
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Models.Catalog;
+
+@section Breadcrumb
+{
+	@if (Model.DisplayCategoryBreadcrumb)
+	{
+		<div class="breadcrumb">
+			<ul>
+				<li>
+					<a href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")">@T("Categories.Breadcrumb.Top")</a>
+					<span class="delimiter">@breadcrumbDelimiter</span>
+				</li>
+				@foreach (var cat in Model.CategoryBreadcrumb)
+				{
+					var isLastCategory = cat.Id == Model.Id;
+				<li>
+					@if (isLastCategory)
+						{
+						<strong class="current-item">@cat.Name</strong>
+						}
+						else
+						{
+						<a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })" title="@cat.Name">@cat.Name</a>
+						<span class="delimiter">@breadcrumbDelimiter</span>
+						}
+				</li>
+				}
+			</ul>
+		</div>
+		@Html.Widget("categorydetails_after_breadcrumb", Model.Id)
+	}
+}
+
+@Html.Partial("_Partial.MBN.CategoryTemplate.ProductsInGridOrLines", Model)
+
+<script type="text/javascript">
+
+	$(window).load(function () {
+		//Carousel
+		$(".owl-carousel").owlCarousel({
+			items: 4,
+			itemsDesktop: [1000, 4],
+			itemsDesktopSmall: [900, 3],
+			itemsTablet: [600, 2],
+			itemsMobile: [479, 1],
+			lazyLoad: true,
+			navigation: true,
+			pagination: false
+		});
+	});
+</script>

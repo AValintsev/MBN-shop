@@ -1,0 +1,137 @@
+﻿@model CategoryModel
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Models.Catalog;
+
+<div class="side-2">
+	@if ((Model.PagingFilteringContext.PriceRangeFilter.Enabled ||
+		Model.PagingFilteringContext.SpecificationFilter.Enabled) && Model.SubCategories.Count == 0)
+	{
+		<div class="product-filters">
+			<div class="filter-title">
+				<span>@T("Filtering.FilterResults")</span>
+			</div>
+			@if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
+			{
+				<div class="filter-item">
+					@Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
+				</div>
+			}
+			@if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
+			{
+				<div class="filter-item">
+					@Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
+				</div>
+			}
+		</div>
+	}
+</div>
+<div class="center-2">
+	<div class="page category-page">
+		<div class="page-title">
+			<h1>@Model.Name</h1>
+		</div>
+		<div class="page-body">
+			@Html.Widget("categorydetails_top", Model.Id)
+			@*description*@
+			@if (!String.IsNullOrWhiteSpace(Model.Description))
+			{
+				<div class="category-description">
+					@Html.Raw(Model.Description)
+				</div>
+			}
+			@Html.Widget("categorydetails_before_subcategories", Model.Id)
+			@*subcategories*@
+			@if (Model.SubCategories.Count > 0)
+			{
+				<div class="category-grid sub-category-grid">
+					<div class="item-grid owl-carousel">
+						@foreach (var item in Model.SubCategories)
+						{
+							<div class="item-box">
+								<div class="sub-category-item">
+									<div class="picture">
+										<a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+											<img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+										</a>
+									</div>
+									<h2 class="title">
+										<a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+											@item.Name
+										</a>
+									</h2>
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+			}
+			@Html.Widget("categorydetails_before_featured_products", Model.Id)
+			@*featured products*@
+			@if (Model.FeaturedProducts.Count > 0)
+			{
+				<div class="product-grid featured-product-grid">
+					<div class="title">
+						<strong>@T("Products.FeaturedProducts")</strong>
+					</div>
+					<div class="item-grid">
+						@foreach (var item in Model.FeaturedProducts)
+						{
+							<div class="item-box">
+								@Html.Partial("_ProductBox", item)
+							</div>
+						}
+					</div>
+				</div>
+			}
+			@Html.Widget("categorydetails_after_featured_products", Model.Id)
+			@if (Model.Products.Count > 0)
+			{
+				@Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
+			}
+
+
+			@if (Model.Products.Count > 0)
+			{
+				<div class="@(Model.PagingFilteringContext.ViewMode == "list" ? "product-list" : "product-grid")">
+					<div class="item-grid">
+						@foreach (var product in Model.Products)
+						{
+							<div class="item-box">
+								@Html.Partial("_ProductBox", product)
+							</div>
+						}
+					</div>
+				</div>
+			}
+			@{
+				var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
+			}
+			@if (!pager.IsEmpty())
+			{
+				<div class="pager">
+					@pager
+				</div>
+			}
+			@Html.Widget("categorydetails_bottom", Model.Id)
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	//$(window).load(function () {
+	//	//Carousel
+	//	$(".owl-carousel").owlCarousel({
+	//		items: 4,
+	//		itemsDesktop: [1000, 4],
+	//		itemsDesktopSmall: [900, 3],
+	//		itemsTablet: [600, 2],
+	//		itemsMobile: [479, 1],
+	//		lazyLoad: true,
+	//		navigation: true,
+	//		pagination: false
+	//	});
+	//});
+</script>

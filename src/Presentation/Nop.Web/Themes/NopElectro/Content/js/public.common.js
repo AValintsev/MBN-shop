@@ -2,7 +2,13 @@
 ** nopCommerce custom js functions
 */
 
+$(document).ajaxStart(function () {
+	displayAjaxLoading(true);
+});
 
+$(document).ajaxStop(function () {
+	displayAjaxLoading(false);
+});
 
 function OpenWindow(query, w, h, scroll) {
     var l = (screen.width - w) / 2;
@@ -22,7 +28,7 @@ function displayAjaxLoading(display) {
         $('.ajax-loading-block-window').show();
     }
     else {
-        $('.ajax-loading-block-window').hide('slow');
+        $('.ajax-loading-block-window').hide();
     }
 }
 
