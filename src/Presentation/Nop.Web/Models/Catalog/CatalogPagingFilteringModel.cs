@@ -31,6 +31,7 @@ namespace Nop.Web.Models.Catalog
 			this.PageSizeOptions = new List<SelectListItem>();
 			this.PriceRangeFilter = new PriceRangeFilterModel();
 			this.SpecificationFilter = new SpecificationFilterModel();
+			this.ManufacturerFilter = new ManufacturerFilterModel();
 		}
 
 		#endregion
@@ -45,6 +46,10 @@ namespace Nop.Web.Models.Catalog
 		/// Specification filter model
 		/// </summary>
 		public SpecificationFilterModel SpecificationFilter { get; set; }
+		/// <summary>
+		/// Manufacturer filter model
+		/// </summary>
+		public ManufacturerFilterModel ManufacturerFilter { get; set; }
 
 		/// <summary>
 		/// A value indicating whether product sorting is allowed
@@ -125,7 +130,7 @@ namespace Nop.Web.Models.Catalog
 				if (string.IsNullOrWhiteSpace(priceRangesStr))
 					return priceRanges;
 
-				string[] fromTo = priceRangesStr.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+				string[] fromTo = priceRangesStr.Split(new[] { ';', '-' }, StringSplitOptions.RemoveEmptyEntries);
 
 				decimal? from = null;
 				if (!String.IsNullOrEmpty(fromTo[0]) && !String.IsNullOrEmpty(fromTo[0].Trim()))
@@ -288,6 +293,188 @@ namespace Nop.Web.Models.Catalog
 			/// </summary>
 			public bool Selected { get; set; }
 		}
+
+		/// <summary>
+		/// Manufacturer filter view model
+		/// </summary>
+		public partial class ManufacturerFilterModel : BaseNopModel
+		{
+			#region Const
+
+			private const string QUERYSTRINGPARAM = "mafr";
+
+			#endregion
+
+			public ManufacturerFilterModel()
+			{
+				AlreadyFilteredItems = new List<ManufacturerFilterItem>();
+				NotFilteredItems = new List<ManufacturerFilterItem>();
+			}
+
+			#region Utilities
+
+			/// <summary>
+			/// Exclude query string parameters
+			/// </summary>
+			/// <param name="url">URL</param>
+			/// <param name="webHelper">Web helper</param>
+			/// <returns>New URL</returns>
+			protected virtual string ExcludeQueryStringParams(string url, IWebHelper webHelper)
+			{
+				//comma separated list of parameters to exclude
+				const string excludedQueryStringParams = "pagenumber";
+				var excludedQueryStringParamsSplitted = excludedQueryStringParams.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+				foreach (string exclude in excludedQueryStringParamsSplitted)
+					url = webHelper.RemoveQueryString(url, exclude);
+				return url;
+			}
+
+			/// <summary>
+			/// Generate URL of already filtered items
+			/// </summary>
+			/// <param name="optionIds">Option IDs</param>
+			/// <returns>URL</returns>
+			protected virtual string GenerateFilteredManufacturerQueryParam(IList<int> optionIds)
+			{
+				if (optionIds == null)
+					return "";
+
+				string result = string.Join(",", optionIds);
+				return result;
+			}
+
+			#endregion
+
+			#region Methods
+
+			/// <summary>
+			/// Get IDs of already filtered specification options
+			/// </summary>
+			/// <param name="webHelper">Web helper</param>
+			/// <returns>IDs</returns>
+			public virtual List<int> GetAlreadyFilteredManufacturerIds(IWebHelper webHelper)
+			{
+				var result = new List<int>();
+
+				var alreadyFilteredManufacturersStr = webHelper.QueryString<string>(QUERYSTRINGPARAM);
+				if (String.IsNullOrWhiteSpace(alreadyFilteredManufacturersStr))
+					return result;
+
+				foreach (var item in alreadyFilteredManufacturersStr.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+				{
+					int mafrId;
+					int.TryParse(item.Trim(), out mafrId);
+					if (!result.Contains(mafrId))
+						result.Add(mafrId);
+				}
+				return result;
+			}
+
+			/// <summary>
+			/// Prepare model
+			/// </summary>
+			/// <param name="alreadyFilteredManufacturerIds">IDs of already filtered specification options</param>
+			/// <param name="filterableSpecificationAttributeOptionIds">IDs of filterable specification options</param>
+			/// <param name="specificationAttributeService"></param>
+			/// <param name="webHelper">Web helper</param>
+			/// <param name="workContext">Work context</param>
+			/// <param name="cacheManager">Cache manager</param>
+			public virtual void PrepareManufacturerFilters(
+				int categoryId,
+				IManufacturerService manufacturerService,
+				IWebHelper webHelper,
+				IWorkContext workContext,
+				ICacheManager cacheManager)
+			{
+				Enabled = false;
+
+				IList<int> alreadyFilteredManufacturerIds = this.GetAlreadyFilteredManufacturerIds(webHelper);
+
+				var optionIds = alreadyFilteredManufacturerIds != null
+					? string.Join(",", alreadyFilteredManufacturerIds) : string.Empty;
+
+				var allManufacturersByCategory = manufacturerService.GetManufacturersByCategoryId(categoryId);
+
+				if (!allManufacturersByCategory.Any())
+					return;
+
+				//prepare the model properties
+				Enabled = true;
+				var removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+				RemoveFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+
+				//get already filtered specification options
+				var alreadyFilteredOptions = allManufacturersByCategory
+					.Where(x => alreadyFilteredManufacturerIds.Contains(x.Id));
+
+				AlreadyFilteredItems = alreadyFilteredOptions.Select(x =>
+					new ManufacturerFilterItem
+					{
+						ManufacturerId = x.Id,
+						ManufacturerName = x.Name
+					}).ToList();
+
+				//get not filtered specification options
+				NotFilteredItems = allManufacturersByCategory.Select(x =>
+				{
+					//filter URL
+					var alreadyFiltered = alreadyFilteredManufacturerIds.Concat(new List<int> { x.Id });
+					var queryString = string.Format("{0}={1}", QUERYSTRINGPARAM, GenerateFilteredManufacturerQueryParam(alreadyFiltered.ToList()));
+					var filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), queryString, null);
+
+					return new ManufacturerFilterItem
+					{
+						ManufacturerId = x.Id,
+						ManufacturerName = x.Name,
+						FilterUrl = ExcludeQueryStringParams(filterUrl, webHelper)
+					};
+				}).ToList();
+			}
+
+			#endregion
+
+			#region Properties
+			/// <summary>
+			/// Gets or sets a value indicating whether filtering is enabled
+			/// </summary>
+			public bool Enabled { get; set; }
+			/// <summary>
+			/// Already filtered items
+			/// </summary>
+			public IList<ManufacturerFilterItem> AlreadyFilteredItems { get; set; }
+			/// <summary>
+			/// Not filtered yet items
+			/// </summary>
+			public IList<ManufacturerFilterItem> NotFilteredItems { get; set; }
+			/// <summary>
+			/// URL of "remove filters" button
+			/// </summary>
+			public string RemoveFilterUrl { get; set; }
+
+			#endregion
+		}
+
+		/// <summary>
+		/// Manufacturer filter item
+		/// </summary>
+		public partial class ManufacturerFilterItem : BaseNopModel
+		{
+			/// <summary>
+			/// Manufacturer name
+			/// </summary>
+			public string ManufacturerName { get; set; }
+
+			/// <summary>
+			/// Manufacturer Id
+			/// </summary>
+			public int ManufacturerId { get; set; }
+
+			/// <summary>
+			/// Filter URL
+			/// </summary>
+			public string FilterUrl { get; set; }
+		}
+
 
 		/// <summary>
 		/// Specification filter model

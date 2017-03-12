@@ -1131,6 +1131,7 @@
     <Content Include="Themes\NopElectro\Views\Catalog\_Partial.MBN.CategoryTemplate.ProductsInGridOrLines.cshtml" />
     <Content Include="Themes\NopElectro\Views\Catalog\_CatalogSelectors.cshtml" />
     <Content Include="Themes\NopElectro\Views\Catalog\_FilterSpecsBox.cshtml" />
+    <Content Include="Themes\NopElectro\Views\Catalog\_FilterManufacturersBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

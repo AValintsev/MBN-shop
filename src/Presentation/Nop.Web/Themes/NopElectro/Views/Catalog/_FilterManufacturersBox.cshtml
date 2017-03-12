@@ -1,0 +1,46 @@
+﻿@model CatalogPagingFilteringModel.ManufacturerFilterModel
+@using Nop.Web.Models.Catalog;
+
+@if (Model.Enabled)
+{
+	<div class="product-filter">
+		<div class="filter-title">
+			<strong>@T("Manufacturers.List")</strong>
+		</div>
+		@if (Model.NotFilteredItems.Count > 0)
+		{
+			<div class="available-items">
+				<ul class="group product-spec-group">
+					@foreach (var item in Model.NotFilteredItems)
+					{
+						<li class="item">
+							<a href="@item.FilterUrl">
+								@item.ManufacturerName
+							</a>
+						</li>
+					}
+				</ul>
+			</div>
+		}
+		@if (Model.AlreadyFilteredItems.Count > 0)
+		{
+			<div class="filtered-items">
+				<ul>
+					<li class="title">
+						@T("Filtering.SpecificationFilter.CurrentlyFilteredBy")
+					</li>
+
+					<li class="item">
+						@*<strong>@group.First().ManufacturerName</strong>:*@
+						@Model.AlreadyFilteredItems.ToList().Aggregate(string.Empty, (current, next) =>
+									string.Format("{0}{1}", string.IsNullOrEmpty(current) ? string.Empty
+										 : string.Format("{0} {1}", current, T("Filtering.SpecificationFilter.Separator")), next.ManufacturerName))
+					</li>
+				</ul>
+			</div>
+			<div class="remove-filter">
+				<a href="@Model.RemoveFilterUrl">@T("Filtering.SpecificationFilter.Remove")</a>
+			</div>
+		}
+	</div>
+}

@@ -66,7 +66,7 @@ GO
 CREATE PROCEDURE [dbo].[ProductLoadAllPaged]
 (
 	@CategoryIds		nvarchar(MAX) = null,	--a list of category IDs (comma-separated list). e.g. 1,2,3
-	@ManufacturerId		int = 0,
+	@ManufacturerIds	nvarchar(MAX) = null,	--a list of category IDs (comma-separated list). e.g. 1,2,3	
 	@StoreId			int = 0,
 	@VendorId			int = 0,
 	@WarehouseId		int = 0,
@@ -337,6 +337,18 @@ BEGIN
 	DECLARE @CategoryIdsCount int	
 	SET @CategoryIdsCount = (SELECT COUNT(1) FROM #FilteredCategoryIds)
 
+	--filter by manufacturer IDs
+	SET @ManufacturerIds = isnull(@ManufacturerIds, '')
+	CREATE TABLE #FilteredManufacturerIds
+	(
+		ManufacturerId int not null
+	)
+	INSERT INTO #FilteredManufacturerIds (ManufacturerId)
+	SELECT CAST(data as int) FROM [nop_splitstring_to_table](@ManufacturerIds, ',')	
+	DECLARE @ManufacturerIdsCount int	
+	SET @ManufacturerIdsCount = (SELECT COUNT(1) FROM #FilteredManufacturerIds)
+
+
 	--filter by customer role IDs (access control list)
 	SET @AllowedCustomerRoleIds = isnull(@AllowedCustomerRoleIds, '')	
 	CREATE TABLE #FilteredCustomerRoleIds
@@ -374,7 +386,7 @@ BEGIN
 			ON p.Id = pcm.ProductId'
 	END
 	
-	IF @ManufacturerId > 0
+	IF @ManufacturerIdsCount > 0
 	BEGIN
 		SET @sql = @sql + '
 		LEFT JOIN Product_Manufacturer_Mapping pmm with (NOLOCK)
@@ -414,10 +426,10 @@ BEGIN
 	END
 	
 	--filter by manufacturer
-	IF @ManufacturerId > 0
+	IF @ManufacturerIdsCount > 0
 	BEGIN
 		SET @sql = @sql + '
-		AND pmm.ManufacturerId = ' + CAST(@ManufacturerId AS nvarchar(max))
+		AND pmm.ManufacturerId IN (SELECT ManufacturerId FROM #FilteredManufacturerIds)'
 		
 		IF @FeaturedProducts IS NOT NULL
 		BEGIN
@@ -635,7 +647,7 @@ BEGIN
 		IF @CategoryIdsCount > 0 SET @sql_orderby = ' pcm.DisplayOrder ASC'
 		
 		--manufacturer position (display order)
-		IF @ManufacturerId > 0
+		IF @ManufacturerIdsCount > 0
 		BEGIN
 			IF LEN(@sql_orderby) > 0 SET @sql_orderby = @sql_orderby + ', '
 			SET @sql_orderby = @sql_orderby + ' pmm.DisplayOrder ASC'
@@ -691,6 +703,7 @@ BEGIN
 	
 	DROP TABLE #PageIndex
 END
+
 GO
 
 

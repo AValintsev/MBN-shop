@@ -18,6 +18,12 @@
 					@Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
 				</div>
 			}
+			@if (Model.PagingFilteringContext.ManufacturerFilter.Enabled)
+			{
+				<div class="filter-item">
+					@Html.Partial("_FilterManufacturersBox", Model.PagingFilteringContext.ManufacturerFilter, new ViewDataDictionary())
+				</div>
+			}
 			@if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
 			{
 				<div class="filter-item">
