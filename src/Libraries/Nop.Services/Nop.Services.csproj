@@ -186,6 +186,8 @@
     <Compile Include="Catalog\CategoryTemplateService.cs" />
     <Compile Include="Catalog\IBackInStockSubscriptionService.cs" />
     <Compile Include="Catalog\IManufacturerTemplateService.cs" />
+    <Compile Include="Catalog\IPriceRangeService.cs" />
+    <Compile Include="Catalog\PriceRangeService.cs" />
     <Compile Include="Catalog\RoundingHelper.cs" />
     <Compile Include="Catalog\ManufacturerTemplateService.cs" />
     <Compile Include="Catalog\ICategoryTemplateService.cs" />

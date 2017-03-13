@@ -100,7 +100,7 @@ namespace Nop.Web.Models.Catalog
 			#region Const
 
 			private const string QUERYSTRINGPARAM = "price";
-			private const decimal PRICE_EXAMPLE = 100000.00M;
+			private const decimal FORMAT_PRICE_PATTERN = 100000.00M;
 
 			#endregion
 
@@ -126,22 +126,23 @@ namespace Nop.Web.Models.Catalog
 			protected virtual IList<PriceRange> GetPriceRangeList(string priceRangesStr)
 			{
 				var priceRanges = new List<PriceRange>();
-
 				if (string.IsNullOrWhiteSpace(priceRangesStr))
 					return priceRanges;
+				string[] rangeArray = priceRangesStr.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+				foreach (string str1 in rangeArray)
+				{
+					string[] fromTo = str1.Trim().Split(new[] { '-' });
 
-				string[] fromTo = priceRangesStr.Split(new[] { ';', '-' }, StringSplitOptions.RemoveEmptyEntries);
+					decimal? from = null;
+					if (!String.IsNullOrEmpty(fromTo[0]) && !String.IsNullOrEmpty(fromTo[0].Trim()))
+						from = decimal.Parse(fromTo[0].Trim(), new CultureInfo("en-US"));
 
-				decimal? from = null;
-				if (!String.IsNullOrEmpty(fromTo[0]) && !String.IsNullOrEmpty(fromTo[0].Trim()))
-					from = decimal.Parse(fromTo[0].Trim(), new CultureInfo("en-US"));
+					decimal? to = null;
+					if (!String.IsNullOrEmpty(fromTo[1]) && !String.IsNullOrEmpty(fromTo[1].Trim()))
+						to = decimal.Parse(fromTo[1].Trim(), new CultureInfo("en-US"));
 
-				decimal? to = null;
-				if (!String.IsNullOrEmpty(fromTo[1]) && !String.IsNullOrEmpty(fromTo[1].Trim()))
-					to = decimal.Parse(fromTo[1].Trim(), new CultureInfo("en-US"));
-
-				priceRanges.Add(new PriceRange { From = from, To = to });
-
+					priceRanges.Add(new PriceRange { From = from, To = to });
+				}
 				return priceRanges;
 			}
 
@@ -189,6 +190,7 @@ namespace Nop.Web.Models.Catalog
 
 					return new PriceRange { From = from, To = to };
 				}
+
 				return null;
 			}
 
@@ -204,29 +206,41 @@ namespace Nop.Web.Models.Catalog
 				if (priceRangeList.Any())
 				{
 					this.Enabled = true;
-					this.PriceFormat = priceFormatter.FormatPrice(PRICE_EXAMPLE, true, false);
 
 					var selectedPriceRange = GetSelectedPriceRange(webHelper, priceRangeStr);
 
-					var allowedRange = priceRangeList[0];
-					this.AllowedRange = new PriceRangeFilterItem
+					this.Items = priceRangeList.ToList().Select(x =>
 					{
-						FromDigit = allowedRange.From.Value,
-						ToDigit = allowedRange.To.Value,
-						From = priceFormatter.FormatPrice(allowedRange.From.Value, true, false),
-						To = priceFormatter.FormatPrice(allowedRange.To.Value, true, false)
-					};
+						//from&to
+						var item = new PriceRangeFilterItem();
+						if (x.From.HasValue)
+							item.From = priceFormatter.FormatPrice(x.From.Value, true, false);
+						if (x.To.HasValue)
+							item.To = priceFormatter.FormatPrice(x.To.Value, true, false);
+						string fromQuery = string.Empty;
+						if (x.From.HasValue)
+							fromQuery = x.From.Value.ToString(new CultureInfo("en-US"));
+						string toQuery = string.Empty;
+						if (x.To.HasValue)
+							toQuery = x.To.Value.ToString(new CultureInfo("en-US"));
+
+						//is selected?
+						if (selectedPriceRange != null
+							&& selectedPriceRange.From == x.From
+							&& selectedPriceRange.To == x.To)
+							item.Selected = true;
+
+						//filter URL
+						string url = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + fromQuery + "-" + toQuery, null);
+						url = ExcludeQueryStringParams(url, webHelper);
+						item.FilterUrl = url;
+
+
+						return item;
+					}).ToList();
 
 					if (selectedPriceRange != null)
 					{
-						this.CurrentRange = new PriceRangeFilterItem
-						{
-							FromDigit = selectedPriceRange.From.Value,
-							ToDigit = selectedPriceRange.To.Value,
-							From = priceFormatter.FormatPrice(selectedPriceRange.From.Value, true, false),
-							To = priceFormatter.FormatPrice(selectedPriceRange.To.Value, true, false)
-						};
-
 						//remove filter URL
 						string url = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
 						url = ExcludeQueryStringParams(url, webHelper);
@@ -236,6 +250,44 @@ namespace Nop.Web.Models.Catalog
 				else
 				{
 					this.Enabled = false;
+				}
+			}
+
+			public virtual void LoadPriceRangeFiltersByCategory(
+				int categoryId,
+				IPriceRangeService priceRangeService,
+				IWebHelper webHelper,
+				IPriceFormatter priceFormatter)
+			{
+				var priceRange = priceRangeService.GetPriceRangeByCategory(categoryId);
+				this.Enabled = true;
+				this.PriceFormat = priceFormatter.FormatPrice(FORMAT_PRICE_PATTERN, true, false);
+
+				this.Items.Add(new PriceRangeFilterItem
+					{
+						From = priceFormatter.FormatPrice(priceRange.From.Value, true, false),
+						To = priceFormatter.FormatPrice(priceRange.To.Value, true, false),
+						FromDigit = priceRange.From.Value,
+						ToDigit = priceRange.To.Value
+					});
+
+				var selectedPriceRange = GetSelectedPriceRange(webHelper, null);
+
+				if (selectedPriceRange != null)
+				{
+					//remove filter URL
+					string url = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+					url = ExcludeQueryStringParams(url, webHelper);
+					this.RemoveFilterUrl = url;
+
+					this.Items.Add(new PriceRangeFilterItem
+					{
+						From = priceFormatter.FormatPrice(selectedPriceRange.From.Value, true, false),
+						To = priceFormatter.FormatPrice(selectedPriceRange.To.Value, true, false),
+						FromDigit = selectedPriceRange.From.Value,
+						ToDigit = selectedPriceRange.To.Value,
+						Selected = true
+					});
 				}
 			}
 
@@ -252,10 +304,6 @@ namespace Nop.Web.Models.Catalog
 			/// Filter items
 			/// </summary>
 			public IList<PriceRangeFilterItem> Items { get; set; }
-
-			public PriceRangeFilterItem AllowedRange { get; set; }
-
-			public PriceRangeFilterItem CurrentRange { get; set; }
 
 			public string PriceFormat { get; set; }
 

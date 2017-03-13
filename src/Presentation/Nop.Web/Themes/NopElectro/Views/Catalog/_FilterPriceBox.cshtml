@@ -2,7 +2,9 @@
 @using Nop.Web.Models.Catalog;
 
 @{
-	var currentRangeItem = Model.CurrentRange == null ? Model.AllowedRange : Model.CurrentRange;
+	var selectedRangeItem = Model.Items.Where(i => i.Selected == true).FirstOrDefault();
+	var defatulRangeItem = Model.Items.First();
+	var currentRangeItem = selectedRangeItem == null ? defatulRangeItem : selectedRangeItem;
 }
 
 @helper FormatPriceRangeText(CatalogPagingFilteringModel.PriceRangeFilterItem filterItem)
@@ -18,14 +20,14 @@
 			<strong>@T("Filtering.PriceRangeFilter")</strong>
 		</div>
 		<div class="filter-content">
-			@if (Model.CurrentRange != null)
+			@if (selectedRangeItem != null)
 			{
-			<div class="filtered-items">
-				<span class="item">@FormatPriceRangeText(Model.CurrentRange)</span>
-			</div>
-			<div class="remove-filter">
-				<a href="@Model.RemoveFilterUrl">@T("Filtering.PriceRangeFilter.Remove")</a>
-			</div>
+				<div class="filtered-items">
+					<span class="item">@FormatPriceRangeText(selectedRangeItem)</span>
+				</div>
+				<div class="remove-filter">
+					<a href="@Model.RemoveFilterUrl">@T("Filtering.PriceRangeFilter.Remove")</a>
+				</div>
 			}
 		</div>
 
@@ -35,9 +37,9 @@
 				   class="span2"
 				   value=""
 				   data-provide="bootstrapSlider"
-				   data-slider-min="@Model.AllowedRange.FromDigit"
-				   data-slider-max="@Model.AllowedRange.ToDigit"
-				   data-slider-step="5"
+				   data-slider-min="@defatulRangeItem.FromDigit"
+				   data-slider-max="@defatulRangeItem.ToDigit"
+				   data-slider-step="1"
 				   data-slider-value="[@currentRangeItem.FromDigit, @currentRangeItem.ToDigit]"
 				   data-slider-range="true"
 				   data-slider-tooltip="hide" />

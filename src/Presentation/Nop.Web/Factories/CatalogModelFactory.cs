@@ -35,6 +35,7 @@ namespace Nop.Web.Factories
 		#region Fields
 
 		private readonly IProductModelFactory _productModelFactory;
+		private readonly IPriceRangeService _priceRangeService;
 		private readonly ICategoryService _categoryService;
 		private readonly IManufacturerService _manufacturerService;
 		private readonly IProductService _productService;
@@ -68,6 +69,7 @@ namespace Nop.Web.Factories
 		#region Constructors
 
 		public CatalogModelFactory(IProductModelFactory productModelFactory,
+			IPriceRangeService priceRangeService,
 			ICategoryService categoryService,
 			IManufacturerService manufacturerService,
 			IProductService productService,
@@ -97,6 +99,7 @@ namespace Nop.Web.Factories
 			ICacheManager cacheManager)
 		{
 			this._productModelFactory = productModelFactory;
+			this._priceRangeService = priceRangeService;
 			this._categoryService = categoryService;
 			this._manufacturerService = manufacturerService;
 			this._productService = productService;
@@ -424,7 +427,18 @@ namespace Nop.Web.Factories
 				_cacheManager);
 
 			//price ranges
-			model.PagingFilteringContext.PriceRangeFilter.LoadPriceRangeFilters(category.PriceRanges, _webHelper, _priceFormatter);
+			if (category.PriceRanges != null && category.PriceRanges.ToLower().Equals("auto"))
+			{
+				model.PagingFilteringContext.PriceRangeFilter.LoadPriceRangeFiltersByCategory(
+					category.Id,
+					_priceRangeService,
+					_webHelper,
+					_priceFormatter);
+			}
+			else
+			{
+				model.PagingFilteringContext.PriceRangeFilter.LoadPriceRangeFilters(category.PriceRanges, _webHelper, _priceFormatter);
+			}
 			var selectedPriceRange = model.PagingFilteringContext.PriceRangeFilter.GetSelectedPriceRange(_webHelper, category.PriceRanges);
 			decimal? minPriceConverted = null;
 			decimal? maxPriceConverted = null;

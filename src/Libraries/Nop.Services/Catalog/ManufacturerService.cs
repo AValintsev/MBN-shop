@@ -481,15 +481,11 @@ namespace Nop.Services.Catalog
 			return queryFilter.Except(filter).ToArray();
 		}
 
-		#endregion
-
-
-		public IList<Manufacturer> GetManufacturersByCategoryId(int categoryId)
-		{	
+		public virtual IList<Manufacturer> GetManufacturersByCategoryId(int categoryId)
+		{
 			if (categoryId == 0) return new List<Manufacturer>();
 
 			string key = string.Format(MANUFACTURERS_ALLBYCATEGORYID_KEY, categoryId, _workContext.CurrentCustomer.Id, _storeContext.CurrentStore.Id);
-
 
 			return _cacheManager.Get(key, () =>
 			{
@@ -506,10 +502,13 @@ namespace Nop.Services.Catalog
 							orderby mGroup.Key
 							select mGroup.FirstOrDefault();
 				query = query.OrderBy(pm => pm.DisplayOrder).ThenBy(pm => pm.Id);
-				
+
 				var result = query.ToList();
 				return result;
 			});
 		}
+
+		#endregion
+
 	}
 }
