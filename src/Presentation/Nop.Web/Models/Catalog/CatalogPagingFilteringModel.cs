@@ -260,6 +260,8 @@ namespace Nop.Web.Models.Catalog
 				IPriceFormatter priceFormatter)
 			{
 				var priceRange = priceRangeService.GetPriceRangeByCategory(categoryId);
+				if (priceRange == null) return;
+
 				this.Enabled = true;
 				this.PriceFormat = priceFormatter.FormatPrice(FORMAT_PRICE_PATTERN, true, false);
 

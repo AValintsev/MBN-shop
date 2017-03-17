@@ -172,7 +172,8 @@ namespace Nop.Web.Framework
             builder.RegisterType<CategoryTemplateService>().As<ICategoryTemplateService>().InstancePerLifetimeScope();
             builder.RegisterType<ManufacturerTemplateService>().As<IManufacturerTemplateService>().InstancePerLifetimeScope();
             builder.RegisterType<TopicTemplateService>().As<ITopicTemplateService>().InstancePerLifetimeScope();
-            //use static cache (between HTTP requests)
+            
+			//use static cache (between HTTP requests)
             builder.RegisterType<ProductTagService>().As<IProductTagService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerLifetimeScope();
@@ -240,6 +241,7 @@ namespace Nop.Web.Framework
             builder.RegisterType<LocalizedEntityService>().As<ILocalizedEntityService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerLifetimeScope();
+
             builder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerLifetimeScope();
 
             builder.RegisterType<DownloadService>().As<IDownloadService>().InstancePerLifetimeScope();
@@ -310,11 +312,11 @@ namespace Nop.Web.Framework
                 //installation service
                 if (config.UseFastInstallationService)
                 {
-                    builder.RegisterType<SqlFileInstallationService>().As<IInstallationService>().InstancePerLifetimeScope();
+					builder.RegisterType<SqlFileInstallationService>().As<IInstallationService>().InstancePerLifetimeScope();
                 }
                 else
                 {
-                    builder.RegisterType<CodeFirstInstallationService>().As<IInstallationService>().InstancePerLifetimeScope();
+                    builder.RegisterType<CodeFirstInstallationServiceMBN>().As<IInstallationService>().InstancePerLifetimeScope();
                 }
             }
 

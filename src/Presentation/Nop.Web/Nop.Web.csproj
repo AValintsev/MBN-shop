@@ -531,6 +531,7 @@
     <Content Include="Content\files\ExportImport\Index.htm" />
     <Content Include="Content\files\Index.htm" />
     <Content Include="Content\Images\default-image.png" />
+    <Content Include="Content\Images\MBNPRO.jpg" />
     <Content Include="Content\install\images\logo.png" />
     <Content Include="Content\jquery-ui-themes\smoothness\images\animated-overlay.gif" />
     <Content Include="Content\jquery-ui-themes\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1134,6 +1135,7 @@
     <Content Include="Themes\NopElectro\Views\Catalog\_FilterManufacturersBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Images\categories\" />
     <Folder Include="Plugins\bin\" />
   </ItemGroup>
   <ItemGroup>
