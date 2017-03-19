@@ -3,15 +3,44 @@
 <div class="header-links">
     <ul>
         @Html.Widget("header_links_before")
+        
+        @if (Model.WishlistEnabled)
+        {
+            <li>
+                <a href="@Url.RouteUrl("Wishlist")">
+                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                    <span class="wishlist-qty">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
+                </a>
+            </li>
+        }
         @if (Model.IsAuthenticated)
         {
-            <li><a href="@Url.RouteUrl("CustomerInfo")" class="ico-account">@T("Account.MyAccount")@*@Model.CustomerName*@</a></li>
-            <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
+            <li>
+                <a href="@Url.RouteUrl("CustomerInfo")" class="ico-account">
+                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                    @*@T("Account.MyAccount")*@@*@Model.CustomerName*@
+                </a>
+            </li>
+            <li>
+                <a href="@Url.RouteUrl("Logout")" class="ico-logout">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        @*@T("Account.Logout")*@
+                </a>
+            </li>
         }
         else
         {
-            <li><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
-            <li><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>
+            @*<li>
+                <a href="@Url.RouteUrl("Register")" class="ico-register">
+                    @T("Account.Register")
+                </a>
+            </li>*@
+            <li>
+                <a href="@Url.RouteUrl("Login")" class="ico-login">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    @*@T("Account.Login")*@
+                </a>
+            </li>
         }
         @if (Model.AllowPrivateMessages)
         {
@@ -22,16 +51,7 @@
                 </a>
             </li>
         }
-        @if (Model.WishlistEnabled)
-        {
-            <li>
-                <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
-                    <span class="wishlist-label">@T("Wishlist")</span>
-                    <span class="wishlist-qty">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
-                </a>
-            </li>
-        }
-        @if (Model.ShoppingCartEnabled)
+        @*@if (Model.ShoppingCartEnabled)
         {
             <li id="topcartlink">
                 <a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
@@ -39,7 +59,7 @@
                     <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
                 </a>
             </li>
-        }
+        }*@
         @Html.Widget("header_links_after")
     </ul>
     @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))

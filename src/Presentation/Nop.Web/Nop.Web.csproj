@@ -992,6 +992,12 @@
     <Content Include="Themes\NopElectro\Content\images\calendar-next.png" />
     <Content Include="Themes\NopElectro\Content\images\calendar-prev.png" />
     <Content Include="Themes\NopElectro\Content\images\carousel-arrows.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\1.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\2.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\accessories.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\components.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\mining.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\page.png" />
     <Content Include="Themes\NopElectro\Content\images\category-title-bg.jpg" />
     <Content Include="Themes\NopElectro\Content\images\close.png" />
     <Content Include="Themes\NopElectro\Content\images\compare-button.png" />
@@ -1133,6 +1139,10 @@
     <Content Include="Themes\NopElectro\Views\Catalog\_CatalogSelectors.cshtml" />
     <Content Include="Themes\NopElectro\Views\Catalog\_FilterSpecsBox.cshtml" />
     <Content Include="Themes\NopElectro\Views\Catalog\_FilterManufacturersBox.cshtml" />
+    <Content Include="Themes\NopElectro\Content\images\categories\accessories.ai" />
+    <Content Include="Themes\NopElectro\Content\images\categories\components.ai" />
+    <Content Include="Themes\NopElectro\Content\images\categories\mining.ai" />
+    <Content Include="Themes\NopElectro\Content\images\categories\new logo.ai" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\categories\" />

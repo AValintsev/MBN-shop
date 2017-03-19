@@ -1,4 +1,5 @@
-﻿<div class="header">
+﻿
+<div class="header">
     <div>
         @Html.Widget("header")
         <div class="header-upper">
@@ -24,7 +25,11 @@
                     <div class="header-block">
                         <div>
                             <h3>Кошик</h3>
-                            <p><i class="fa fa-shopping-cart" aria-hidden="true"></i></p>
+                            <p>
+                                <a href="@Url.RouteUrl("ShoppingCart")">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                </a>
+                            </p>
                         </div>
                     </div>
                     <div class="header-block">
@@ -35,7 +40,7 @@
                     </div>
                     <div class="header-block">
                         <div>
-                            <h3>Наш Youtube канал</h3>
+                            <h3>Наш канал</h3>
                             <p><i class="fa fa-youtube" aria-hidden="true"></i></p>
                         </div>
                     </div>
