@@ -31,7 +31,27 @@
 				</div>
 			}
 		</div>
-	}
+    }
+    else
+    {
+        //current category ID
+        int currentCategoryId = 0;
+        if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+            Url.RequestContext.RouteData.Values["action"].ToString().Equals("category", StringComparison.InvariantCultureIgnoreCase))
+        {
+            currentCategoryId = Convert.ToInt32(Url.RequestContext.RouteData.Values["categoryId"].ToString());
+        }
+        //current product ID
+        int currentProductId = 0;
+        if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("product", StringComparison.InvariantCultureIgnoreCase) &&
+            Url.RequestContext.RouteData.Values["action"].ToString().Equals("productdetails", StringComparison.InvariantCultureIgnoreCase))
+        {
+            currentProductId = Convert.ToInt32(Url.RequestContext.RouteData.Values["productId"].ToString());
+        }
+        @Html.Widget("left_side_column_before")
+        @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+        @Html.Widget("left_side_column_after_category_navigation")
+    }
 </div>
 <div class="center-2">
 	<div class="page category-page">
@@ -52,7 +72,7 @@
 			@if (Model.SubCategories.Count > 0)
 			{
 				<div class="category-grid sub-category-grid">
-					<div class="item-grid owl-carousel">
+					<div class="item-grid">
 						@foreach (var item in Model.SubCategories)
 						{
 							<div class="item-box">

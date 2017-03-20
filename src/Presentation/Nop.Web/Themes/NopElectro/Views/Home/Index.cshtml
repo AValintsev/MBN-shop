@@ -29,6 +29,7 @@
                 </div>
             </div>
         </div>
+        @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
         @Html.Widget("home_page_before_categories")
         @Html.Action("HomepageCategories", "Catalog")
 
@@ -89,7 +90,7 @@
         </div>
 
 
-        @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+        
         @Html.Widget("home_page_before_products")
         @Html.Action("HomepageProducts", "Product")
         @Html.Widget("home_page_before_best_sellers")

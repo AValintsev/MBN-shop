@@ -530,6 +530,17 @@
     <Content Include="Content\BBEditor\images\unordered.gif" />
     <Content Include="Content\files\ExportImport\Index.htm" />
     <Content Include="Content\files\Index.htm" />
+    <Content Include="Themes\NopElectro\Content\images\categories\Audioadapters.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\Cooling.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\Frames.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\HDDDrives.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\Motherboards.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\Powersupplies.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\Processors.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\Raizers.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\RAMs.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\SSDDrives.png" />
+    <Content Include="Themes\NopElectro\Content\images\categories\Videoadapters.png" />
     <Content Include="Content\Images\default-image.png" />
     <Content Include="Content\Images\MBNPRO.jpg" />
     <Content Include="Content\install\images\logo.png" />
@@ -1013,6 +1024,7 @@
     <Content Include="Themes\NopElectro\Content\images\last.png" />
     <Content Include="Themes\NopElectro\Content\images\loading.gif" />
     <Content Include="Themes\NopElectro\Content\images\logo.png" />
+    <Content Include="Themes\NopElectro\Content\images\MBNPRO.jpg" />
     <Content Include="Themes\NopElectro\Content\images\menu-icon.png" />
     <Content Include="Themes\NopElectro\Content\images\move.png" />
     <Content Include="Themes\NopElectro\Content\images\new.png" />
@@ -1145,7 +1157,6 @@
     <Content Include="Themes\NopElectro\Content\images\categories\new logo.ai" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Images\categories\" />
     <Folder Include="Plugins\bin\" />
   </ItemGroup>
   <ItemGroup>
