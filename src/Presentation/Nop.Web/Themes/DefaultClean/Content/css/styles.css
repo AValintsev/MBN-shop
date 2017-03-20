@@ -779,7 +779,7 @@ label, label + * {
 .header-links a:hover {
 	color: #4ab2f1;
 }
-#topcartlink {
+/*#topcartlink {
 	display: block;
 	width: 70%;
 	max-width: 400px;
@@ -790,7 +790,7 @@ label, label + * {
 #topcartlink a {
 	background: url('../images/shopping-bag.png') left center no-repeat;
 	padding: 0 0 0 20px;
-}
+}*/
 
 .header-lower {
 	position: relative;
@@ -6109,12 +6109,12 @@ pre {
 	line-height: 45px;
 	text-transform: none;
 }
-#topcartlink {
+/*#topcartlink {
 	display: inline-block;
 	width: auto;
 	margin: 0;
 	padding: 0 18px;
-}
+}*/
 
 .flyout-cart {
 	position: absolute;

@@ -12,25 +12,17 @@
                 </div>
                 <div class="header-links-wrapper">
                     @Html.Action("HeaderLinks", "Common")
-                    @Html.Action("FlyoutShoppingCart", "ShoppingCart")
                 </div>
             </div>
         </div>
-        <div class="header-lower">
+        <div class="header-lower clearfix">
             <div class="header-logo">
                 @Html.Action("Logo", "Common")
             </div>
             <div class="header-tools">
                 <div class="blocks-wrapper clearfix">
                     <div class="header-block">
-                        <div>
-                            <h3>Кошик</h3>
-                            <p>
-                                <a href="@Url.RouteUrl("ShoppingCart")">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                </a>
-                            </p>
-                        </div>
+                        @Html.Action("FlyoutShoppingCart", "ShoppingCart")
                     </div>
                     <div class="header-block">
                         <div>
@@ -55,3 +47,19 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.header-lower').on('mouseenter', '#topcartlink', function () {
+            $('#flyout-cart').addClass('active');
+        });
+        $('.header-lower').on('mouseleave', '#topcartlink', function () {
+            $('#flyout-cart').removeClass('active');
+        });
+        $('.header-lower').on('mouseenter', '#flyout-cart', function () {
+            $('#flyout-cart').addClass('active');
+        });
+        $('.header-lower').on('mouseleave', '#flyout-cart', function () {
+            $('#flyout-cart').removeClass('active');
+        });
+    });
+</script>

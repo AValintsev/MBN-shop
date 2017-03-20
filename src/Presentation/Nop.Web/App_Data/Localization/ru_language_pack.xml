@@ -15550,7 +15550,10 @@
 	<LocaleResource Name="ShoppingCart.WishlistDisabled">
 		<Value>Список пожеланий недоступен для этого товара</Value>
 	</LocaleResource>
-	<LocaleResource Name="Sitemap">
+  <LocaleResource Name="ShoppingCart.BackToCart">
+    <Value>Назад в корзину</Value>
+  </LocaleResource>
+  <LocaleResource Name="Sitemap">
 		<Value>Карта сайта</Value>
 	</LocaleResource>
 	<LocaleResource Name="Sitemap.Categories">
