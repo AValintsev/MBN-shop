@@ -236,8 +236,13 @@ namespace Nop.Web.Controllers
         [ChildActionOnly]
         public virtual ActionResult HeaderLinks()
         {
-            var model = _commonModelFactory.PrepareHeaderLinksModel();
+            var model = _commonModelFactory.PrepareHeaderLinksModel();            
             return PartialView(model);
+        }
+        [ChildActionOnly]
+        public virtual int GetShoppintCartItemsCount()
+        {
+            return _commonModelFactory.GetShoppintCartItemsCount();
         }
         [ChildActionOnly]
         public virtual ActionResult AdminHeaderLinks()
@@ -297,7 +302,7 @@ namespace Nop.Web.Controllers
 
                 _workflowMessageService.SendContactUsMessage(_workContext.WorkingLanguage.Id,
                     model.Email.Trim(), model.FullName, subject, body);
-                
+
                 model.SuccessfullySent = true;
                 model.Result = _localizationService.GetResource("ContactUs.YourEnquiryHasBeenSent");
 
@@ -351,7 +356,7 @@ namespace Nop.Web.Controllers
 
                 _workflowMessageService.SendContactVendorMessage(vendor, _workContext.WorkingLanguage.Id,
                     model.Email.Trim(), model.FullName, subject, body);
-                
+
                 model.SuccessfullySent = true;
                 model.Result = _localizationService.GetResource("ContactVendor.YourEnquiryHasBeenSent");
 
@@ -380,7 +385,7 @@ namespace Nop.Web.Controllers
         {
             if (!_commonSettings.SitemapEnabled)
                 return RedirectToRoute("HomePage");
-            
+
             var siteMap = _commonModelFactory.PrepareSitemapXml(this.Url, id);
             return Content(siteMap, "text/xml");
         }

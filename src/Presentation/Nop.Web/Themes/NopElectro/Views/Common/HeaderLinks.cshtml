@@ -1,5 +1,4 @@
-﻿@model HeaderLinksModel
-@using Nop.Web.Models.Common;
+﻿
 <div class="header-links">
     <ul>
         @Html.Widget("header_links_before")
@@ -70,24 +69,5 @@
                 displayPopupNotification('@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.AlertMessage))', 'success', false);
             });
         </script>
-    }
-    @if (Model.ShoppingCartEnabled)
-    {
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('.header-upper').on('mouseenter', '#topcartlink', function () {
-                    $('#flyout-cart').addClass('active');
-                });
-                $('.header-upper').on('mouseleave', '#topcartlink', function () {
-                    $('#flyout-cart').removeClass('active');
-                });
-                $('.header-upper').on('mouseenter', '#flyout-cart', function () {
-                    $('#flyout-cart').addClass('active');
-                });
-                $('.header-upper').on('mouseleave', '#flyout-cart', function () {
-                    $('#flyout-cart').removeClass('active');
-                });
-            });
-        </script>
-    }
+    }   
 </div>

@@ -1,5 +1,7 @@
 ﻿@model MiniShoppingCartModel
 @using Nop.Web.Models.ShoppingCart;
+
+
 <div id="flyout-cart" class="flyout-cart">
     <div class="mini-shopping-cart">
         <div class="count">
@@ -9,11 +11,11 @@
             }
             else
             {
-                @Html.Raw(string.Format(T("ShoppingCart.Mini.ItemsText").Text, string.Format("<a href=\"{0}\">{1}</a>", Url.RouteUrl("ShoppingCart"), string.Format(T("ShoppingCart.Mini.Items").Text, Model.TotalProducts))))
+                @Html.Raw(string.Format(T("ShoppingCart.Mini.ItemsText").Text, string.Format("<a href=\"{0}\">{1}</a>", Url.RouteUrl("ShoppingCart"), Model.TotalProducts)))
             }
         </div>
         @if (Model.TotalProducts > 0)
-        {
+            {
             <div class="items">
                 @for (int i = 0; i < Model.Items.Count; i++)
                 {

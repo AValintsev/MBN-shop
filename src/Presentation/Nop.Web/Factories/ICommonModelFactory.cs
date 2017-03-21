@@ -16,6 +16,8 @@ namespace Nop.Web.Factories
 
         HeaderLinksModel PrepareHeaderLinksModel();
 
+        int GetShoppintCartItemsCount();
+
         AdminHeaderLinksModel PrepareAdminHeaderLinksModel();
 
         SocialModel PrepareSocialModel();

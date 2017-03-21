@@ -7009,6 +7009,9 @@
 	<LocaleResource Name="Admin.Configuration.Shipping">
 		<Value>Доставка</Value>
 	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.DatesAndRanges">
+		<Value>Даты и интервалы</Value>
+	</LocaleResource>	
 	<LocaleResource Name="Admin.Configuration.Shipping.DeliveryDates">
 		<Value>Даты доставки</Value>
 	</LocaleResource>
@@ -7042,6 +7045,9 @@
 	<LocaleResource Name="Admin.Configuration.Shipping.DeliveryDates.Fields.Name.Required">
 		<Value>Пожалуйста, укажите имя.</Value>
 	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.DeliveryDates.Hint">
+		<Value>Список дат доставок, которые будут доступны для выбора в деталях продукта.</Value>
+	</LocaleResource>	
 	<LocaleResource Name="Admin.Configuration.Shipping.DeliveryDates.Updated">
 		<Value>Дата доставки была успешно обновлена.</Value>
 	</LocaleResource>
@@ -15550,7 +15556,10 @@
 	<LocaleResource Name="ShoppingCart.WishlistDisabled">
 		<Value>Список пожеланий недоступен для этого товара</Value>
 	</LocaleResource>
-	<LocaleResource Name="Sitemap">
+  <LocaleResource Name="ShoppingCart.BackToCart">
+    <Value>Назад в корзину</Value>
+  </LocaleResource>
+  <LocaleResource Name="Sitemap">
 		<Value>Карта сайта</Value>
 	</LocaleResource>
 	<LocaleResource Name="Sitemap.Categories">
@@ -15723,5 +15732,45 @@
 	</LocaleResource>
 	<LocaleResource Name="Wishlist.YourWishlistURL">
 		<Value>URL вашего списка пожеланий</Value>
+	</LocaleResource>
+
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges">
+		<Value>Диапазоны доступности товара</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.Added">
+		<Value>Новый диапазон доступности товаров был успешно добавлен.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.AddNew">
+		<Value>Добавить диапазон доступности новых товаров</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.BackToList">
+		<Value>Вернуться к списку доступных товаров</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.Deleted">
+		<Value>Диапазон доступности товара успешно удален.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.EditProductAvailabilityRangeDetails">
+		<Value>Изменить диапазон доступности товаров</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.Fields.DisplayOrder">
+		<Value>Порядок отображения</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.Fields.DisplayOrder.Hint">
+		<Value>Порядок отображения этого диапазона доступности товара. 1 - верхняя часть списка.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.Fields.Name">
+		<Value>Название</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.Fields.Name.Hint">
+		<Value>Введите название диапазона доступности.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.Fields.Name.Required">
+		<Value>Укажите имя.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.Hint">
+		<Value>Список диапазонов доступности, которые будут доступны для выбора в деталях товара.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.Updated">
+		<Value>Диапазон доступности товаров обновлен.</Value>
 	</LocaleResource>
 </Language>
