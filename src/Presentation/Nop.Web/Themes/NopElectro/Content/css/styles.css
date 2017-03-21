@@ -977,6 +977,10 @@ td.product-picture img {
             position: relative;
         }
 
+            .header-tools .blocks-wrapper .header-block a:hover {
+                color: #1E90FF;
+            }
+
             .header-tools .blocks-wrapper .header-block > div {
                 width: 100%;
                 /*display: block;*/
@@ -6969,9 +6973,13 @@ pre {
         text-transform: none;
     }
 
+    #topcartlink a {
+        text-decoration: none;
+    }
+
     .flyout-cart {
         position: absolute;
-        top: 90px;
+        top: 160px;
         right: 0;
         z-index: 900;
         height: auto !important;
@@ -7772,10 +7780,6 @@ pre {
         padding: 0px;
         width: 1260px;
         margin: 0 auto;
-    }
-
-    .inputs label {
-        width: 375px;
     }
 
     .center-2 .inputs label {

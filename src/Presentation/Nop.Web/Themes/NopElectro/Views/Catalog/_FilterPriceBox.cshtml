@@ -2,51 +2,56 @@
 @using Nop.Web.Models.Catalog;
 
 @{
-	var selectedRangeItem = Model.Items.Where(i => i.Selected == true).FirstOrDefault();
-	var defatulRangeItem = Model.Items.First();
-	var currentRangeItem = selectedRangeItem == null ? defatulRangeItem : selectedRangeItem;
+    var selectedRangeItem = Model.Items.Where(i => i.Selected == true).FirstOrDefault();
+    var defatulRangeItem = Model.Items.First();
+    var currentRangeItem = selectedRangeItem == null ? defatulRangeItem : selectedRangeItem;
+
+    var fromValueDefault = defatulRangeItem.FromDigit.ToString(System.Globalization.CultureInfo.InvariantCulture);
+    var toValueDefault = defatulRangeItem.ToDigit.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+    var fromValue = currentRangeItem.FromDigit.ToString(System.Globalization.CultureInfo.InvariantCulture);
+    var toValue = currentRangeItem.ToDigit.ToString(System.Globalization.CultureInfo.InvariantCulture);
 }
 
 @helper FormatPriceRangeText(CatalogPagingFilteringModel.PriceRangeFilterItem filterItem)
 {
-	string rangeText = string.Format("<span class=\"PriceRange\">{0}</span> - <span class=\"PriceRange\">{1}</span>", filterItem.From, filterItem.To);
+string rangeText = string.Format("<span class=\"PriceRange\">{0}</span> - <span class=\"PriceRange\">{1}</span>", filterItem.From, filterItem.To);
 
-	<text>@Html.Raw(rangeText)</text>
+    <text>@Html.Raw(rangeText)</text>
 }
 @if (Model.Enabled)
 {
-	<div class="product-filter price-range-filter">
-		<div class="filter-title">
-			<strong>@T("Filtering.PriceRangeFilter")</strong>
-		</div>
-		<div class="filter-content">
-			@if (selectedRangeItem != null)
-			{
-				<div class="filtered-items">
-					<span class="item">@FormatPriceRangeText(selectedRangeItem)</span>
-				</div>
-				<div class="remove-filter">
-					<a href="@Model.RemoveFilterUrl">@T("Filtering.PriceRangeFilter.Remove")</a>
-				</div>
-			}
-		</div>
+    <div class="product-filter price-range-filter">
+        <div class="filter-title">
+            <strong>@T("Filtering.PriceRangeFilter")</strong>
+        </div>
+        <div class="filter-content">
+            @if (selectedRangeItem != null)
+            {
+                <div class="filtered-items">
+                    <span class="item">@FormatPriceRangeText(selectedRangeItem)</span>
+                </div>
+                <div class="remove-filter">
+                    <a href="@Model.RemoveFilterUrl">@T("Filtering.PriceRangeFilter.Remove")</a>
+                </div>}
+        </div>
 
-		<div class="price-range-container">
-			<input id="priceRange"
-				   type="text"
-				   class="span2"
-				   value=""
-				   data-provide="bootstrapSlider"
-				   data-slider-min="@defatulRangeItem.FromDigit"
-				   data-slider-max="@defatulRangeItem.ToDigit"
-				   data-slider-step="1"
-				   data-slider-value="[@currentRangeItem.FromDigit, @currentRangeItem.ToDigit]"
-				   data-slider-range="true"
-				   data-slider-tooltip="hide" />
-			<b id="startPrice">@currentRangeItem.From</b>
-			<b id="endPrice" class="pull-right">@currentRangeItem.To</b>
-		</div>
-	</div>
+        <div class="price-range-container">
+            <input id="priceRange"
+                   type="text"
+                   class="span2"
+                   value=""
+                   data-provide="bootstrapSlider"
+                   data-slider-min="@fromValueDefault"
+                   data-slider-max="@toValueDefault"
+                   data-slider-step="1"
+                   data-slider-value="[@fromValue, @fromValue]"
+                   data-slider-range="true"
+                   data-slider-tooltip="hide" />
+            <b id="startPrice">@currentRangeItem.From</b>
+            <b id="endPrice" class="pull-right">@currentRangeItem.To</b>
+        </div>
+    </div>
 
-	<input type="hidden" id="priceFormat" value="@Model.PriceFormat" />
+    <input type="hidden" id="priceFormat" value="@Model.PriceFormat" />
 }

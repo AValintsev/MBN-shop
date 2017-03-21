@@ -12,6 +12,7 @@
                 </div>
                 <div class="header-links-wrapper">
                     @Html.Action("HeaderLinks", "Common")
+                    @Html.Action("FlyoutShoppingCart", "ShoppingCart")
                 </div>
             </div>
         </div>
@@ -22,12 +23,26 @@
             <div class="header-tools">
                 <div class="blocks-wrapper clearfix">
                     <div class="header-block">
-                        @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+                        <div id="topcartlink">
+                            <h3>@T("ShoppingCart")</h3>
+                            <p>
+                                <a href="@Url.RouteUrl("ShoppingCart")">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                    @{
+                                        var total = Html.Action("GetShoppintCartItemsCount", "Common");
+                                    }
+                                    <span class="cart-qty">(@total)</span>
+                                </a>
+                            </p>
+                        </div>
+
                     </div>
                     <div class="header-block">
                         <div>
-                            <h3>Контакти</h3>
-                            <p><i class="fa fa-address-card-o" aria-hidden="true"></i></p>
+                            <h3>@T("ContactUs")</h3>
+                            <p>
+                                <a href="@Url.RouteUrl("ContactUs")" title="@T("ContactUs")"><i class="fa fa-address-card-o" aria-hidden="true"></i></a>
+                            </p>
                         </div>
                     </div>
                     <div class="header-block">
@@ -49,16 +64,16 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.header-lower').on('mouseenter', '#topcartlink', function () {
+        $('.header').on('mouseenter', '#topcartlink', function () {
             $('#flyout-cart').addClass('active');
         });
-        $('.header-lower').on('mouseleave', '#topcartlink', function () {
+        $('.header').on('mouseleave', '#topcartlink', function () {
             $('#flyout-cart').removeClass('active');
         });
-        $('.header-lower').on('mouseenter', '#flyout-cart', function () {
+        $('.header').on('mouseenter', '#flyout-cart', function () {
             $('#flyout-cart').addClass('active');
         });
-        $('.header-lower').on('mouseleave', '#flyout-cart', function () {
+        $('.header').on('mouseleave', '#flyout-cart', function () {
             $('#flyout-cart').removeClass('active');
         });
     });

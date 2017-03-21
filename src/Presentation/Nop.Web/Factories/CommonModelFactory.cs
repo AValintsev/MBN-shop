@@ -214,7 +214,7 @@ namespace Nop.Web.Factories
                 AvailableLanguages = availableLanguages,
                 UseImages = _localizationSettings.UseImagesForLanguageSelection
             };
-            
+
             return model;
         }
 
@@ -262,6 +262,23 @@ namespace Nop.Web.Factories
             };
 
             return model;
+        }
+
+        public virtual int GetShoppintCartItemsCount()
+        {
+            int result = 0;
+            var customer = _workContext.CurrentCustomer;
+
+            if (customer.HasShoppingCartItems)
+            {
+                result = customer.ShoppingCartItems
+                    .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
+                    .LimitPerStore(_storeContext.CurrentStore.Id)
+                    .ToList()
+                    .GetTotalProducts();
+            }
+
+            return result;
         }
 
         public virtual HeaderLinksModel PrepareHeaderLinksModel()
@@ -386,7 +403,7 @@ namespace Nop.Web.Factories
 
             return model;
         }
-        
+
         public virtual ContactUsModel PrepareContactUsModel(ContactUsModel model, bool excludeProperties)
         {
             if (model == null)
@@ -399,7 +416,7 @@ namespace Nop.Web.Factories
             }
             model.SubjectEnabled = _commonSettings.SubjectFieldOnContactUsForm;
             model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage;
-            
+
             return model;
         }
 
@@ -421,7 +438,7 @@ namespace Nop.Web.Factories
             model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage;
             model.VendorId = vendor.Id;
             model.VendorName = vendor.GetLocalized(x => x.Name);
-            
+
             return model;
         }
 
@@ -506,7 +523,7 @@ namespace Nop.Web.Factories
             var siteMap = _cacheManager.Get(cacheKey, () => _sitemapGenerator.Generate(url, id));
             return siteMap;
         }
-        
+
         public virtual StoreThemeSelectorModel PrepareStoreThemeSelectorModel()
         {
             var model = new StoreThemeSelectorModel();
@@ -525,7 +542,7 @@ namespace Nop.Web.Factories
                 .ToList();
             return model;
         }
-        
+
         public virtual FaviconModel PrepareFaviconModel()
         {
             var model = new FaviconModel();
@@ -547,7 +564,7 @@ namespace Nop.Web.Factories
             model.FaviconUrl = _webHelper.GetStoreLocation() + faviconFileName;
             return model;
         }
-        
+
         public virtual string PrepareRobotsTextFile()
         {
             var sb = new StringBuilder();
@@ -691,7 +708,7 @@ namespace Nop.Web.Factories
 
             return sb.ToString();
         }
-        
+
         #endregion
     }
 }
