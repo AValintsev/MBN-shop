@@ -19,20 +19,23 @@
                 </div>
             </div>
             <div class="col-sm-6 pull-left youtube-sliders">
-                <div id="homepage-side-info">
-                    @*@Html.Action("TopicBlock", "Topic", new { systemName = "NopElectro-Home-Column" })*@
+                @Html.Partial("_YouTubeSlider")
+            </div>
+        </div>
 
-                    <div class="youtube-links">
-                        <div class="video-preview"></div>
-                        <div class="video-preview"></div>
-                    </div>
+        <div class="row categories-and-home-page-text-wrapper">
+            <div>
+                <div class="row home-page-text">
+                    @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+                </div>
+                <div class="row">
+                    @Html.Widget("home_page_before_categories")
+                </div>
+                <div class="row categories">
+                    @Html.Action("HomepageCategories", "Catalog")
                 </div>
             </div>
         </div>
-        @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
-        @Html.Widget("home_page_before_categories")
-        @Html.Action("HomepageCategories", "Catalog")
-
         <div class="container our-features">
             <div class="row yellow-title">
                 <div class="col-md-24">
@@ -41,11 +44,13 @@
                     </h1>
                 </div>
             </div>
-            <div class="row">
+            <div class="row features-row">
                 <div class="col-md-6">
                     <h2><i class="fa fa-th" aria-hidden="true"></i></h2>
                     <h3>Найбільші записи товару на складі</h3>
-                    <p>Наші товари розходяться, як гарячі пиріжки. Тому ми працюємо з найбільшими постачальниками, щоб наші клієнти завжди мали змогу негайно придбати потрібний їм об'єм товару.</p>
+                    <p>Наші товари розходяться, як гарячі пиріжки. Тому ми працюємо з найбільшими постачальниками, 
+                        щоб наші клієнти завжди мали змогу негайно придбати потрібний їм об'єм товару.
+                        А в разі відсутності товару на складі, наш клієнт має можливість забронювати своє індивідуальне замовлення.</p>
                 </div>
                 <div class="col-md-6">
                     <h2><i class="fa fa-book" aria-hidden="true"></i></h2>
@@ -62,29 +67,30 @@
                 <div class="col-md-6">
                     <h2><i class="fa fa-check-circle" aria-hidden="true"></i></h2>
                     <h3>Перевірений товар</h3>
-                    <p>Ми тестуємо товар перед його відправкою Вам. А якщо Вам, все-таки, доставили товар з дефектом, ми проведемо аудит та заміномо його.</p>
+                    <p>Ми тестуємо товар перед його відправкою Вам. 
+                    А якщо Вам, все-таки, доставили товар з дефектом, ми проведемо аудит та заміномо його в найкоротші строки.</p>
                 </div>
             </div>
-            <div class="row">    
+            <div class="row features-row">    
                 <div class="col-md-6">
                     <h2><i class="fa fa-handshake-o" aria-hidden="true"></i></h2>
-                    <h3>Без посередників</h3>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <h3>Поставки без посередників</h3>
+                    <p>Співпраця з іноземними постачальниками на пряму в короткі обумовлені сроки за таблицею передзамовлень.</p>
                 </div>
                 <div class="col-md-6">
                     <h2><i class="fa fa-users" aria-hidden="true"></i></h2>
                     <h3>Довіра клієнтів</h3>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <p>Наша компанія налічує уже більше 1500 задоволених клієнтів, які стали нашими постійними покупцями, частина з яких є нашими співпартнерами.</p>
                 </div>
                 <div class="col-md-6">
                     <h2><i class="fa fa-sign-language" aria-hidden="true"></i></h2>
                     <h3>Своє виробництво та майстри</h3>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <p>Замовляючи комплекти для майнингу у нас ви гарантовано отримуєте якісний збір обладнання нашими кваліфкованими майстрами з подальшим гарантійним і технічним обслуговуванням.</p>
                 </div>
                 <div class="col-md-6">
                     <h2><i class="fa fa-cogs" aria-hidden="true"></i></h2>
                     <h3>Обслуговування</h3>
-                    <p>Ми надаємо послуги з обслуговування та ремонту електроінки.</p>
+                    <p>Ми проводимо діагностику, налаштування та ремонт вашого майнингового обладнання.</p>
                 </div>
             </div>
         </div>
