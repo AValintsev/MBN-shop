@@ -7,18 +7,15 @@
 <div class="page home-page">
     <div class="page-body">
         <div class="row">
-            <div class="col-sm-18 pull-right">
+            <div class="col-md-18 pull-right nivo-slider">
                 @Html.Widget("home_page_top")
                 <div class="row" id="homepage-banners">
-                    <div class="col-sm-12">
+                    <div class="col-md-24">
                         @Html.Action("TopicBlock", "Topic", new { systemName = "NopElectro-Home-Banner-1" })
-                    </div>
-                    <div class="col-sm-12">
-                        @Html.Action("TopicBlock", "Topic", new { systemName = "NopElectro-Home-Banner-2" })
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 pull-left youtube-sliders">
+            <div class="col-md-6 pull-left youtube-slider">
                 @Html.Partial("_YouTubeSlider")
             </div>
         </div>
@@ -96,7 +93,6 @@
         </div>
 
 
-        
         @Html.Widget("home_page_before_products")
         @Html.Action("HomepageProducts", "Product")
         @Html.Widget("home_page_before_best_sellers")

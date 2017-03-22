@@ -8,71 +8,96 @@
     //page class
     Html.AppendPageCssClassParts("html-contact-page");
 }
-<div class="page contact-page">
-    <div class="page-title">
+<div class="page contact-page container-fluid">
+    <div class="row page-title">
         <h1>@T("PageTitle.ContactUs")</h1>
     </div>
-    <div class="page-body">
-        @Html.Action("TopicBlock", "Topic", new { systemName = "ContactUs" })
-        @Html.Widget("contactus_top")
-        @if (Model.SuccessfullySent)
-        {
-            <div class="result">
-                @Model.Result
-            </div>
-        }
-        else
-        {
-            using (Html.BeginForm())
+
+
+    <div class="row page-body">
+        <div class="col-md-10">
+            @*@Html.Action("TopicBlock", "Topic", new { systemName = "ContactUs" })*@
+            @Html.Widget("contactus_top")
+            @if (Model.SuccessfullySent)
             {
-                @Html.AntiForgeryToken()
-                var validationSummary = Html.ValidationSummary(true);
-                if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
-                {
-                    <div class="message-error">@validationSummary</div> 
-                }
-                <div class="fieldset">
-                    <div class="form-fields">
-                        <div class="inputs">
-                            @Html.LabelFor(model => model.FullName)
-                            @Html.TextBoxFor(model => model.FullName, new { @class = "fullname", placeholder = T("ContactUs.FullName.Hint") })
-                            @Html.RequiredHint()
-                            @Html.ValidationMessageFor(model => model.FullName)
-                        </div>
-                        <div class="inputs">
-                            @Html.LabelFor(model => model.Email)
-                            @Html.TextBoxFor(model => model.Email, new { @class = "email", placeholder = T("ContactUs.Email.Hint") })
-                            @Html.RequiredHint()
-                            @Html.ValidationMessageFor(model => model.Email)
-                        </div>
-                        @if (Model.SubjectEnabled)
-                        {
-                            <div class="inputs">
-                                @Html.LabelFor(model => model.Subject)
-                                @Html.TextBoxFor(model => model.Subject, new { @class = "subject", placeholder = T("ContactUs.Subject.Hint") })
-                                @Html.RequiredHint()
-                                @Html.ValidationMessageFor(model => model.Subject)
-                            </div>
-                        }
-                        <div class="inputs">
-                            @Html.LabelFor(model => model.Enquiry)
-                            @Html.TextAreaFor(model => model.Enquiry, new { @class = "enquiry", placeholder = T("ContactUs.Enquiry.Hint") })
-                            @Html.RequiredHint()
-                            @Html.ValidationMessageFor(model => model.Enquiry)
-                        </div>
-                        @if (Model.DisplayCaptcha)
-                        {
-                            <div class="captcha-box">
-                                @Html.Raw(Html.GenerateCaptcha())
-                            </div>
-                        }
-                    </div>
-                </div>
-                <div class="buttons">
-                    <input type="submit" name="send-email" class="button-1 contact-us-button" value="@T("ContactUs.Button")" />
+                <div class="result">
+                    @Model.Result
                 </div>
             }
-        }
-        @Html.Widget("contactus_bottom")
+            else
+            {
+                using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    var validationSummary = Html.ValidationSummary(true);
+                    if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+                    {
+                        <div class="message-error">@validationSummary</div>
+                    }
+                    <div class="fieldset">
+                        <div class="form-fields">
+                            <div class="inputs">
+                                <p>@Html.LabelFor(model => model.FullName)</p>
+                                <p>
+                                    @Html.TextBoxFor(model => model.FullName, new { @class = "fullname", placeholder = T("ContactUs.FullName.Hint") })
+                                    @Html.RequiredHint()
+                                    @Html.ValidationMessageFor(model => model.FullName)
+                                </p>
+                            </div>
+                            <div class="inputs">
+                                <p>
+                                    @Html.LabelFor(model => model.Email)
+                                </p>
+                                <p>
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "email", placeholder = T("ContactUs.Email.Hint") })
+                                    @Html.RequiredHint()
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </p>
+                            </div>
+                            @if (Model.SubjectEnabled)
+                            {
+                                <div class="inputs">
+                                    <p>
+                                        @Html.LabelFor(model => model.Subject)
+                                    </p>
+                                    <p>
+                                        @Html.TextBoxFor(model => model.Subject, new { @class = "subject", placeholder = T("ContactUs.Subject.Hint") })
+                                        @Html.RequiredHint()
+                                        @Html.ValidationMessageFor(model => model.Subject)
+                                    </p>
+                                </div>
+                            }
+                            <div class="inputs">
+                                <p>
+                                    @Html.LabelFor(model => model.Enquiry)
+                                </p>
+                                <p>
+                                    @Html.TextAreaFor(model => model.Enquiry, new { @class = "enquiry", placeholder = T("ContactUs.Enquiry.Hint") })
+                                    @Html.RequiredHint()
+                                    @Html.ValidationMessageFor(model => model.Enquiry)
+                                </p>
+                            </div>
+                            @if (Model.DisplayCaptcha)
+                            {
+                                <div class="captcha-box">
+                                    @Html.Raw(Html.GenerateCaptcha())
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <input type="submit" name="send-email" class="button-1 contact-us-button" value="@T("ContactUs.Button")" />
+                    </div>
+                }
+            }
+            @Html.Widget("contactus_bottom")
+        </div>
+
+        <div class="col-md-12 col-md-offset-2 company-contacts-details">
+            <p><a href="#"><i class="fa fa-phone" aria-hidden="true"></i> +380636007613</a></p>
+            <p><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> chelseaboots.in.ua@gmail.com</a></p>
+            <p><i class="fa fa-map-marker" aria-hidden="true"></i> ул. М.Стельмаха 10А, г. Киев, Украина, 03040</p>
+        </div>
+
     </div>
 </div>

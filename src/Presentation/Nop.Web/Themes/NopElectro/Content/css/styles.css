@@ -209,7 +209,7 @@ label, label + * {
 }
 
     .page-title h1 {
-        font-size: 30px;
+        font-size: 46px;
         font-weight: normal;
         padding: 15px 0;
     }
@@ -328,7 +328,7 @@ label, label + * {
 input[type="text"],
 input[type="password"],
 select, textarea {
-    width: 400px;
+    width: 100%;
     max-width: 100%;
     background-color: #f6f6f6;
 }
@@ -1154,6 +1154,7 @@ td.product-picture img {
     }
 
     .footer-block.my-account .list {
+        padding: 0 10px;
         border-left: 5px solid #f5dd0b;
     }
 
@@ -5924,8 +5925,10 @@ pre {
         margin: auto !important;
     }
 
-    .youtube-sliders {
+    .youtube-slider {
         width: 100% !important;
+        padding-right: 0;
+
     }
 }
 
@@ -6871,9 +6874,10 @@ pre {
 
         .inputs label {
             display: inline-block;
-            width: 250px;
-            margin: 0 10px 0;
+            width: 100%;
+            margin: 0 0 10px;
             text-align: left;
+            font-size: 20px;
         }
 
         .inputs input[type="text"],
@@ -7920,12 +7924,12 @@ pre {
 }
 
 .theme-custom {
-    margin: 0 0 24px !important;
+    margin: 0 0 0 !important;
     max-width: 100% !important;
 }
 
 #homepage-banners, #homepage-side-info {
-    margin-bottom: 24px;
+    margin-bottom: 0;
 }
 
     #homepage-banners p, #homepage-side-info p {
@@ -7992,7 +7996,6 @@ pre {
 
 @media (max-width: 768px) {
     #homepage-side-info > * {
-        max-width: 450px;
         margin: 0 auto;
     }
 
@@ -8036,16 +8039,28 @@ pre {
 
         #homepage-side-info .youtube-links .video-preview {
             width: 100%;
-            min-height: 185px;
-            background: #e4434b;
-            margin-bottom: 18px;
+            margin-bottom: 12px;
             color: #fff;
             font-size: 36px;
             font-weight: bold;
-            padding-top: 60px;
             text-align: center;
-            background-image: url("../images/video-bg.jpg");
         }
+
+        #homepage-side-info .youtube-links .video-preview a {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: 8px solid #9acd32;
+        }
+            #homepage-side-info .youtube-links .video-preview a:hover {
+                width: 100%;
+                border-color: #f4df29;
+            }
+
+            #homepage-side-info .youtube-links .video-preview a img {
+                width: 100%;
+            }
+
 
 .page-body .row .col-sm-18.pull-right {
     padding: 0;
@@ -8243,6 +8258,20 @@ pre {
         }
 
 
+.contact-page .company-contacts-details p {
+    font-size: 26px;
+    margin-top: 20px;
+    color: #444;
+}
+
+
+.nivo-slider {
+    padding-left: 0;
+}
+
+
+
+
 
 
 
@@ -8384,6 +8413,19 @@ pre {
     .newsletter .title div {
         padding: 10px;
     }
+
+    #topcartlink span {
+        font-size: 18px;
+    }
+
+    .nivo-slider {
+        padding: 0 5px;
+        margin-bottom: 10px;
+    }
+
+    .youtube-slider {
+        padding: 0 5px;
+    }
 }
 /* xs */
 @media (min-width: 376px) and (max-width: 767px) {
@@ -8519,6 +8561,29 @@ pre {
 
         .newsletter .title div {
             padding: 10px;
+        }
+
+    .nivo-slider {
+        padding-left: 12px;
+        margin-bottom: 10px;
+    }
+
+
+    .youtube-slider {
+        padding: 0;
+    }
+
+    #homepage-side-info .youtube-links .video-preview {
+        width: 50%;
+        float: left;
+    }
+
+        #homepage-side-info .youtube-links .video-preview div {
+            padding: 12px;
+        }
+
+        #homepage-side-info .youtube-links .video-preview a {
+            border-width: 5px;
         }
 }
 /* sm */
@@ -8675,6 +8740,24 @@ pre {
         background: #9acd32 url('../images/toggle-white.png') right center no-repeat;
         color: #fff;
     }
+
+    .nivo-slider {
+        padding-left: 12px;
+        margin-bottom: 10px;
+    }
+
+
+    .youtube-slider {
+        padding: 0;
+    }
+    #homepage-side-info .youtube-links .video-preview {
+        width: 50%;
+        float: left;
+    }
+    #homepage-side-info .youtube-links .video-preview div  {
+        padding: 12px;
+    }
+
 }
 /* md */
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -8698,6 +8781,9 @@ pre {
     .newsletter {
         margin: 0 -21px;
     }
+
+
+
 }
 /* lg */
 @media (min-width: 1200px) {
