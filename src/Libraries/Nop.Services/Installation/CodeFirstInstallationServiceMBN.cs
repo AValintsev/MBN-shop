@@ -332,9 +332,6 @@ namespace Nop.Services.Installation
 
 		protected virtual void InstallLocaleResources()
 		{
-			//'English' language
-			//var language = _languageRepository.Table.Single(l => l.Name == "English");
-
 			//Russian language
 			var languageRu = _languageRepository.Table.Single(l => l.Name == "Russian");
 
@@ -1844,8 +1841,7 @@ namespace Nop.Services.Installation
 				RichEditorAdditionalSettings = null,
 				RichEditorAllowJavaScript = false
 			});
-
-
+			
 			settingService.SaveSetting(new ProductEditorSettings
 			{
 				Weight = true,
@@ -2188,9 +2184,8 @@ namespace Nop.Services.Installation
 				ActivePaymentMethodSystemNames = new List<string>
 					{
 						"Payments.CheckMoneyOrder",
-						"Payments.Manual",
 						"Payments.PayInStore",
-						"Payments.PurchaseOrder",
+						"Payments.CashOnDelivery"
 					},
 				AllowRePostingPayments = true,
 				BypassPaymentMethodSelectionIfOnlyOne = true,
@@ -3222,19 +3217,64 @@ namespace Nop.Services.Installation
 			//	throw new Exception("No default store could be loaded");
 
 
-			////pictures
-			//var pictureService = EngineContext.Current.Resolve<IPictureService>();
-			//var sampleImagesPath = CommonHelper.MapPath("~/content/samples/");
+			//pictures
+			var pictureService = EngineContext.Current.Resolve<IPictureService>();
+			var sampleImagesPath = CommonHelper.MapPath("~/content/samples/");
 
 			////downloads
 			//var downloadService = EngineContext.Current.Resolve<IDownloadService>();
 			//var sampleDownloadsPath = CommonHelper.MapPath("~/content/samples/");
 
-			////products
-			//var allProducts = new List<Product>();
+			//products
+			var allProducts = new List<Product>();
+			
+			var productLenovoIdeaCentre = new Product
+			{
+				ProductType = ProductType.SimpleProduct,
+				VisibleIndividually = true,
+				Name = "Lenovo IdeaCentre 600 All-in-One PC",
+				Sku = "LE_IC_600",
+				ShortDescription = "",
+				FullDescription = "<p>The A600 features a 21.5in screen, DVD or optional Blu-Ray drive, support for the full beans 1920 x 1080 HD, Dolby Home Cinema certification and an optional hybrid analogue/digital TV tuner.</p><p>Connectivity is handled by 802.11a/b/g - 802.11n is optional - and an ethernet port. You also get four USB ports, a Firewire slot, a six-in-one card reader and a 1.3- or two-megapixel webcam.</p>",
+				ProductTemplateId = productTemplateSimple.Id,
+				//SeName = "hp-iq506-touchsmart-desktop-pc",
+				AllowCustomerReviews = true,
+				Price = 500M,
+				IsShipEnabled = true,
+				Weight = 7,
+				Length = 7,
+				Width = 7,
+				Height = 7,
+				ManageInventoryMethod = ManageInventoryMethod.ManageStock,
+				StockQuantity = 10000,
+				NotifyAdminForQuantityBelow = 1,
+				AllowBackInStockSubscriptions = false,
+				DisplayStockAvailability = true,
+				LowStockActivity = LowStockActivity.DisableBuyButton,
+				BackorderMode = BackorderMode.NoBackorders,
+				OrderMinimumQuantity = 1,
+				OrderMaximumQuantity = 10000,
+				Published = true,
+				CreatedOnUtc = DateTime.UtcNow,
+				UpdatedOnUtc = DateTime.UtcNow,
+				ProductCategories =
+				{
+					new ProductCategory
+					{
+						Category = _categoryRepository.Table.First(c => c.Name == "Видеокарты"),
+						DisplayOrder = 1,
+					}
+				}
+			};
+			allProducts.Add(productLenovoIdeaCentre);
+			productLenovoIdeaCentre.ProductPictures.Add(new ProductPicture
+			{
+				Picture = pictureService.InsertPicture(File.ReadAllBytes(sampleImagesPath + "product_LenovoIdeaCentre.jpeg"), MimeTypes.ImageJpeg, pictureService.GetPictureSeName(productLenovoIdeaCentre.Name)),
+				DisplayOrder = 1,
+			});
+			_productRepository.Insert(productLenovoIdeaCentre);
 
 			//#region Desktops
-
 
 			//var productBuildComputer = new Product
 			//{
@@ -3422,10 +3462,6 @@ namespace Nop.Services.Installation
 			//});
 			//_productRepository.Insert(productBuildComputer);
 
-
-
-
-
 			//var productDigitalStorm = new Product
 			//{
 			//	ProductType = ProductType.SimpleProduct,
@@ -3477,52 +3513,6 @@ namespace Nop.Services.Installation
 
 
 
-			//var productLenovoIdeaCentre = new Product
-			//{
-			//	ProductType = ProductType.SimpleProduct,
-			//	VisibleIndividually = true,
-			//	Name = "Lenovo IdeaCentre 600 All-in-One PC",
-			//	Sku = "LE_IC_600",
-			//	ShortDescription = "",
-			//	FullDescription = "<p>The A600 features a 21.5in screen, DVD or optional Blu-Ray drive, support for the full beans 1920 x 1080 HD, Dolby Home Cinema certification and an optional hybrid analogue/digital TV tuner.</p><p>Connectivity is handled by 802.11a/b/g - 802.11n is optional - and an ethernet port. You also get four USB ports, a Firewire slot, a six-in-one card reader and a 1.3- or two-megapixel webcam.</p>",
-			//	ProductTemplateId = productTemplateSimple.Id,
-			//	//SeName = "hp-iq506-touchsmart-desktop-pc",
-			//	AllowCustomerReviews = true,
-			//	Price = 500M,
-			//	IsShipEnabled = true,
-			//	Weight = 7,
-			//	Length = 7,
-			//	Width = 7,
-			//	Height = 7,
-			//	TaxCategoryId = _taxCategoryRepository.Table.Single(tc => tc.Name == "Electronics & Software").Id,
-			//	ManageInventoryMethod = ManageInventoryMethod.ManageStock,
-			//	StockQuantity = 10000,
-			//	NotifyAdminForQuantityBelow = 1,
-			//	AllowBackInStockSubscriptions = false,
-			//	DisplayStockAvailability = true,
-			//	LowStockActivity = LowStockActivity.DisableBuyButton,
-			//	BackorderMode = BackorderMode.NoBackorders,
-			//	OrderMinimumQuantity = 1,
-			//	OrderMaximumQuantity = 10000,
-			//	Published = true,
-			//	CreatedOnUtc = DateTime.UtcNow,
-			//	UpdatedOnUtc = DateTime.UtcNow,
-			//	ProductCategories =
-			//	{
-			//		new ProductCategory
-			//		{
-			//			Category = _categoryRepository.Table.Single(c => c.Name == "Desktops"),
-			//			DisplayOrder = 1,
-			//		}
-			//	}
-			//};
-			//allProducts.Add(productLenovoIdeaCentre);
-			//productLenovoIdeaCentre.ProductPictures.Add(new ProductPicture
-			//{
-			//	Picture = pictureService.InsertPicture(File.ReadAllBytes(sampleImagesPath + "product_LenovoIdeaCentre.jpeg"), MimeTypes.ImageJpeg, pictureService.GetPictureSeName(productLenovoIdeaCentre.Name)),
-			//	DisplayOrder = 1,
-			//});
-			//_productRepository.Insert(productLenovoIdeaCentre);
 
 
 

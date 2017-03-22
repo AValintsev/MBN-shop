@@ -7011,7 +7011,7 @@
 	</LocaleResource>
 	<LocaleResource Name="Admin.Configuration.Shipping.DatesAndRanges">
 		<Value>Даты и интервалы</Value>
-	</LocaleResource>	
+	</LocaleResource>
 	<LocaleResource Name="Admin.Configuration.Shipping.DeliveryDates">
 		<Value>Даты доставки</Value>
 	</LocaleResource>
@@ -7047,7 +7047,7 @@
 	</LocaleResource>
 	<LocaleResource Name="Admin.Configuration.Shipping.DeliveryDates.Hint">
 		<Value>Список дат доставок, которые будут доступны для выбора в деталях продукта.</Value>
-	</LocaleResource>	
+	</LocaleResource>
 	<LocaleResource Name="Admin.Configuration.Shipping.DeliveryDates.Updated">
 		<Value>Дата доставки была успешно обновлена.</Value>
 	</LocaleResource>
@@ -15556,10 +15556,10 @@
 	<LocaleResource Name="ShoppingCart.WishlistDisabled">
 		<Value>Список пожеланий недоступен для этого товара</Value>
 	</LocaleResource>
-  <LocaleResource Name="ShoppingCart.BackToCart">
-    <Value>Назад в корзину</Value>
-  </LocaleResource>
-  <LocaleResource Name="Sitemap">
+	<LocaleResource Name="ShoppingCart.BackToCart">
+		<Value>Назад в корзину</Value>
+	</LocaleResource>
+	<LocaleResource Name="Sitemap">
 		<Value>Карта сайта</Value>
 	</LocaleResource>
 	<LocaleResource Name="Sitemap.Categories">
@@ -15772,5 +15772,68 @@
 	</LocaleResource>
 	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.Updated">
 		<Value>Диапазон доступности товаров обновлен.</Value>
+	</LocaleResource>
+
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.DescriptionText">
+		<Value>Описание</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.DescriptionText.Hint">
+		<Value>Текст, который пользователь увидит на екране оформления заказа</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.AdditionalFe">
+		<Value>Дополнтиельная комиссия</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.AdditionalFee.Hint">
+		<Value>Дополнительная комиссия.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.AdditionalFeePercentage">
+		<Value>Дополнительная комиссия. Использовать проценты</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.AdditionalFeePercentage.Hint">
+		<Value>Определяет или дополнительная комиссия вычисляется от процента общей суммы заказа. Если не включено, использовается статичное значение.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.ShippableProductRequired">
+		<Value>Необходим товар для доставки</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.ShippableProductRequired.Hint">
+		<Value>Значение которое определяет или доставляемые продукты необходимы для отображения этого метода оплаты в процессе оформления заказа</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.PaymentMethodDescription">
+		<Value>Оплата производится наличными в нашем офисе</Value>
+	</LocaleResource>		
+	<LocaleResource Name="Plugins.FriendlyName.Payments.CashOnDelivery">
+		<Value>Оплата наличными</Value>
+	</LocaleResource>
+
+
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.AdditionalFee">
+		<Value>Комиссия</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.AdditionalFee.Hin">
+		<Value>Комиссия</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.AdditionalFeePercentage">
+		<Value>Комиссия. Использовать проценты</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.AdditionalFeePercentage.Hint">
+		<Value>Определяет, или нужно использовать процентную дополнительную плату в общей сумме заказа. Если не включено, используется фиксированное значение.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.DescriptionText">
+		<Value>Описание</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.DescriptionText.Hint">
+		<Value>Введите информацию, котора будет отображаться клиентам во время оформления заказа</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.ShippableProductRequired">
+		<Value>Товар необходимый для доставки</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.ShippableProductRequired.Hint">
+		<Value>Определяет или доставляемые товары, необходимы для отображения этого метода в процессе оформления заказа</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.PaymentMethodDescription">
+		<Value>Оплата производится с помощью перевода средств на банковскую карту</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.FriendlyName.Payments.CheckMoneyOrder">
+		<Value>Перевод средств на банковскую карту</Value>
 	</LocaleResource>
 </Language>
