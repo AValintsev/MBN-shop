@@ -50,7 +50,8 @@
     {
         <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
     }
-    @if (rootCategories.Count == 0 && Model.Topics.Count == 0)
+    @if (rootCategories.Count == 0 
+        && Model.Topics.Count == 0)
     {
         //no categories or topis to display? in this case let's diplay some default menu items (should we?)
         <li><a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
@@ -71,8 +72,33 @@
         }
         <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
     }
+
+
+    <li><a href="№">Акції</a></li>
+    <li><a href="№">ІНФО</a>
+        <div class="sublist-toggle"></div>
+        <ul class="sublist first-level">
+            <li><a href="#">Про нас</a></li>
+            <li><a href="#">Новини</a></li>
+            <li><a href="#">Години роботи</a></li>
+            <li><a href="#">Як дістатися до нас</a></li>
+            <li><a href="#">Оплата і доставка</a></li>
+            <li><a href="#">Гарантія і повернення</a></li>
+            <li><a href="#">Сервіс</a></li>
+            <li><a href="#">Вакансії</a></li>
+            <li><a href="#">Блог</a></li>
+        </ul>
+    </li>
+
+
     @Html.Widget("header_menu_after")
 </ul>
+
+
+
+
+
+
 
 @{
     var rootCategoriesResponsive = Model.Categories.ToList();
