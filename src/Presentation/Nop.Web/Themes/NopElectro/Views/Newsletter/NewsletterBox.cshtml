@@ -3,13 +3,15 @@
 <div class="newsletter">
     <div>
         <div class="row">
-            <div class="col-sm-10">
+            <div class="col-sm-12">
                 <div class="title text-right">
-                    @T("Newsletter.Title")
+                    <div>
+                        @T("Newsletter.Title")
+                    </div>
                 </div>
                 <div class="newsletter-result text-right" id="newsletter-result-block"></div>
             </div>
-            <div class="col-sm-14">
+            <div class="col-sm-12">
                 <div class="newsletter-subscribe" id="newsletter-subscribe-block">
                     <div class="newsletter-email">
                         @Html.TextBoxFor(x => x.NewsletterEmail, new { id = "newsletter-email", @class = "newsletter-subscribe-text", placeholder = T("Newsletter.Email.Placeholder") })
@@ -56,6 +58,7 @@
                             $('#newsletter-result-block').show();
                         } else {
                             $('#newsletter-result-block').fadeIn("slow").delay(2000).fadeOut("slow");
+                            $('#newsletter-result-block').css({ "padding-top": "0px", "padding-right": "15px", "padding-bottom": "10px" });
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {

@@ -59,7 +59,7 @@
 
     .footer-block .title {
         margin: 0 0 1px;
-        background: #59b210 url('../images/toggle-white.png') right center no-repeat;
+        background: #9acd32 url('../images/toggle-white.png') right center no-repeat;
         color: #fff;
     }
 }
@@ -122,7 +122,9 @@
     }
 
 .news-list-homepage .view-all a:hover, .newsletter-result {
-    color: #59b210;
+    color: #444;
+    background:rgba(255, 255, 255, 0.7);
+    text-align: center;
 }
 
 #bar-notification.success, #dialog-notifications-success {

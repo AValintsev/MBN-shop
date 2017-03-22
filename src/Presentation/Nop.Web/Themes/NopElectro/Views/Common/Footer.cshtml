@@ -10,59 +10,59 @@
         <div class="footer-upper">
             <div class="footer-block information">
                 <div class="title">
-                    <strong>@T("Footer.Information")</strong>
+                    <strong>MBN</strong>
                 </div>
                 <ul class="list">
-                    @if (Model.SitemapEnabled)
-                    {
-                        <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
-                    }
-                    @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
-                    {
-                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
-                    }
-                    <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
-                </ul>
-            </div>
-            <div class="footer-block customer-service">
-                <div class="title">
-                    <strong>@T("Footer.CustomerService")</strong>
-                </div>
-                <ul class="list">
-                    <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> </li>
-                    @if (Model.NewsEnabled)
-                    {
-                        <li><a href="@Url.RouteUrl("NewsArchive")">@T("News")</a></li>
-                    }
+                    <li><a href="#">Про нас</a></li>
                     @if (Model.BlogEnabled)
                     {
                         <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
                     }
-                    @if (Model.ForumEnabled)
+                    <li><a href="#">Вакансії</a></li>
+                    @*@foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
                     {
-                        <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
-                    }
-                    @if (Model.RecentlyViewedProductsEnabled)
-                    {
-                        <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">@T("Products.RecentlyViewedProducts")</a></li>
-                    }
-                    @if (Model.CompareProductsEnabled)
-                    {
-                        <li><a href="@Url.RouteUrl("CompareProducts")">@T("Products.Compare.List")</a></li>
-                    }
+                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                    }*@
+                </ul>
+            </div>
+            <div class="footer-block customer-service">
+                <div class="title">
+                    <strong>@*@T("Footer.CustomerService")*@</strong>
+                    <strong>Магазин</strong>
+                </div>
+                <ul class="list">
+                    <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> </li>
+                    <li><a href="#">Акції</a></li>
                     @if (Model.NewProductsEnabled)
                     {
                         <li><a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a></li>
                     }
+                    <li><a href="#">Оплата і доставка</a></li>
+                    <li><a href="#">Години роботи</a></li>
+                    <li><a href="#">Гарантія</a></li>
+                    <li><a href="#">Правила сервісу</a></li>
+
+                    @if (Model.ForumEnabled)
+                    {
+                        <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
+                    }
+                    
                     @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn2).ToList())
                     {
                         <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
                     }
+                    @if (Model.SitemapEnabled)
+                    {
+                        <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
+                    }
+                    <li><a href="">Повернення</a></li>
+
                 </ul>
             </div>
             <div class="footer-block my-account">
                 <div class="title">
-                    <strong>@T("Footer.MyAccount")</strong>
+                    <strong>Профіль</strong>
+                    <strong>@*@T("Footer.MyAccount")*@</strong>
                 </div>
                 <ul class="list">
                     <li><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a></li>
@@ -84,6 +84,14 @@
                     {
                         <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
                     }
+                    @if (Model.RecentlyViewedProductsEnabled)
+                    {
+                        <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">@T("Products.RecentlyViewedProducts")</a></li>
+                    }
+                    @if (Model.CompareProductsEnabled)
+                    {
+                        <li><a href="@Url.RouteUrl("CompareProducts")">@T("Products.Compare.List")</a></li>
+                    }
                 </ul>
             </div>
             @*<div class="footer-block">
@@ -91,14 +99,19 @@
             </div>*@
             <div class="footer-block">
                 <div class="title contacts">
-                    <strong>Contacts</strong>
+                    <strong>Контакти</strong>
                 </div>
                 <ul class="list">
-                    <li><a href="#">Contact 1</a></li>
-                    <li><a href="#">Contact 1</a></li>
-                    <li><a href="#">Contact 1</a></li>
-                    <li><a href="#">Contact 1</a></li>
-                    <li><a href="#">Contact 1</a></li>
+                    <li><a href="#">Адреса</a></li>
+                    <li><a href="#">Телефон 1</a></li>
+                    <li><a href="#">Телефон 2</a></li>
+                    <li><a href="#">Телефон 3</a></li>
+                    <li><a href="#">Як нам знайти</a></li>
+                    <li><a href="@Url.RouteUrl("ContactUs")">
+                        Написати нам
+                        @*@T("ContactUs")*@
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
