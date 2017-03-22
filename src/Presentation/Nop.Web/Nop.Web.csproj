@@ -1158,6 +1158,8 @@
     <Content Include="Themes\NopElectro\Content\images\categories\mining.ai" />
     <Content Include="Themes\NopElectro\Content\images\categories\new logo.ai" />
     <Content Include="Themes\NopElectro\Views\Home\_YouTubeSlider.cshtml" />
+    <Content Include="Themes\NopElectro\Views\Common\LanguageSelector.cshtml" />
+    <Content Include="Themes\NopElectro\Views\Common\CurrencySelector.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

@@ -2,10 +2,12 @@
 
 namespace Nop.Web.Models.Common
 {
-    public partial class CurrencyModel : BaseNopEntityModel
-    {
-        public string Name { get; set; }
+	public partial class CurrencyModel : BaseNopEntityModel
+	{
+		public string Name { get; set; }
 
-        public string CurrencySymbol { get; set; }
-    }
+		public string CurrencyCode { get; set; }
+
+		public string CurrencySymbol { get; set; }
+	}
 }
