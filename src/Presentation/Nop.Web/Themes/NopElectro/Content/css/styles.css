@@ -203,7 +203,7 @@ label, label + * {
 
 .page-title {
     min-height: 50px;
-    margin: 0 0 25px;
+    margin: 0;
     border-bottom: 1px solid #ddd;
     padding: 6px 10px;
 }
@@ -1750,6 +1750,7 @@ td.product-picture img {
 
 .item-box .details {
     padding: 0 25px;
+    text-align: center;
 }
 
 .item-box .product-title {
@@ -1827,7 +1828,8 @@ td.product-picture img {
 }
 
 .item-box .product-box-add-to-cart-button {
-    width: 24%;
+    width: 60%;
+    background: #9acd32;
     text-align: center;
     font-size: 15px;
     color: #fff;
@@ -1836,7 +1838,7 @@ td.product-picture img {
 
 .item-box .add-to-compare-list-button,
 .item-box .add-to-wishlist-button {
-    width: 24%;
+    width: 20%;
     border-left: 1px solid #fff !important;
     background-color: #eaeaea;
     background-position: center;
@@ -1966,7 +1968,7 @@ td.product-picture img {
 
         .pager li span {
             border-color: transparent;
-            background-color: #999;
+            background-color: #f5dd0b;
             color: #fff;
         }
 
@@ -6988,7 +6990,7 @@ pre {
 
     .flyout-cart {
         position: absolute;
-        top: 160px;
+        top: 153px;
         right: 0;
         z-index: 900;
         height: auto !important;
@@ -7098,7 +7100,6 @@ pre {
         color: #fff;
         text-transform: uppercase;
         width: 100%;
-        border-radius: 25px;
     }
 
     .header-lower {
@@ -7411,13 +7412,13 @@ pre {
 
     .product-grid .item-box {
         width: 25%;
-        padding: 2%;
+        padding: 1%;
         margin: 0;
     }
 
     .item-box .product-title {
         overflow-y: hidden;
-        height: 57px;
+        height: 40px;
     }
 
     .item-box .details {
@@ -7986,12 +7987,14 @@ pre {
     }
 
 .category-page .page-title, .manufacturer-page .page-title {
-    background: url("../images/category-title-bg.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 15px;
+    padding: 0;
     border-bottom: 0;
     text-align: center;
+    background: #9c3;
+    color: #fff;
+}
+ .page-title h1 {
+    color: #fff !important;
 }
 
 @media (max-width: 768px) {

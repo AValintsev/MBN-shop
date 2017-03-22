@@ -37,11 +37,11 @@
     }
 
     .mini-shopping-cart input[type="button"] {
-        background: #59b210;
+        background: #1e90ff;
     }
 
         .mini-shopping-cart input[type="button"]:hover {
-            background: #469009;
+            background: #9acd32;
         }
 
     .header-menu > ul > li > a:hover {
@@ -86,7 +86,7 @@
 .item-box .product-box-add-to-cart-button, .search-input .button-1,
 .overview .add-to-cart-button, .variant-overview .add-to-cart-button,
 .ui-dialog-content .back-in-stock-subscription-page .button-1 {
-    background-color: #59b210;
+    background-color: #9acd32;
 }
 
     .search-input .button-1:hover, .overview .add-to-cart-button:hover, .variant-overview .add-to-cart-button:hover,
@@ -95,7 +95,7 @@
     }
 
     .item-box .product-box-add-to-cart-button:hover {
-        background-color: #555;
+        background-color: #1e90ff;
     }
 
 .product-review-links a:hover {
