@@ -6415,7 +6415,7 @@
 	</LocaleResource>
 	<LocaleResource Name="Admin.Configuration.Shipping.DeliveryDates.Hint">
 		<Value>Список термінів доставок, які будуть доступні для вибору на деталях продукту.</Value>
-	</LocaleResource>	
+	</LocaleResource>
 	<LocaleResource Name="admin.configuration.shipping.deliverydates.updated">
 		<Value>Дата доставки була успішно оновленf.</Value>
 	</LocaleResource>
@@ -6500,7 +6500,7 @@
 	<LocaleResource Name="Admin.Configuration.Shipping.ProductAvailabilityRanges.Updated">
 		<Value>Діапазон доступності товарів оновлено.</Value>
 	</LocaleResource>
-	
+
 	<LocaleResource Name="admin.configuration.shipping.providers">
 		<Value>Способи розрахунку вартості доставки</Value>
 	</LocaleResource>
@@ -11247,6 +11247,9 @@
 	<LocaleResource Name="checkout.shippingoptioncouldnotbeloaded">
 		<Value>Варіанти доставки не знайдені</Value>
 	</LocaleResource>
+	<LocaleResource Name="Checkout.ShipToSameAddress">
+		<Value>Доставити на ту саму адресу</Value>
+	</LocaleResource>
 	<LocaleResource Name="checkout.shiptothisaddress">
 		<Value>Доставити за цією адресою</Value>
 	</LocaleResource>
@@ -11287,7 +11290,7 @@
 		<Value>Ви впевнені?</Value>
 	</LocaleResource>
 	<LocaleResource Name="common.back">
-		<Value>Тому</Value>
+		<Value>Назад</Value>
 	</LocaleResource>
 	<LocaleResource Name="common.cancel">
 		<Value>Скасування</Value>
@@ -14552,5 +14555,67 @@
 	</LocaleResource>
 	<LocaleResource Name="т">
 		<Value>Видалити зображення користувача</Value>
+	</LocaleResource>
+
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.DescriptionText">
+		<Value>Опис</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.DescriptionText.Hint">
+		<Value>Текст, котрий побачить користувач на екрані оформлення замовлення</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.AdditionalFe">
+		<Value>Додаткова комісія</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.AdditionalFee.Hint">
+		<Value>Додаткова комісія.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.AdditionalFeePercentage">
+		<Value>Додаткова комісія. Використовувати проценти.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.AdditionalFeePercentage.Hint">
+		<Value>Визначає чи буде додаткова комісія обчислена від загальної суми замовлення. Якщо вимкнено, використовується статична значення.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.ShippableProductRequired">
+		<Value>Товар небохідний для доставки</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.ShippableProductRequired.Hint">
+		<Value>Визначає чи товари які доставляються, нобхідні для відображення цього методу в процесі оформлення замовлення</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CashOnDelivery.PaymentMethodDescription">
+		<Value>Оплата здійснюється готівкою в нашому офісі</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.FriendlyName.Payments.CashOnDelivery">
+		<Value>Оплата готівкою</Value>
+	</LocaleResource>
+	
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.AdditionalFee">
+		<Value>Комісія</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.AdditionalFee.Hin">
+		<Value>Комісія</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.AdditionalFeePercentage">
+		<Value>Комісія. Використовувати проценти</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.AdditionalFeePercentage.Hint">
+		<Value>Визначає, чи слід застосовувати процентну додаткову плату в загальній вартості замовлення. Якщо не включений, використовується фіксоване значення.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.DescriptionText">
+		<Value>Опис</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.DescriptionText.Hint">
+		<Value>Введіть інформацію, яка буде відображатися клієнтам під час оформлення замовлення</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.ShippableProductRequired">
+		<Value>Товар небохідний для доставки</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.ShippableProductRequired.Hint">
+		<Value>Визначає чи товари які доставляються, нобхідні для відображення цього методу в процесі оформлення замовлення</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Payment.CheckMoneyOrder.PaymentMethodDescription">
+		<Value>Оплата здійснюється за допомогою переказу коштів на банківську картку</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.FriendlyName.Payments.CheckMoneyOrder">
+		<Value>Переказ коштів на банківську картку</Value>
 	</LocaleResource>
 </Language>

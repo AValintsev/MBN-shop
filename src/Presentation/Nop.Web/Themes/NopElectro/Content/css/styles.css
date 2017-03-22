@@ -6950,7 +6950,7 @@ pre {
 
         .header-selectors-wrapper > div {
             width: auto;
-            min-width: 100px;
+            min-width: 70px;
             margin: 0;
             line-height: 43px;
         }

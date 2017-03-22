@@ -1,46 +1,47 @@
-using System;
-using System.Collections.Generic;
-using System.Web.Routing;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
 using Nop.Core.Plugins;
-using Nop.Plugin.Payments.CheckMoneyOrder.Controllers;
+using Nop.Plugin.Payments.CashOnDelivery.Controllers;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
 using Nop.Services.Orders;
 using Nop.Services.Payments;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web.Routing;
 
-namespace Nop.Plugin.Payments.CheckMoneyOrder
+namespace Nop.Plugin.Payments.CashOnDelivery
 {
 	/// <summary>
-	/// CheckMoneyOrder payment processor
+	/// CashOnDelivery payment processor
 	/// </summary>
-	public class CheckMoneyOrderPaymentProcessor : BasePlugin, IPaymentMethod
+	public class CashOnDeliveryPaymentProcessor : BasePlugin, IPaymentMethod
 	{
 		#region Fields
 
-		private readonly CheckMoneyOrderPaymentSettings _checkMoneyOrderPaymentSettings;
-		private readonly ILocalizationService _localizationService;
-		private readonly IOrderTotalCalculationService _orderTotalCalculationService;
-		private readonly ILanguageService _languageService;
 		private readonly ISettingService _settingService;
+		private readonly ILocalizationService _localizationService;
+		private readonly ILanguageService _languageService;
+		private readonly IOrderTotalCalculationService _orderTotalCalculationService;
+		private readonly CashOnDeliveryPaymentSettings _cashOnDeliveryPaymentSettings;
 
 		#endregion
 
 		#region Ctor
 
-		public CheckMoneyOrderPaymentProcessor(CheckMoneyOrderPaymentSettings checkMoneyOrderPaymentSettings,
-			ILocalizationService localizationService,
+		public CashOnDeliveryPaymentProcessor(
+			ISettingService settingService,
 			ILanguageService languageService,
+			ILocalizationService _localizationService,
 			IOrderTotalCalculationService orderTotalCalculationService,
-			ISettingService settingService)
+			CashOnDeliveryPaymentSettings cashOnDeliveryPaymentSettings)
 		{
-			this._checkMoneyOrderPaymentSettings = checkMoneyOrderPaymentSettings;
-			this._localizationService = localizationService;
-			this._orderTotalCalculationService = orderTotalCalculationService;
 			this._settingService = settingService;
 			this._languageService = languageService;
+			this._localizationService = _localizationService;
+			this._orderTotalCalculationService = orderTotalCalculationService;
+			this._cashOnDeliveryPaymentSettings = cashOnDeliveryPaymentSettings;
 		}
 
 		#endregion
@@ -54,8 +55,11 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		/// <returns>Process payment result</returns>
 		public ProcessPaymentResult ProcessPayment(ProcessPaymentRequest processPaymentRequest)
 		{
-			var result = new ProcessPaymentResult();
-			result.NewPaymentStatus = PaymentStatus.Pending;
+			var result = new ProcessPaymentResult
+			{
+				NewPaymentStatus = PaymentStatus.Pending
+			};
+
 			return result;
 		}
 
@@ -78,11 +82,7 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 			//you can put any logic here
 			//for example, hide this payment method if all products in the cart are downloadable
 			//or hide this payment method if current customer is from certain country
-
-			if (_checkMoneyOrderPaymentSettings.ShippableProductRequired && !cart.RequiresShipping())
-				return true;
-
-			return false;
+			return _cashOnDeliveryPaymentSettings.ShippableProductRequired && !cart.RequiresShipping();
 		}
 
 		/// <summary>
@@ -93,7 +93,8 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		public decimal GetAdditionalHandlingFee(IList<ShoppingCartItem> cart)
 		{
 			var result = this.CalculateAdditionalFee(_orderTotalCalculationService, cart,
-				_checkMoneyOrderPaymentSettings.AdditionalFee, _checkMoneyOrderPaymentSettings.AdditionalFeePercentage);
+				_cashOnDeliveryPaymentSettings.AdditionalFee, _cashOnDeliveryPaymentSettings.AdditionalFeePercentage);
+
 			return result;
 		}
 
@@ -105,7 +106,9 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		public CapturePaymentResult Capture(CapturePaymentRequest capturePaymentRequest)
 		{
 			var result = new CapturePaymentResult();
+
 			result.AddError("Capture method not supported");
+
 			return result;
 		}
 
@@ -117,7 +120,9 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		public RefundPaymentResult Refund(RefundPaymentRequest refundPaymentRequest)
 		{
 			var result = new RefundPaymentResult();
+
 			result.AddError("Refund method not supported");
+
 			return result;
 		}
 
@@ -129,7 +134,9 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		public VoidPaymentResult Void(VoidPaymentRequest voidPaymentRequest)
 		{
 			var result = new VoidPaymentResult();
+
 			result.AddError("Void method not supported");
+
 			return result;
 		}
 
@@ -141,7 +148,9 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		public ProcessPaymentResult ProcessRecurringPayment(ProcessPaymentRequest processPaymentRequest)
 		{
 			var result = new ProcessPaymentResult();
+
 			result.AddError("Recurring payment not supported");
+
 			return result;
 		}
 
@@ -153,7 +162,9 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		public CancelRecurringPaymentResult CancelRecurringPayment(CancelRecurringPaymentRequest cancelPaymentRequest)
 		{
 			var result = new CancelRecurringPaymentResult();
+
 			result.AddError("Recurring payment not supported");
+
 			return result;
 		}
 
@@ -180,8 +191,8 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		public void GetConfigurationRoute(out string actionName, out string controllerName, out RouteValueDictionary routeValues)
 		{
 			actionName = "Configure";
-			controllerName = "PaymentCheckMoneyOrder";
-			routeValues = new RouteValueDictionary { { "Namespaces", "Nop.Plugin.Payments.CheckMoneyOrder.Controllers" }, { "area", null } };
+			controllerName = "PaymentCashOnDelivery";
+			routeValues = new RouteValueDictionary { { "Namespaces", "Nop.Plugin.Payments.CashOnDelivery.Controllers" }, { "area", null } };
 		}
 
 		/// <summary>
@@ -193,43 +204,25 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		public void GetPaymentInfoRoute(out string actionName, out string controllerName, out RouteValueDictionary routeValues)
 		{
 			actionName = "PaymentInfo";
-			controllerName = "PaymentCheckMoneyOrder";
-			routeValues = new RouteValueDictionary { { "Namespaces", "Nop.Plugin.Payments.CheckMoneyOrder.Controllers" }, { "area", null } };
+			controllerName = "PaymentCashOnDelivery";
+			routeValues = new RouteValueDictionary { { "Namespaces", "Nop.Plugin.Payments.CashOnDelivery.Controllers" }, { "area", null } };
 		}
 
-		/// <summary>
-		/// Get the type of controller
-		/// </summary>
-		/// <returns>Type</returns>
 		public Type GetControllerType()
 		{
-			return typeof(PaymentCheckMoneyOrderController);
+			return typeof(PaymentCashOnDeliveryController);
 		}
 
-		/// <summary>
-		/// Install the plugin
-		/// </summary>
 		public override void Install()
 		{
-			//settings
-			var settings = new CheckMoneyOrderPaymentSettings
-			{
-				DescriptionText = "<p>Mail Personal or Business Check, Cashier's Check or money order to:</p><p><br /><b>NOP SOLUTIONS</b> <br /><b>your address here,</b> <br /><b>New York, NY 10001 </b> <br /><b>USA</b></p><p>Notice that if you pay by Personal or Business Check, your order may be held for up to 10 days after we receive your check to allow enough time for the check to clear.  If you want us to ship faster upon receipt of your payment, then we recommend your send a money order or Cashier's check.</p><p>P.S. You can edit this text from admin panel.</p>"
+			var settings = new CashOnDeliveryPaymentSettings
+			{				
+				DescriptionText = @"<p>In cases where an order is placed, an authorized representative will contact you, 
+personally or over telephone, to confirm the order.<br />
+After the order is confirmed, it will be processed.<br />Orders once confirmed, cannot be cancelled.</p><p>
+</p>"
 			};
 			_settingService.SaveSetting(settings);
-
-			//locales are in xml resourse files
-
-			////locales
-			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.AdditionalFee", "Additional fee");
-			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.AdditionalFee.Hint", "The additional fee.");
-			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.AdditionalFeePercentage", "Additional fee. Use percentage");
-			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.AdditionalFeePercentage.Hint", "Determines whether to apply a percentage additional fee to the order total. If not enabled, a fixed value is used.");
-			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.DescriptionText", "Description");
-			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.DescriptionText.Hint", "Enter info that will be shown to customers during checkout");
-			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.PaymentMethodDescription", "Pay by transfer money to a bank card");
-			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.ShippableProductRequired", "Shippable product required");
-			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.ShippableProductRequired.Hint", "An option indicating whether shippable products are required in order to display this payment method during checkout.");
 
 			var allLanguages = _languageService.GetAllLanguages();
 
@@ -239,7 +232,7 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 				settings.SaveLocalizedSetting(x => x.DescriptionText,
 						langRu.Id,
 						 @"<p>После оформления заказа, с Вами свяжется наш менеджер для уточнения всех деталей. <br />
-							Вам будет выслана смс со всеми необходимыми данными для перевода средств на карту Приватбанка.</p>");
+							Оплата производится наличными в нашем офисе.</p>");
 			}
 
 			var langUa = allLanguages.FirstOrDefault(l => l.Name == "Ukrainian");
@@ -248,44 +241,54 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 				settings.SaveLocalizedSetting(x => x.DescriptionText,
 						langUa.Id,
 						 @"<p>Пілся оформелння замовлення, з Вами зв'яжеться наш менеджер для уточнення усіх деталей.<br />
-							Вам буде надіслано смс із усіма необхідними даними для переказу коштів на карту Приватбанку.</p>");
+							Оплата проводиться готівкой у нашому офіусу.</p>");
 			}
+
+			//locales are in xml resourse files
+			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CashOnDelivery.DescriptionText", "Description");
+			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CashOnDelivery.DescriptionText.Hint", "Enter info that will be shown to customers during checkout");
+			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CashOnDelivery.AdditionalFee", "Additional fee");
+			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CashOnDelivery.AdditionalFee.Hint", "The additional fee.");
+			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CashOnDelivery.AdditionalFeePercentage", "Additional fee. Use percentage");
+			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CashOnDelivery.AdditionalFeePercentage.Hint", "Determines whether to apply a percentage additional fee to the order total. If not enabled, a fixed value is used.");
+			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CashOnDelivery.ShippableProductRequired", "Shippable product required");
+			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CashOnDelivery.ShippableProductRequired.Hint", "An option indicating whether shippable products are required in order to display this payment method during checkout.");
+			//this.AddOrUpdatePluginLocaleResource("Plugins.Payment.CashOnDelivery.PaymentMethodDescription", "Pay by cash");
 
 			base.Install();
 		}
 
-		/// <summary>
-		/// Uninstall the plugin
-		/// </summary>
 		public override void Uninstall()
 		{
 			//settings
-			_settingService.DeleteSetting<CheckMoneyOrderPaymentSettings>();
+			_settingService.DeleteSetting<CashOnDeliveryPaymentSettings>();
 
 			//locales
-			this.DeletePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.AdditionalFee");
-			this.DeletePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.AdditionalFee.Hint");
-			this.DeletePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.AdditionalFeePercentage");
-			this.DeletePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.AdditionalFeePercentage.Hint");
-			this.DeletePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.DescriptionText");
-			this.DeletePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.DescriptionText.Hint");
-			this.DeletePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.PaymentMethodDescription");
-			this.DeletePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.ShippableProductRequired");
-			this.DeletePluginLocaleResource("Plugins.Payment.CheckMoneyOrder.ShippableProductRequired.Hint");
+			this.DeletePluginLocaleResource("Plugins.Payment.CashOnDelivery.DescriptionText");
+			this.DeletePluginLocaleResource("Plugins.Payment.CashOnDelivery.DescriptionText.Hint");
+			this.DeletePluginLocaleResource("Plugins.Payment.CashOnDelivery.AdditionalFee");
+			this.DeletePluginLocaleResource("Plugins.Payment.CashOnDelivery.AdditionalFee.Hint");
+			this.DeletePluginLocaleResource("Plugins.Payment.CashOnDelivery.AdditionalFeePercentage");
+			this.DeletePluginLocaleResource("Plugins.Payment.CashOnDelivery.AdditionalFeePercentage.Hint");
+			this.DeletePluginLocaleResource("Plugins.Payment.CashOnDelivery.ShippableProductRequired");
+			this.DeletePluginLocaleResource("Plugins.Payment.CashOnDelivery.ShippableProductRequired.Hint");
 
 			base.Uninstall();
 		}
 
 		#endregion
 
-		#region Properties
+		#region Properies
 
 		/// <summary>
 		/// Gets a value indicating whether capture is supported
 		/// </summary>
 		public bool SupportCapture
 		{
-			get { return false; }
+			get
+			{
+				return false;
+			}
 		}
 
 		/// <summary>
@@ -293,7 +296,10 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		/// </summary>
 		public bool SupportPartiallyRefund
 		{
-			get { return false; }
+			get
+			{
+				return false;
+			}
 		}
 
 		/// <summary>
@@ -301,7 +307,10 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		/// </summary>
 		public bool SupportRefund
 		{
-			get { return false; }
+			get
+			{
+				return false;
+			}
 		}
 
 		/// <summary>
@@ -309,7 +318,10 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		/// </summary>
 		public bool SupportVoid
 		{
-			get { return false; }
+			get
+			{
+				return false;
+			}
 		}
 
 		/// <summary>
@@ -317,7 +329,10 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		/// </summary>
 		public RecurringPaymentType RecurringPaymentType
 		{
-			get { return RecurringPaymentType.NotSupported; }
+			get
+			{
+				return RecurringPaymentType.NotSupported;
+			}
 		}
 
 		/// <summary>
@@ -325,7 +340,10 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		/// </summary>
 		public PaymentMethodType PaymentMethodType
 		{
-			get { return PaymentMethodType.Standard; }
+			get
+			{
+				return PaymentMethodType.Standard;
+			}
 		}
 
 		/// <summary>
@@ -333,17 +351,17 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder
 		/// </summary>
 		public bool SkipPaymentInfo
 		{
-			get { return false; }
+			get
+			{
+				return false;
+			}
 		}
 
-		/// <summary>
-		/// Gets a payment method description that will be displayed on checkout pages in the public store
-		/// </summary>
 		public string PaymentMethodDescription
 		{
 			//return description of this payment method to be display on "payment method" checkout step. good practice is to make it localizable
 			//for example, for a redirection payment method, description may be like this: "You will be redirected to PayPal site to complete the payment"
-			get { return _localizationService.GetResource("Plugins.Payment.CheckMoneyOrder.PaymentMethodDescription"); }
+			get { return _localizationService.GetResource("Plugins.Payment.CashOnDelivery.PaymentMethodDescription"); }
 		}
 
 		#endregion
