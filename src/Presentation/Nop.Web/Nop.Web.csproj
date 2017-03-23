@@ -735,6 +735,7 @@
     <Content Include="Content\Images\Images Store\Slider\slide 2.psd" />
     <Content Include="Content\Images\Images Store\Slider\slide 3.psd" />
     <Content Include="Content\Images\Images Store\YouTube\youtube-covers-template.psd" />
+    <None Include="Properties\PublishProfiles\mbnpro.com.ua - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -1061,7 +1062,6 @@
     <Content Include="Content\Images\uploaded\placeholder.txt" />
     <Content Include="Content\install\style.css" />
     <Content Include="Content\install\style.rtl.css" />
-    <Content Include="Content\Images\Thumbs\placeholder.txt" />
     <Content Include="ErrorPage.htm" />
     <Content Include="FileNotFound.htm" />
     <Content Include="Global.asax" />
@@ -1246,6 +1246,7 @@
     <Content Include="Themes\NopElectro\Views\Catalog\TopMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Images\Thumbs\" />
     <Folder Include="Plugins\bin\" />
   </ItemGroup>
   <ItemGroup>
