@@ -7993,8 +7993,7 @@ pre {
     background: #9c3;
     color: #fff;
 }
- .page-title h1 {
-    color: #fff !important;
+ .page-title h1 {    
 }
 
 @media (max-width: 768px) {
