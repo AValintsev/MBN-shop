@@ -67,7 +67,7 @@
 
 /*Catalog*/
 .block .title {
-    background-color: #59b210;
+    background-color: #9acd32;
     color: #fff;
 }
 
@@ -91,7 +91,7 @@
 
     .search-input .button-1:hover, .overview .add-to-cart-button:hover, .variant-overview .add-to-cart-button:hover,
     .ui-dialog-content .back-in-stock-subscription-page .button-1:hover {
-        background-color: #469009;
+        background-color: #1e90ff;
     }
 
     .item-box .product-box-add-to-cart-button:hover {
@@ -104,7 +104,7 @@
 
 .overview .product-price,
 .variant-overview .product-price {
-    color: #f23c3c;
+    color: #1e90ff;
 }
 
 /*Blog & News*/

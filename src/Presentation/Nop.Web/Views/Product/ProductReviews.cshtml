@@ -17,13 +17,13 @@
         @Html.Widget("productreviews_page_top", Model.ProductId)
         @if (Model.AddProductReview.SuccessfullyAdded)
         {
-            <div class="result">
+            <div class="result col-md-12">
                 @Model.AddProductReview.Result
             </div>
         }
         else
         {
-            <div class="write-review" id="review-form">
+            <div class="write-review col-md-12" id="review-form">
                 <div class="title">
                     <strong>@T("Reviews.Write")</strong>
                 </div>
@@ -79,7 +79,7 @@
         }
         @if (Model.Items.Count > 0)
         {
-            <div class="product-review-list">
+            <div class="product-review-list col-md-12">
                 <div class="title">
                     <strong>@T("Reviews.ExistingReviews")</strong>
                 </div>

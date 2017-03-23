@@ -304,9 +304,9 @@ label, label + * {
 .inputs {
     position: relative;
     margin: 0 0 15px;
-    text-align: center;
-    white-space: nowrap; /*fix for 'required' elements*/
+    text-align: left;
     font-size: 0;
+    width: 100%;
 }
 
     .inputs:after {
@@ -359,7 +359,7 @@ select, textarea {
 
 .inputs.reversed {
     margin: 0 0 20px;
-    text-align: center;
+    text-align: left;
 }
 
 .required {
@@ -1906,7 +1906,7 @@ td.product-picture img {
 
 .product-grid,
 .product-list {
-    margin: 0 0 50px;
+    margin: 0 10px 50px;
 }
 
     .product-grid .title {
@@ -1939,7 +1939,7 @@ td.product-picture img {
 }
 
 .pager {
-    margin: 0 0 20px;
+    margin: 0 10px 20px;
 }
 
     .pager ul {
@@ -2093,15 +2093,12 @@ td.product-picture img {
         }
 
     .overview .product-name {
-        margin: 0 0 20px;
-        padding: 10px;
-        background: url("../images/category-title-bg.jpg");
-        background-position: right;
-        background-repeat: no-repeat;
+        margin: 0 0 10px;
+        padding: 0 10px;
     }
 
         .overview .product-name h1 {
-            font-size: 23px;
+            font-size: 35px;
             font-weight: 500;
         }
 
@@ -2127,13 +2124,13 @@ td.product-picture img {
 }
 
     .product-review-box .rating {
-        width: 95px;
-        height: 14px;
+        width: 100px;
+        height: 20px;
         background: url('../images/rating1.png') repeat-x;
     }
 
         .product-review-box .rating div {
-            height: 14px;
+            height: 20px;
             background: url('../images/rating2.png') repeat-x;
         }
 
@@ -2778,8 +2775,8 @@ td.product-picture img {
 }
 
 .product-reviews-page .title {
-    margin: 0 0 20px;
-    font-size: 20px;
+    margin: 10px 0 20px;
+    font-size: 26px;
     color: #444;
 }
 
@@ -2848,7 +2845,7 @@ td.product-picture img {
 
 .product-reviews-page .result,
 .product-reviews-page .message-error {
-    margin: 0 0 20px;
+    margin: 10px 0 20px;
 }
 
 .product-review-list {
@@ -2878,7 +2875,7 @@ td.product-picture img {
 
 .product-details-page .product-review-box, .product-details-page .product-no-reviews {
     float: left;
-    padding-right: 5px;
+    padding: 0 10px 0 0;
 }
 
 .product-review-item .review-content {
@@ -4540,11 +4537,11 @@ td.product-picture img {
 }
 
 .search-input .fieldset {
-    margin: 0 0 30px;
+    margin: 0;
 }
 
 .search-input .form-fields {
-    padding: 30px 15px 10px;
+    padding: 30px 0px 10px;
 }
 
 .search-input input + label {
@@ -4566,7 +4563,7 @@ td.product-picture img {
         }
 
 .search-input .buttons {
-    text-align: center;
+    text-align: left;
 }
 
 .search-input .button-1 {
@@ -6262,6 +6259,7 @@ pre {
 
     .product-selectors {
         text-align: left;
+        padding: 10px;
     }
 
         .product-selectors .product-viewmode {
@@ -7662,7 +7660,7 @@ pre {
 
 
     .advanced-search .price-range {
-        margin-left: 114px;
+        margin-left: 0px;
     }
 
 
@@ -7994,7 +7992,12 @@ pre {
     color: #fff;
 }
  .page-title h1 {
-    color: #fff !important;
+    color: #444;
+}
+
+.product-reviews-page .page-title h1 {
+    color: #444 !important;
+    text-align:center;
 }
 
 @media (max-width: 768px) {
@@ -8010,14 +8013,6 @@ pre {
 		text-align: center;
 	}
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -8436,6 +8431,14 @@ pre {
     .youtube-slider {
         padding: 0 5px;
     }
+
+    .search-input .form-fields {
+        padding: 30px 20px 10px;
+    }
+
+    .side-2 {
+        display: none;
+    }
 }
 /* xs */
 @media (min-width: 376px) and (max-width: 767px) {
@@ -8595,6 +8598,17 @@ pre {
         #homepage-side-info .youtube-links .video-preview a {
             border-width: 5px;
         }
+
+    .search-input .form-fields {
+        padding: 30px 10px 10px;
+    }
+    .search-input .buttons {
+        margin-left: 10px;
+    }
+
+    .side-2 {
+        display: none;
+    }
 }
 /* sm */
 @media (min-width: 768px) and (max-width: 991px) {
@@ -8747,8 +8761,14 @@ pre {
 
     .footer-block .title {
         margin: 0 0 1px;
-        background: #9acd32 url('../images/toggle-white.png') right center no-repeat;
+        background: #9acd32;
         color: #fff;
+        padding: 10px;
+    }
+
+
+    .footer-block .list li {
+        padding: 10px 0;
     }
 
     .nivo-slider {
@@ -8768,6 +8788,24 @@ pre {
         padding: 12px;
     }
 
+    .search-input .form-fields {
+        padding: 30px 10px 10px;
+    }
+    .search-input .buttons {
+        margin-left: 10px;
+    }
+
+    .side-2 {
+        display: none;
+    }
+
+    .container {
+        width:100%;
+    }
+
+    .footer {
+        padding: 10px;
+    }
 }
 /* md */
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -8792,6 +8830,10 @@ pre {
         margin: 0 -21px;
     }
 
+    .product-grid {
+        margin-left: 0;
+        margin-right: 0;
+    }
 
 
 }
@@ -8800,5 +8842,10 @@ pre {
     .footer-upper {
         margin: auto;
         width: 100%;
+    }
+
+    .product-grid {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
