@@ -3309,7 +3309,7 @@ td.product-picture img {
     font-weight: 600;
     font-family: Poppins, sans-serif;
     border-bottom: 0;
-    padding: 0;
+    padding: 15px 0 10px;
 }
 
     .login-page .title strong {
@@ -4288,7 +4288,6 @@ td.product-picture img {
             display: inline-block;
             padding: 5px 10px;
             color: #444;
-            border-radius: 25px;
         }
 
             .checkout-page a.button-2.btn-sm:hover {
@@ -8278,8 +8277,13 @@ pre {
 
 
 
+.category-page .page-title h1 {
+   color: #fff !important;
+}
 
-
+.checkout-page .section.order-completed {
+    text-align: center;
+}
 
 
 

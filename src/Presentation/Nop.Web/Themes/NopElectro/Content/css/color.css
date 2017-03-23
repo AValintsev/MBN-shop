@@ -17,7 +17,7 @@
 
 .header-links a:hover, .mini-shopping-cart .name a, .footer-block .list a:hover, .footer-powered-by a,
 .eu-cookie-bar-notification a {
-    color: #59b210;
+    color: #9acd32;
 }
 
     .mini-shopping-cart .name a:hover {
@@ -25,7 +25,7 @@
     }
 
 .owl-title, .news-list-homepage .title, .home-page-polls .title {
-    background: #59b210;
+    background: #9acd32;
 }
 
 @media (min-width: 1001px) {
@@ -45,13 +45,13 @@
         }
 
     .header-menu > ul > li > a:hover {
-        color: #59b210;
+        color: #9acd32;
     }
 }
 
 @media (max-width: 1000px) {
     .top-menu .sublist li a {
-        color: #59b210;
+        color: #9acd32;
     }
 }
 
@@ -74,11 +74,11 @@
 .item-box .product-title a:hover, .breadcrumb strong, .breadcrumb a, .block .list a:hover, .block .list .active > a,
 .block .view-all a, .filtered-items .item, .product-filter .group li a:hover,
 .block .tags li a:hover, .product-tags-all-page li a:hover, .overview .value a, .variant-overview .value a {
-    color: #59b210;
+    color: #9acd32;
 }
 
 .block.block-category-navigation .list .active > a {
-    background: #59b210;
+    background: #1e90ff;
     border-radius: 25px;
     color: #fff;
 }
@@ -116,7 +116,7 @@
     .blog-posts .buttons .read-more:hover,
     .news-items .buttons .read-more:hover,
     .poll .buttons input:hover {
-        background-color: #59b210;
+        background-color: #9acd32;
         color: #fff;
         text-decoration: none;
     }
@@ -128,7 +128,7 @@
 }
 
 #bar-notification.success, #dialog-notifications-success {
-    color: #59b210;
+    color: #9acd32;
 }
 
 #dialog-notifications-error, #bar-notification.error {
@@ -138,7 +138,7 @@
 /*Cart, Wishlist, Checkout*/
 .cart .product .edit-item a, .cart-total .order-total, .terms-of-service a, .order-completed .details a,
 .cart a, .data-table a, .forum-table a {
-    color: #59b210;
+    color: #1e90ff;
 }
 
 .cart .product a:hover, .data-table .product a:hover, .data-table .info a:hover, .wishlist-page .share-info a:hover,
@@ -149,14 +149,14 @@
 .cart th, .data-table th, .forum-table th,
 .wishlist-content .update-wishlist-button, .wishlist-content .wishlist-add-to-cart-button,
 .shopping-cart-page .common-buttons input:first-child, .checkout-page .button-1, .checkout-page a.button-2.btn-sm:hover {
-    background-color: #59b210;
+    background-color: #1e90ff;
 }
 
     .wishlist-content .update-wishlist-button:hover,
     .wishlist-content .wishlist-add-to-cart-button:hover,
     .shopping-cart-page .common-buttons input:first-child:hover,
     .checkout-page .button-1:hover {
-        background-color: #469009;
+        background-color: #9acd32;
     }
 
 .cart-footer .checkout-button {
@@ -168,7 +168,7 @@
 .login-page .title, .fieldset .title, .section .title,
 .product-review-item .review-info a,
 .product-review-helpfulness .vote, .email-a-friend-page .title h2 {
-    color: #59b210;
+    color: #444;
 }
 
 .registration-page .button-1, .registration-result-page .button-1, .login-page .button-1,
@@ -176,7 +176,7 @@
 .return-request-page .button-1, .opc .allow.active .step-title,
 .order-details-page .page-title a.print-order-button,
 .contact-page .button-1, .email-a-friend-page .button-1, .apply-vendor-page .button-1 {
-    background-color: #59b210;
+    background-color: #9acd32;
 }
 
     .registration-page .button-1:hover, .registration-result-page .button-1:hover,
@@ -209,7 +209,7 @@
 .footer-tax-shipping a, .item-box .tax-shipping-info a, .manufacturer-grid .title a:hover, .vendor-grid .title a:hover,
 .overview .tax-shipping-info a, .variant-overview .tax-shipping-info a, .product-reviews-page h1 a,
 .compare-products-table .remove-button:hover, .compare-products-table .product-name td a:hover {
-    color: #59b210;
+    color: #9acd32;
 }
 
 .order-details-page .repost .button-2, .user-agreement-page .button-1, .new-comment .button-1,
@@ -217,14 +217,14 @@
 .private-messages .buttons .button-1, .contact-vendor .button-2, .write-review .button-1,
 .compare-products-page .clear-list, .enter-password-form input[type="submit"], .ui-datepicker-header,
 .color-squares .selected-value .color-container {
-    background-color: #59b210;
+    background-color: #9acd32;
 }
 
     .order-details-page .repost .button-2:hover, .user-agreement-page .button-1:hover, .new-comment .button-1:hover,
     .forums-table-section .view-all a:hover, .forum-edit-page .buttons .button-1:hover, .move-topic-page .buttons .button-1:hover,
     .private-messages .buttons .button-1:hover, .contact-vendor .button-2:hover, .write-review .button-1:hover,
     .compare-products-page .clear-list:hover, .enter-password-form input[type="submit"]:hover {
-        background-color: #469009;
+        background-color: #9acd32;
     }
 
 .cart td.subtotal .discount {
@@ -232,8 +232,8 @@
 }
 
 .ui-datepicker-calendar .ui-state-active {
-    outline: 2px solid #59b210;
-    color: #59b210;
+    outline: 2px solid #9acd32;
+    color: #9acd32;
     /*override jQuery UI styles, do not delete doubled properties*/
-    color: #59b210 !important;
+    color: #9acd32 !important;
 }
