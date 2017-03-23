@@ -6023,7 +6023,7 @@ pre {
     }
 
         .product-filter.price-range-filter {
-            width: 200px;
+            width: 100%;
         }
 
         .product-filter .product-spec-group {
@@ -7123,8 +7123,6 @@ pre {
 
 
     .header-menu {
-        position: relative;
-        /*z-index: 5;*/
         margin: 0;
         width: 100%;
         padding: 0 10px 10px 10px;
@@ -8284,6 +8282,24 @@ pre {
 .checkout-page .section.order-completed {
     text-align: center;
 }
+
+
+
+.product-filters > .filter-title {
+    background: #9c3;
+    color: #fff;
+    padding: 15px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.product-filters .filter-item .filter-title {
+    width: 100%;
+}
+
+
+
+
 
 
 
