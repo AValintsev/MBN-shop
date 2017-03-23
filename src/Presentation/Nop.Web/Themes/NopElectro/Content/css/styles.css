@@ -6017,7 +6017,7 @@ pre {
 
 
     .product-filter {
-        display: table-cell;
+        display: block;
         vertical-align: top;
         text-align: left;
     }
@@ -8297,8 +8297,14 @@ pre {
     width: 100%;
 }
 
-
-
+.slider.slider-horizontal {
+    width: 100% !important;
+    display: block;
+}
+.price-range-container {
+    width: 95%;
+    padding-left: 5%;
+}
 
 
 
@@ -8457,7 +8463,7 @@ pre {
     }
 
     .side-2 {
-        display: none;
+        display: block;
     }
 }
 /* xs */
@@ -8627,7 +8633,7 @@ pre {
     }
 
     .side-2 {
-        display: none;
+        display: block;
     }
 }
 /* sm */
@@ -8816,7 +8822,7 @@ pre {
     }
 
     .side-2 {
-        display: none;
+        display: block;
     }
 
     .container {
