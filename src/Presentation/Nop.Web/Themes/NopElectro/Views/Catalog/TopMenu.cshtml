@@ -53,9 +53,12 @@
 		<ul class="sublist first-level">
 
 			@foreach (var topic in Model.Topics)
-			{
-				<li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+			{	
+				<li>
+					<a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
+				</li>
 			}
+			<li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
 		</ul>
 	</li>
 
