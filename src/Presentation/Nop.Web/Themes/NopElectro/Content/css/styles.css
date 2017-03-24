@@ -209,9 +209,9 @@ label, label + * {
 }
 
 	.page-title h1 {
-		font-size: 46px;
+		font-size: 38px;
 		font-weight: normal;
-		padding: 15px 0;
+		padding: 0 0 5px;
 	}
 
 	.page:after,
@@ -263,8 +263,24 @@ label, label + * {
 .topic-page p,
 .post-body p,
 .news-body p {
-	margin: 10px 0;
+    margin: 10px 0;
+    padding: 0 15px 5px;
+    font-size: 18px;
 }
+
+.category-description h3,
+.manufacturer-description h3,
+.full-description h3,
+.topic-block h3,
+.topic-page h3,
+.post-body h3,
+.news-body h3 {
+    margin: 10px 0;
+    padding: 0 15px 5px;
+    font-size: 22px;
+}
+
+
 
 .flyout-cart {
 	display: none;
@@ -8318,6 +8334,51 @@ pre {
     width: 95%;
     padding-left: 5%;
 }
+
+
+.about-us {
+
+}
+.about-us h1 {
+    font-size: 44px;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 15%;
+}
+    .about-us h2 {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 0 15%;
+    }
+
+    .about-us h3 {
+        font-size: 26px;
+        text-align: center;
+        margin-bottom: 10px;
+        padding: 0 15%;
+    }
+
+    .about-us h4 {
+        font-size: 23px;
+        text-align: left;
+        margin-bottom: 10px;
+        padding: 0;
+    }
+
+    .about-us h5 {
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 0 15%;
+    }
+
+    .about-us p {
+        font-size: 18px;
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
 
 
 

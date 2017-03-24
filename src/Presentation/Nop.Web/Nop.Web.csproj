@@ -1245,6 +1245,7 @@
     <Content Include="Themes\NopElectro\Views\Common\LanguageSelector.cshtml" />
     <Content Include="Themes\NopElectro\Views\Common\CurrencySelector.cshtml" />
     <Content Include="Themes\NopElectro\Views\Catalog\TopMenu.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Thumbs\" />
