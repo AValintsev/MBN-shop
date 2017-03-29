@@ -100,7 +100,14 @@
             convert_urls: false,
             //ensure that special chars are not encoded. For example, ä, ö and ü should NOT become "&auml;", "&ouml;" and "&uuml;"
             //Otherwise, database searches become impossible when words contain a character of this kind
-            entity_encoding: "raw"
+			
+			entity_encoding: "raw",
+			extended_valid_elements: 'i[class|aria-hidden]',
+			//extended_valid_elements: "i[class|aria-hidden]",
+			//valid_children: "+body[style], +style[type]",
+			apply_source_formatting: false,                //added option
+			verify_html: false,
+			cleanup: false
         };
 
         function getAdditionalEditorSettings@(random)(settings) {
