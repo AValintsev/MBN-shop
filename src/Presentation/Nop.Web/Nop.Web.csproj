@@ -597,6 +597,7 @@
     <Content Include="Content\Images\Images Store\YouTube\Райзер - залог стабильности.png" />
     <Content Include="Content\Images\Images Store\YouTube\Чего стоит опасаться в заказе фермы у НАРОДНЫХ УМЕЛЬЦЕВ.png" />
     <Content Include="Properties\PublishProfiles\mbnpro.com.ua - Web Deploy.pubxml.user" />
+    <Content Include="Themes\NopElectro\Content\images\about\костя-брайченко-магазин-мбн.jpeg" />
     <Content Include="Themes\NopElectro\Content\images\categories\Audioadapters.png" />
     <Content Include="Themes\NopElectro\Content\images\categories\Cooling.png" />
     <Content Include="Themes\NopElectro\Content\images\categories\Frames.png" />
