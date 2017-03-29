@@ -3959,6 +3959,9 @@
 	<LocaleResource Name="admin.configuration.languages.fields.displayorder.hint">
 		<Value>Порядок відображення цієї мови. 1 — це перший пункт списку.</Value>
 	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Languages.Fields.FlagImage">
+		<Value>зображення прапора</Value>
+	</LocaleResource>
 	<LocaleResource Name="admin.configuration.languages.fields.flagimagefilename">
 		<Value>Ім'я файлу із зображенням прапора</Value>
 	</LocaleResource>
@@ -4354,6 +4357,46 @@
 	</LocaleResource>
 	<LocaleResource Name="admin.configuration.plugins.officialfeed.version.hint">
 		<Value>Шукати по версії.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Plugins.OfficialFeed.Instructions">
+		<Value><![CDATA[<p>Здесь можно найти плагины и темы сторонних разработчиков, а также разработки nopcommerce и партнеров. <a href="http://www.nopcommerce.com/marketplace.aspx?utm_source=admin-panel&utm_medium=official-plugins&utm_campaign=admin-panel" target="_blank">marketplace</a></p>]]></Value>
+	</LocaleResource>
+
+	<LocaleResource Name="Admin.Pager.All">
+		<Value>Все</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Display">
+		<Value>{0} - {1} из {2} елементов</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Empty">
+		<Value>Нет елементов для отображения</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.First">
+		<Value>На первую страницу</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.ItemsPerPage">
+		<Value>елементов на страницу</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Last">
+		<Value>На последнюю страницу</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.MorePages">
+		<Value>Больше страниц</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Next">
+		<Value>На следующую</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Of">
+		<Value>из {0}</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Page">
+		<Value>Страница</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Previous">
+		<Value>На предыдущую</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Refresh">
+		<Value>Обновить</Value>
 	</LocaleResource>
 	<LocaleResource Name="admin.configuration.plugins.reloadlist">
 		<Value>Перезавантажити список плагінів</Value>
@@ -14617,5 +14660,8 @@
 	</LocaleResource>
 	<LocaleResource Name="Plugins.FriendlyName.Payments.CheckMoneyOrder">
 		<Value>Переказ коштів на банківську картку</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Plugins.Description.DownloadMorePlugins">
+		<Value><![CDATA[<p>Загрузить больше плагинов можно здесь <a href="http://www.nopcommerce.com/marketplace.aspx?utm_source=admin-panel&utm_medium=plugins&utm_campaign=admin-panel" target="_blank">marketplace</a></p>]]></Value>
 	</LocaleResource>
 </Language>

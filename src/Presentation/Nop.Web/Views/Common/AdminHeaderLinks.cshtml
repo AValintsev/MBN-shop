@@ -14,10 +14,10 @@
         {
             <a href="@Url.Content("~/admin")" class="administration">@T("Account.Administration")</a>
 			
-			using (Html.BeginForm("ResetAllPlugins", "Install", FormMethod.Post))
+			@*using (Html.BeginForm("ResetAllPlugins", "Install", FormMethod.Post))
 			{
 						<button type="submit" class="btn btn-md btn-default" title="Resets the all plugins in the system">Reset all plugins</button>
-			}
+			}*@
         }
         @if (!String.IsNullOrEmpty(Model.EditPageUrl))
         {

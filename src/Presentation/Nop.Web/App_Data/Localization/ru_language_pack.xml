@@ -4134,6 +4134,9 @@
 	<LocaleResource Name="Admin.Configuration.ExternalAuthenticationMethods.Fields.SystemName">
 		<Value>Идентификатор</Value>
 	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Plugins.Description.DownloadMorePlugins">
+		<Value><![CDATA[<p>Загрузить больше плагинов можно здесь <a href="http://www.nopcommerce.com/marketplace.aspx?utm_source=admin-panel&utm_medium=plugins&utm_campaign=admin-panel" target="_blank">marketplace</a></p>]]></Value>
+	</LocaleResource>
 	<LocaleResource Name="Admin.Configuration.Languages">
 		<Value>Языки</Value>
 	</LocaleResource>
@@ -4168,7 +4171,7 @@
 		<Value>Порядок отображения этого языка. 1 — это первый пункт списка.</Value>
 	</LocaleResource>
 	<LocaleResource Name="Admin.Configuration.Languages.Fields.FlagImage">
-		<Value>Имя файла с изображением флага</Value>
+		<Value>Изображение флага</Value>
 	</LocaleResource>
 	<LocaleResource Name="Admin.Configuration.Languages.Fields.FlagImageFileName">
 		<Value>Имя файла с изображением флага</Value>
@@ -4461,6 +4464,9 @@
 	<LocaleResource Name="Admin.Configuration.Plugins.OfficialFeed.Download">
 		<Value>Скачать</Value>
 	</LocaleResource>
+	<LocaleResource Name="Admin.Configuration.Plugins.OfficialFeed.Instructions">
+		<Value><![CDATA[<p>Здесь можно найти плагины и темы сторонних разработчиков, а также разработки nopcommerce и партнеров. <a href="http://www.nopcommerce.com/marketplace.aspx?utm_source=admin-panel&utm_medium=official-plugins&utm_campaign=admin-panel" target="_blank">marketplace</a></p>]]></Value>
+	</LocaleResource>
 	<LocaleResource Name="Admin.Configuration.Plugins.OfficialFeed.Name">
 		<Value>Название</Value>
 	</LocaleResource>
@@ -4491,6 +4497,43 @@
 	<LocaleResource Name="Admin.Configuration.Plugins.OfficialFeed.Version.Hint">
 		<Value>Искать по версии.</Value>
 	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.All">
+		<Value>Все</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Display">
+		<Value>{0} - {1} из {2} елементов</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Empty">
+		<Value>Нет елементов для отображения</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.First">
+		<Value>На первую страницу</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.ItemsPerPage">
+		<Value>елементов на страницу</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Last">
+		<Value>На последнюю страницу</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.MorePages">
+		<Value>Больше страниц</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Next">
+		<Value>На следующую</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Of">
+		<Value>из {0}</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Page">
+		<Value>Страница</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Previous">
+		<Value>На предыдущую</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Pager.Refresh">
+		<Value>Обновить</Value>
+	</LocaleResource>
+	
 	<LocaleResource Name="Admin.Configuration.Plugins.ReloadList">
 		<Value>Перезагрузить список подключаемых модулей</Value>
 	</LocaleResource>

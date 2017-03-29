@@ -22,15 +22,12 @@
 
         <div class="row categories-and-home-page-text-wrapper">
             <div>
-                <div class="row home-page-text">
-                    @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
-                </div>
                 <div class="row">
                     @Html.Widget("home_page_before_categories")
                 </div>
                 <div class="row categories">
                     @Html.Action("HomepageCategories", "Catalog")
-                </div>
+                </div>				
             </div>
         </div>
         <div class="container our-features">
@@ -92,6 +89,9 @@
             </div>
         </div>
 
+		<div class="row home-page-text">
+			@Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+		</div>
 
         @Html.Widget("home_page_before_products")
         @Html.Action("HomepageProducts", "Product")
