@@ -7226,7 +7226,7 @@ pre {
 		padding: 0;
 		text-align: left;
 		z-index: 5;
-		top: 58px;
+		top: 67px;
 	}
 
 		.header-menu .sublist li {
@@ -8211,7 +8211,7 @@ pre {
 }
 
 	.categories-and-home-page-text-wrapper > div {
-		padding: 10px 10px 0;
+		padding: 0 10px 0;
 		background: -moz-linear-gradient(45deg, rgba(154,205,50,1) 0%, rgba(154,205,50,0.75) 25%, rgba(30,144,255,0.6) 50%, rgba(245,221,11,0.74) 75%, rgba(245,221,11,0.75) 76%, rgba(245,221,11,1) 100%); /* FF3.6-15 */
 		background: -webkit-linear-gradient(45deg, rgba(154,205,50,1) 0%,rgba(154,205,50,0.75) 25%,rgba(30,144,255,0.6) 50%,rgba(245,221,11,0.74) 75%,rgba(245,221,11,0.75) 76%,rgba(245,221,11,1) 100%); /* Chrome10-25,Safari5.1-6 */
 		background: linear-gradient(45deg, rgba(154,205,50,1) 0%,rgba(154,205,50,0.75) 25%,rgba(30,144,255,0.6) 50%,rgba(245,221,11,0.74) 75%,rgba(245,221,11,0.75) 76%,rgba(245,221,11,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
