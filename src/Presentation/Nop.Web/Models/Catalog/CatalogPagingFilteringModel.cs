@@ -11,6 +11,7 @@ using Nop.Services.Localization;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Framework.UI.Paging;
 using Nop.Web.Infrastructure.Cache;
+using Nop.Services.Directory;
 
 namespace Nop.Web.Models.Catalog
 {
@@ -174,6 +175,7 @@ namespace Nop.Web.Models.Catalog
 			/// <returns>Price ranges</returns>
 			public virtual PriceRange GetSelectedPriceRange(IWebHelper webHelper, string priceRangesStr)
 			{
+				//_currencyService.ConvertFromPrimaryStoreCurrency(oldPriceBase, _workContext.WorkingCurrency);
 				var range = webHelper.QueryString<string>(QUERYSTRINGPARAM);
 				if (String.IsNullOrEmpty(range))
 					return null;
@@ -264,7 +266,6 @@ namespace Nop.Web.Models.Catalog
 
 				this.Enabled = true;
 				this.PriceFormat = priceFormatter.FormatPrice(FORMAT_PRICE_PATTERN, true, false);
-
 				this.Items.Add(new PriceRangeFilterItem
 					{
 						From = priceFormatter.FormatPrice(priceRange.From.Value, true, false),

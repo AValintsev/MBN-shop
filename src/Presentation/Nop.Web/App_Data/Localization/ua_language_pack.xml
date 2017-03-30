@@ -11395,6 +11395,9 @@
 	<LocaleResource Name="common.loadingnextstep">
 		<Value>Завантаження...</Value>
 	</LocaleResource>
+	<LocaleResource Name="Common.ManagePage">
+		<Value>Управління цією сторінкою</Value>
+	</LocaleResource>
 	<LocaleResource Name="common.month">
 		<Value>Місяць</Value>
 	</LocaleResource>
@@ -14118,6 +14121,9 @@
 	</LocaleResource>
 	<LocaleResource Name="search.advancedsearch">
 		<Value>Розширений пошук</Value>
+	</LocaleResource>
+	<LocaleResource Name="Search.Button">
+		<Value>Пошук</Value>
 	</LocaleResource>
 	<LocaleResource Name="search.category">
 		<Value>Категорія</Value>
