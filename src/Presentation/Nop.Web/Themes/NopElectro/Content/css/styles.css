@@ -7446,11 +7446,11 @@ pre {
 	}
 
 	.item-box:nth-child(3n+1) {
-		clear: none;
+		/*clear: none;*/
 	}
 
 	.item-box:nth-child(4n+1) {
-		clear: both;
+		/*clear: both;*/
 	}
 
 	.home-page .product-grid .item-box,
@@ -7463,13 +7463,13 @@ pre {
 		.home-page .product-grid .item-box:nth-child(3n+1),
 		.product-details-page .product-grid .item-box:nth-child(3n+1),
 		.shopping-cart-page .product-grid .item-box:nth-child(3n+1) {
-			clear: none;
+			/*clear: none;*/
 		}
 
 		.home-page .product-grid .item-box:nth-child(4n+1),
 		.product-details-page .product-grid .item-box:nth-child(4n+1),
 		.shopping-cart-page .product-grid .item-box:nth-child(4n+1) {
-			clear: both;
+			/*clear: both;*/
 		}
 
 
