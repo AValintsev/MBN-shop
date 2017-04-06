@@ -1049,7 +1049,7 @@ td.product-picture img {
 	}
 
 	.search-box .search-box-button {
-		float: left;
+		float: right;
 		width: 20%;
 		height: 36px;
 		border: none;
