@@ -1028,7 +1028,8 @@ td.product-picture img {
 	.search-box form {
 		display: inline-block;
 		background: #fff;
-		padding: 10px 10px 10px 10px;
+		padding: 0;
+        margin: 0;
 		width: 100%;
 		float: right;
 	}
@@ -1043,7 +1044,7 @@ td.product-picture img {
 		float: left;
 		width: 80%;
 		height: 36px;
-		margin: 0 -1px 0 0;
+		margin: 0;
 		padding-left: 20px;
 	}
 
@@ -1057,7 +1058,9 @@ td.product-picture img {
 		color: #fff;
 		text-transform: uppercase;
 	}
-
+    .search-box input.search-box-text {
+        border: none;
+    }
 		.search-box .search-box-button:hover {
 		}
 
