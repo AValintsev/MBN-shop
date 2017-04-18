@@ -1,7 +1,7 @@
 ﻿@model NewsItemListModel
 @using Nop.Web.Models.News;
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.NewsArchive").Text);
@@ -10,7 +10,7 @@
 }
 <div class="page news-list-page">
     <div class="page-title">
-        <a href="@Url.RouteUrl("NewsRSS", new { languageId = Model.WorkingLanguageId })" class="link-rss" title="@T("News.RSS.Hint")">@T("News.RSS")</a>
+        @*<a href="@Url.RouteUrl("NewsRSS", new { languageId = Model.WorkingLanguageId })" class="link-rss" title="@T("News.RSS.Hint")">@T("News.RSS")</a>*@
         <h1>@T("News")</h1>
     </div>
     <div class="page-body">
