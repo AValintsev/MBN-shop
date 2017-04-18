@@ -1,0 +1,9 @@
+﻿Group: Misc
+FriendlyName: SMS Provider
+SystemName: Misc.SMS
+Version: 1.00
+SupportedVersions: 3.90
+Author: proladge
+DisplayOrder: 1
+FileName: Nop.Plugin.Misc.SMS.dll
+Description: My plugin
