@@ -1,47 +1,62 @@
-﻿@using Nop.Web.Framework
-@model List<Nop.Plugin.Misc.SMS.Domain.SMSMessage>
-@using (Html.BeginForm("Messages", "SMS", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    <div class="panel-group">
-        <div class="panel panel-default">
-            <div class="panel-heading">@T("Plugins.Misc.SMS.MessageName.Hint")</div>
-            <div class="panel-body">
-                @for (int i = 0; i< Model.Count;i++)
-                {
+﻿@model List<Nop.Plugin.Misc.SMS.Models.SMSMessageViewModel>
+@using Nop.Web
+@using Nop.Web.Framework
+@using Nop.Plugin.Misc.SMS.Models
+@using Nop.Plugin.Misc.SMS.Extensions
 
-                    <div class="form-group col-md-12">
-                        @Html.HiddenFor(model => Model[i].Id)
-                    <div class="col-md-3">
-                        @if (Model[i].IsforAdmin)
-                        {
-                            <text>For ADMIN</text>
-                        }
-                        @Html.NopDisplayFor(model => Model[i].Name)
-                        @Html.HiddenFor(model => model[i].Name)
-                        @Html.HiddenFor(model => Model[i].EventType)
-                    </div>
-                    <div class="col-md-6">
-                        @Html.NopEditorFor(model => Model[i].MessageText)
-                        @Html.ValidationMessageFor(model => Model[i].MessageText)
-                    </div>
-                    <div class="col-md-3">
-                        <div class="checkbox text-left">
-                            @Html.EditorFor(model => Model[i].Enabled)
-                            @Html.ValidationMessageFor(model => Model[i].Enabled, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                }
-                <div class="form-group">
-                    <div class="col-md-3">
-                        &nbsp;
-                    </div>
-                    <div class="col-md-9">
-                        <input type="submit" name="save" class="btn bg-blue" value="save"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div class="panel-group">
+		<div class="panel panel-default">
+			<div class="panel-heading">@T("Plugins.Misc.SMS.MessageName.Hint")</div>
+			<div class="panel-body">
+				@for(int i = 0; i < Model.Count; i++)
+				{
+					var editorId = string.Format("sms-editor-{0}", Model[i].Id);
+					<div class="form-group col-md-12">
+						@Html.HiddenFor(model => Model[i].Id)
+						<div class="col-md-3">
+							@if (Model[i].IsforAdmin)
+							{
+								<text>For ADMIN</text>
+							}
+							@Html.NopDisplayFor(model => Model[i].Name)
+							@Html.HiddenFor(model => Model[i].Name)
+							@Html.HiddenFor(model => Model[i].EventType)
+						</div>
+
+						<div class="col-md-6">
+							@(Html.LocalizedEditor<SMSMessageViewModel, SMSMessageViewModel.SMSMessageLocalizedModel>(
+							@editorId,
+							@<div>
+								@Html.NopTextAreaFor(model => Model[i].Locales[item].MessageText)
+								@Html.ValidationMessageFor(model => Model[i].Locales[item].MessageText)
+								@Html.HiddenFor(model => Model[i].Locales[item].LanguageId)
+							</div>,
+							@<div>
+								@Html.NopTextAreaFor(model => Model[i].MessageText)
+								@Html.ValidationMessageFor(model => Model[i].MessageText)
+							</div>, true))
+						</div>
+
+						<div class="col-md-3">
+							<div class="checkbox text-left">
+								@Html.EditorFor(model => Model[i].Enabled)
+								@Html.ValidationMessageFor(model => Model[i].Enabled, "", new { @class = "text-danger" })
+							</div>
+						</div>
+					</div>
+				}
+				<div class="form-group">
+					<div class="col-md-3">
+						&nbsp;
+					</div>
+					<div class="col-md-9">
+						<input type="submit" name="savemessages" class="btn bg-blue" value="@T("Admin.Common.Save")" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 }

@@ -1,233 +1,367 @@
 ﻿using Nop.Core.Data;
+using Nop.Core.Domain.Orders;
 using Nop.Core.Plugins;
 using Nop.Plugin.Misc.SMS.Data;
-using Nop.Web.Framework.Menu;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Nop.Plugin.Misc.SMS.Domain;
-using System.Web.Routing;
-using Nop.Services.Events;
-using Nop.Core.Domain.Orders;
-using Nop.Core.Events;
-using Nop.Core.Domain.Customers;
-using Nop.Services.Configuration;
-using Nop.Core.Configuration;
-using Nop.Core.Domain.Configuration;
-using System.Linq.Expressions;
 using Nop.Services.Common;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net;
+using Nop.Services.Configuration;
+using Nop.Services.Events;
 using Nop.Services.Localization;
+using System;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Web.Routing;
 
 namespace Nop.Plugin.Misc.SMS
 {
-    public class SMSPlugin : BasePlugin, IAdminMenuPlugin, IConsumer<OrderPlacedEvent>
-    {
-        #region fields
-        private SMSObjectContext _context;
-        private IRepository<Domain.SMS> _trialRepo;
-        private IRepository<SMSMessage> _messagesRepo;
-        private IRepository<SMSProvider> _providerRepo;
-        private SMSProvider _provider;
-        #endregion
+	public class SMSPlugin : BasePlugin, IMiscPlugin, IConsumer<OrderPlacedEvent>
+	{
+		#region fields
 
-        public SMSPlugin(SMSObjectContext context, IRepository<Domain.SMS> trialRepo,
-            IRepository<SMSMessage> messagesRepo, IRepository<SMSProvider> providerRepo)
-        {
-            _context = context;
-            _trialRepo = trialRepo;
-            _messagesRepo = messagesRepo;
-            _providerRepo = providerRepo;
-        }
-        public bool Authenticate()
-        {
-            return true;
-        }
+		private readonly SMSObjectContext _context;
+		private readonly SMSSettings _smsSettings;
+		private readonly IRepository<Domain.SMS> _smsRepository;
+		private readonly IRepository<SMSMessage> _smsMessageRepository;
+		private readonly ISettingService _settingService;
 
-        public override void Install()
-        {
-            #region Localization Resources Add
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ConfigurationPage", "SMS Sender Configuration");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderEnabled", "Enable sending sms");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderLogin", "Login");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderLoginRequired", "Login is Required");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderPassword", "Password");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderPasswordRequired", "Password is Required");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderApi", "Api");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderApi.Hint", "For <strong>HTTP API</strong> replace Login with #LOGIN#, Password  #PASSWORD#, recipient phone number #MOBILEPHONE# and message text with #MESSAGE# .");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderApiRequired", "Api is Required");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName", "AlfaName");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName.Hint", "Alfa Name will be displayed as sms sender for client.");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderEnableAlfaName", "Enable");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderAdminPhoneNumber", "Admin PhoneNumber");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderLastmodified", "Last modified");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageName", "Message");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageName.Hint", "Please use #ORDERNUMBER# to insert order number in message text");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageText", "Text of Message");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageEventType", "Event");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageEnabled", "Enabled");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageIsForAdmin", "Is for Admin");
-            #endregion
-            _context.Install();
-            base.Install();
-        }
+		#endregion
 
-        public override void Uninstall()
-        {
-            #region Localization Resources Delete
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ConfigurationPage");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderEnabled");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderLogin");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderLoginRequired");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderPassword");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderPasswordRequired");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderApi");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderApi.Hint");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderApiRequired");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName.Hint");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderEnableAlfaName");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderAdminPhoneNumber");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderLastmodified");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageName");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageName.Hint");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageText");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageEventType");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageEnabled");
-            this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageIsForAdmin");
-            #endregion
+		public SMSPlugin(
+			SMSSettings smsSettings,
+			SMSObjectContext context,
+			ISettingService settingsService,
+			IRepository<Domain.SMS> smsRepository,
+			IRepository<SMSMessage> smsMessageRepostitory
+		)
+		{
+			_context = context;
+			_smsSettings = smsSettings;
+			_smsRepository = smsRepository;
+			_settingService = settingsService;
+			_smsMessageRepository = smsMessageRepostitory;
+		}
 
-            _context.Uninstall();
-            base.Uninstall();
-        }
+		public bool Authenticate()
+		{
+			return true;
+		}
 
-        public void ManageSiteMap(SiteMapNode rootNode)
-        {
-            var menuItem = new SiteMapNode()
-            {
-                SystemName = "Misc.SMS",
-                Title = "SMS",
-                ControllerName = "SMS",
-                ActionName = "Manage",
-                Visible = true,
-                RouteValues = new RouteValueDictionary() { { "area", null } },
-            };
+		public override void Install()
+		{
+			_context.Install();
 
-            var pluginNode = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "Third party plugins");
-            if (pluginNode != null)
-                pluginNode.ChildNodes.Add(menuItem);
-            else
-                rootNode.ChildNodes.Add(menuItem);
-        }
+			var settings = new SMSSettings
+			{
+				LastConfigurationDate = DateTime.UtcNow
+			};
+			_settingService.SaveSetting(settings);
 
-        public void HandleEvent(OrderPlacedEvent eventMessage)
-        {
-            _provider = _providerRepo.Table.SingleOrDefault();
+			#region Localization Resources Add
 
-            if (!_provider.Enabled)
-                return;
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ConfigurationPage", "SMS Sender Configuration");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderEnabled", "Enable sending sms");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderLogin", "Login");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderLoginRequired", "Login is Required");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderPassword", "Password");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderPasswordRequired", "Password is Required");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderApi", "Api");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderApi.Hint", "For <strong>HTTP API</strong> replace Login with #LOGIN#, Password  #PASSWORD#, recipient phone number #MOBILEPHONE# and message text with #MESSAGE# .");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderApiRequired", "Api is Required");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName", "AlfaName");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName.Hint", "Alfa Name will be displayed as sms sender for client.");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderEnableAlfaName", "Enable");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderAdminPhoneNumber", "Admin PhoneNumber");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderLastmodified", "Last modified");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageName", "Message");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageName.Hint", "Please use #ORDERNUMBER# to insert order number in message text");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageText", "Text of Message");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageEventType", "Event");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageEnabled", "Enabled");
+			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageIsForAdmin", "Is for Admin");
 
-            var eventType = eventMessage.GetType().ToString();
+			#endregion
 
-            var message = _messagesRepo.Table.Where(m =>
-            m.Enabled == true && m.EventType == eventType).FirstOrDefault() ??
-            new SMSMessage { MessageText = "TEST MESSAGE",
-                Enabled = true, EventType = "Nop.Core.Domain.Orders.OrderPlacedEvent", Id = 1 };
+			#region Add default messages
 
-            
-            string messageText = message.MessageText.Replace("#ORDERNUMBER#", eventMessage.Order.Id.ToString());
+			var message1 = new SMSMessage
+			{
+				Enabled = true,
+				EventType = "Nop.Core.Domain.Orders.OrderPlacedEvent",
+				IsforAdmin = false,
+				MessageText = "Your order #ORDERNUMBER# is placed. Total: #ORDERTOTAL#",
+				Name = "Nop.Core.Domain.Orders.OrderPlacedEvent"
+			};
+			var message1Admin = new SMSMessage
+			{
+				Enabled = true,
+				EventType = "Nop.Core.Domain.Orders.OrderPlacedEvent",
+				IsforAdmin = true,
+				MessageText = "Client has ordered #ORDERNUMBER#. Total: #ORDERTOTAL#",
+				Name = "Nop.Core.Domain.Orders.OrderPlacedEvent"
+			};
 
+			var message2 = new SMSMessage
+			{
+				Enabled = true,
+				EventType = "Nop.Core.Domain.Orders.OrderPaidEvent",
+				IsforAdmin = false,
+				MessageText = "Order #ORDERNUMBER# has been successfully paid. Total: #ORDERTOTAL#",
+				Name = "Nop.Core.Domain.Orders.OrderPaidEvent"
+			};
+			var message2Admin = new SMSMessage
+			{
+				Enabled = true,
+				EventType = "Nop.Core.Domain.Orders.OrderPaidEvent",
+				IsforAdmin = true,
+				MessageText = "Client has paid #ORDERNUMBER#. Total: #ORDERTOTAL#",
+				Name = "Nop.Core.Domain.Orders.OrderPaidEvent"
+			};
 
+			var message3 = new SMSMessage
+			{
+				Enabled = true,
+				EventType = "Nop.Core.Domain.Orders.OrderCancelledEvent",
+				IsforAdmin = false,
+				MessageText = "Order #ORDERNUMBER# has been canceled",
+				Name = "Nop.Core.Domain.Orders.OrderCancelledEvent"
+			};
+			var message3Admin = new SMSMessage
+			{
+				Enabled = true,
+				EventType = "Nop.Core.Domain.Orders.OrderCancelledEvent",
+				IsforAdmin = true,
+				MessageText = "Client has canceled #ORDERNUMBER#.",
+				Name = "Nop.Core.Domain.Orders.OrderCancelledEvent"
+			};
 
-            Domain.SMS sms = new Domain.SMS
-            {
-                Message = messageText,
-                Login = _provider.Login,
-                Password = _provider.Password,
-                Api = _provider.Api,
-                AlfaName = _provider.EnableAlfaName ? _provider.AlfaName : null,
-                EventType = eventType,
-                PhoneNumber = eventMessage.Order.Customer.ShippingAddress.PhoneNumber ??
-                eventMessage.Order.Customer.BillingAddress.PhoneNumber,
-                Date = DateTime.Now,
-            };
+			_context.Set<SMSMessage>().Add(message1);
+			_context.Set<SMSMessage>().Add(message1Admin);
+			_context.Set<SMSMessage>().Add(message2);
+			_context.Set<SMSMessage>().Add(message2Admin);
+			_context.Set<SMSMessage>().Add(message3);
+			_context.Set<SMSMessage>().Add(message3Admin);
 
-            _trialRepo.Insert(sms);
+			_context.SaveChanges();
 
+			#endregion
 
-            GetRequest(sms);
+			base.Install();
+		}
 
-        }
+		public override void Uninstall()
+		{
+			#region Localization Resources Delete
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ConfigurationPage");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderEnabled");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderLogin");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderLoginRequired");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderPassword");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderPasswordRequired");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderApi");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderApi.Hint");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderApiRequired");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName.Hint");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderEnableAlfaName");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderAdminPhoneNumber");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderLastmodified");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageName");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageName.Hint");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageText");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageEventType");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageEnabled");
+			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageIsForAdmin");
+			#endregion
 
+			_settingService.DeleteSetting<SMSSettings>();
 
-        public void GetRequest(Domain.SMS sms)
-        {
-            string api = sms.Api;
+			_context.Uninstall();
 
-            api = api.Replace("#MESSAGE#", sms.Message);
-            api = api.Replace("#MOBILEPHONE#", sms.PhoneNumber);
-            api = api.Replace("#LOGIN#", sms.Login);
-            api = api.Replace("#PASSWORD#", sms.Password);
+			base.Uninstall();
+		}
 
-            string xmlwithAlfa = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-                "<request>" +
-                "<operation>SENDSMS</operation>" +
-                "<message start_time = \" AUTO \" end_time = \" AUTO \" lifetime = \"4\" rate = \"120\" desc = \"My first campaign \"  source=\"" + sms.AlfaName + "\" >" +
-                "<body>" + sms.Message + "</body>" +
-                "<recipient>" + sms.PhoneNumber + "</recipient>" +
-                "</message>" +
-                "</request>";
+		#region IConsumer<OrderPlacedEvent>
 
-            string xmlwithOutAlfa = "<?xml version = \"1.0\" encoding = \"utf-8\" ?>" +
-                "<request>" +
-                "<operation>SENDSMS</operation>" +
-                "<message start_time = \"AUTO\" end_time = \"AUTO\" lifetime = \"4\" rate = \"60\" desc = \"description\" type = \"single\">" +
-                "<recipient>"+sms.PhoneNumber+"</recipient>" +
-                "<body>"+sms.Message+"</body>" +
-                "</message>" +
-                "</request>";
+		public void HandleEvent(OrderPlacedEvent eventMessage)
+		{
+			var eventType = eventMessage.GetType().ToString();
+			HandleOrderEvent(eventMessage.Order, eventType);
+		}
 
-                string xml = sms.AlfaName != null ? xmlwithAlfa : xmlwithOutAlfa;
+		public void HandleEvent(OrderCancelledEvent eventMessage)
+		{
+			var eventType = eventMessage.GetType().ToString();
+			HandleOrderEvent(eventMessage.Order, eventType);
+		}
 
-            try
-            {
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(api);
+		public void HandleEvent(OrderPaidEvent eventMessage)
+		{
+			var eventType = eventMessage.GetType().ToString();
+			HandleOrderEvent(eventMessage.Order, eventType);
+		}
 
-                string authInfo = sms.Login + ":" + sms.Password;
-                authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-                req.Headers["Authorization"] = "Basic " + authInfo;
+		#endregion
 
+		private void HandleOrderEvent(Order order, string eventType)
+		{
+			if (!_smsSettings.Enabled)
+			{
+				return;
+			}
 
-                //string s = "id="+Server.UrlEncode(xml);
-                byte[] requestBytes = System.Text.Encoding.UTF8.GetBytes(xml);
-                req.Method = "POST";
-                req.ContentType = "text/xml;charset=utf-8";
-                req.ContentLength = requestBytes.Length;
-                Stream requestStream = req.GetRequestStream();
-                requestStream.Write(requestBytes, 0, requestBytes.Length);
-                requestStream.Close();
+			#region Send message to client
 
+			var clientMessage = _smsMessageRepository.Table
+				.FirstOrDefault(m => !m.IsforAdmin && m.Enabled && m.EventType == eventType);
 
-                HttpWebResponse res = (HttpWebResponse)req.GetResponse();
-                StreamReader sr = new StreamReader(res.GetResponseStream(), System.Text.Encoding.UTF8);
-                string backstr = sr.ReadToEnd();
+			if (clientMessage != null)
+			{
+				var message = clientMessage.GetLocalized(x => x.MessageText);
+				var clientSms = new Domain.SMS
+				{
+					Login = _smsSettings.Login,
+					Password = _smsSettings.Password,
+					ApiUrl = _smsSettings.ApiUrl,
+					AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
+					Date = DateTime.UtcNow,
+					EventType = eventType,
+					PhoneNumber = order.Customer.ShippingAddress.PhoneNumber ??
+						order.Customer.BillingAddress.PhoneNumber,
+					Message = message
+						.Replace("#ORDERNUMBER#", order.Id.ToString())
+						.Replace("#ORDERTOTAL#", order.OrderTotal.ToString())
+				};
+				clientSms.SmsServerResponse = POSTRequest(clientSms);
+				_smsRepository.Insert(clientSms);
+			}
 
+			#endregion
 
-                sr.Close();
-                res.Close();
+			#region Send message to admin
 
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
+			var adminMessage = _smsMessageRepository.Table
+				.FirstOrDefault(m => m.IsforAdmin && m.Enabled && m.EventType == eventType);
 
-        }
-    }
-    }
+			if (adminMessage != null)
+			{
+				var message = adminMessage.GetLocalized(x => x.MessageText);
+				var adminSms = new Domain.SMS
+				{
+					Login = _smsSettings.Login,
+					Password = _smsSettings.Password,
+					ApiUrl = _smsSettings.ApiUrl,
+					AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
+					Date = DateTime.UtcNow,
+					EventType = eventType,
+					PhoneNumber = _smsSettings.AdminPhoneNumber,
+					Message = message
+						.Replace("#ORDERNUMBER#", order.Id.ToString())
+						.Replace("#ORDERTOTAL#", order.OrderTotal.ToString())
+				};
+				adminSms.SmsServerResponse = POSTRequest(adminSms);
+				_smsRepository.Insert(adminSms);
+			}
+
+			#endregion
+		}
+
+		private string POSTRequest(Domain.SMS sms)
+		{
+			string api = sms.ApiUrl;
+
+			api = api.Replace("#MESSAGE#", sms.Message);
+			api = api.Replace("#MOBILEPHONE#", sms.PhoneNumber);
+			api = api.Replace("#LOGIN#", sms.Login);
+			api = api.Replace("#PASSWORD#", sms.Password);
+			api = api.Replace("#ALFANAME#", sms.AlfaName);
+
+			string XML = _smsSettings.EnableXML ? _smsSettings.XML : null;
+
+			if (XML != null)
+			{
+				XML = XML.Replace("#PHONENUMBER#", sms.PhoneNumber);
+				XML = XML.Replace("#ALFANAME#", sms.AlfaName);
+				XML = XML.Replace("#MESSAGE#", sms.Message);
+			}
+
+			try
+			{
+				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(api);
+
+				if (_smsSettings.IsHttpBasic)
+				{
+					string authInfo = sms.Login + ":" + sms.Password;
+					authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+					webRequest.Headers["Authorization"] = "Basic " + authInfo;
+				}
+
+				if (XML != null)
+				{
+					byte[] requestBytes = System.Text.Encoding.UTF8.GetBytes(XML);
+					webRequest.Method = "POST";
+					webRequest.ContentType = "text/xml;charset=utf-8";
+					webRequest.ContentLength = requestBytes.Length;
+					Stream requestStream = webRequest.GetRequestStream();
+					requestStream.Write(requestBytes, 0, requestBytes.Length);
+					requestStream.Close();
+				}
+
+				HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
+				StreamReader streamReader = new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8);
+				string responce = streamReader.ReadToEnd();
+
+				streamReader.Close();
+				webResponse.Close();
+
+				return responce;
+			}
+			catch (Exception ex)
+			{
+				throw (ex);
+			}
+			//string xmlwithAlfa = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+			//    "<request>" +
+			//    "<operation>SENDSMS</operation>" +
+			//    "<message start_time = \" AUTO \" end_time = \" AUTO \" lifetime = \"4\" rate = \"120\" desc = \"My first campaign \"  source=\"" + sms.AlfaName + "\" >" +
+			//    "<body>" + sms.Message + "</body>" +
+			//    "<recipient>" + sms.PhoneNumber + "</recipient>" +
+			//    "</message>" +
+			//    "</request>";
+
+			//string xmlwithOutAlfa = "<?xml version = \"1.0\" encoding = \"utf-8\" ?>" +
+			//    "<request>" +
+			//    "<operation>SENDSMS</operation>" +
+			//    "<message start_time = \"AUTO\" end_time = \"AUTO\" lifetime = \"4\" rate = \"60\" desc = \"description\" type = \"single\">" +
+			//    "<recipient>"+sms.PhoneNumber+"</recipient>" +
+			//    "<body>"+sms.Message+"</body>" +
+			//    "</message>" +
+			//    "</request>";
+
+			//string xml = sms.AlfaName != null ? xmlwithAlfa : xmlwithOutAlfa;
+		}
+
+		#region Routes
+
+		/// <summary>
+		/// Gets a route for provider configuration
+		/// </summary>
+		/// <param name="actionName">Action name</param>
+		/// <param name="controllerName">Controller name</param>
+		/// <param name="routeValues">Route values</param>
+		public void GetConfigurationRoute(out string actionName, out string controllerName, out RouteValueDictionary routeValues)
+		{
+			actionName = "Configure";
+			controllerName = "MiscSMS";
+			routeValues = new RouteValueDictionary
+			{
+				{ "Namespaces", "Nop.Plugin.Misc.SMS.Controllers" },
+				{ "area", null }
+			};
+		}
+
+		#endregion
+	}
+}
 

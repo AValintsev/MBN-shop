@@ -1,14 +1,10 @@
 ﻿using Nop.Core;
+using Nop.Core.Domain.Localization;
 using Nop.Web.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nop.Plugin.Misc.SMS.Domain
 {
-    public class SMSMessage : BaseEntity
+	public class SMSMessage : BaseEntity, ILocalizedEntity
     {
         [NopResourceDisplayName("Plugins.Misc.SMS.MessageName")]
         public string Name { get; set; }

@@ -1,32 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity;
+﻿using Nop.Core;
 using Nop.Data;
-using Nop.Core;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using Nop.Plugin.Misc.SMS.Domain;
 
 namespace Nop.Plugin.Misc.SMS.Data
 {
-    public class SMSObjectContext : DbContext, IDbContext
+	public class SMSObjectContext : DbContext, IDbContext
     {
         public bool ProxyCreationEnabled { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool AutoDetectChangesEnabled { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public SMSObjectContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
-
-        #region Implementation of IDbContext
-
-        #endregion
-
+		
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new SMSMap());
             modelBuilder.Configurations.Add(new SMSMessageMap());
-            modelBuilder.Configurations.Add(new SMSProviderMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -55,25 +46,10 @@ namespace Nop.Plugin.Misc.SMS.Data
         {
             var dbScriptforSMS = "DROP TABLE SMS";
             var dbScriptforMessage = "DROP TABLE SMSMessage";
-            var dbScriptforProvider = "DROP TABLE SMSProvider";
 
             Database.ExecuteSqlCommand(dbScriptforSMS);
             Database.ExecuteSqlCommand(dbScriptforMessage);
-            Database.ExecuteSqlCommand(dbScriptforProvider);
-
-            //drop the table
-            //var tableName = this.GetTableName<Domain.SMS>();
-            //var tableName1 = this.GetTableName<SMSProvider>();
-            //var tableName2 = this.GetTableName<SMSMessage>();
-
-            //this.DropPluginTable(tableName);
-            //this.DropPluginTable(tableName1);
-            //this.DropPluginTable(tableName2);
-
-
-
-
-
+			
             SaveChanges();
         }
 
@@ -98,7 +74,7 @@ namespace Nop.Plugin.Misc.SMS.Data
         }
 
         public void Detach(object entity)
-        {
+        {			
             throw new NotImplementedException();
         }
     }

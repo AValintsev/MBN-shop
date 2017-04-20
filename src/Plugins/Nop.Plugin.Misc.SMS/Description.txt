@@ -3,7 +3,7 @@ FriendlyName: SMS Provider
 SystemName: Misc.SMS
 Version: 1.00
 SupportedVersions: 3.90
-Author: proladge
+Author: DigitalLeader team
 DisplayOrder: 1
 FileName: Nop.Plugin.Misc.SMS.dll
-Description: My plugin
+Description: This plugin allows system to send sms after order is done e.t.c

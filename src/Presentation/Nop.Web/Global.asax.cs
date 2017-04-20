@@ -19,7 +19,7 @@ using Nop.Web.Framework.Mvc;
 using Nop.Web.Framework.Mvc.Routes;
 using Nop.Web.Framework.Themes;
 using StackExchange.Profiling;
-using StackExchange.Profiling.Mvc;
+using StackExchange.Profiling.Mvc; 
 
 namespace Nop.Web
 {

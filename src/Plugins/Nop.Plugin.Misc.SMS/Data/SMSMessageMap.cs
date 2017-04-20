@@ -1,13 +1,9 @@
 ﻿using Nop.Plugin.Misc.SMS.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity.ModelConfiguration;
+
 namespace Nop.Plugin.Misc.SMS.Data
 {
-    public class SMSMessageMap : EntityTypeConfiguration<SMSMessage>
+	public class SMSMessageMap : EntityTypeConfiguration<SMSMessage>
     {
         public SMSMessageMap()
         {
