@@ -54,7 +54,9 @@ namespace Nop.Plugin.Misc.SMS
 
 			var settings = new SMSSettings
 			{
-				LastConfigurationDate = DateTime.UtcNow
+				LastConfigurationDate = DateTime.UtcNow,
+				Enabled = true,
+				EnableAlfaName = true,
 			};
 			_settingService.SaveSetting(settings);
 
@@ -211,6 +213,17 @@ namespace Nop.Plugin.Misc.SMS
 				return;
 			}
 
+			var sms = new Domain.SMS
+			{
+				Login = _smsSettings.Login,
+				Password = _smsSettings.Password,
+				ApiUrl = _smsSettings.ApiUrl,
+				XML = _smsSettings.XML,
+				AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
+				Date = DateTime.UtcNow,
+				EventType = eventType
+			};
+
 			#region Send message to client
 
 			var clientMessage = _smsMessageRepository.Table
@@ -219,22 +232,15 @@ namespace Nop.Plugin.Misc.SMS
 			if (clientMessage != null)
 			{
 				var message = clientMessage.GetLocalized(x => x.MessageText);
-				var clientSms = new Domain.SMS
-				{
-					Login = _smsSettings.Login,
-					Password = _smsSettings.Password,
-					ApiUrl = _smsSettings.ApiUrl,
-					AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
-					Date = DateTime.UtcNow,
-					EventType = eventType,
-					PhoneNumber = order.Customer.ShippingAddress.PhoneNumber ??
-						order.Customer.BillingAddress.PhoneNumber,
-					Message = message
-						.Replace("#ORDERNUMBER#", order.Id.ToString())
-						.Replace("#ORDERTOTAL#", order.OrderTotal.ToString())
-				};
-				clientSms.SmsServerResponse = POSTRequest(clientSms);
-				_smsRepository.Insert(clientSms);
+
+				sms.PhoneNumber = order.Customer.ShippingAddress.PhoneNumber ??
+						order.Customer.BillingAddress.PhoneNumber;
+				sms.Message = message
+					.Replace("#ORDERNUMBER#", order.Id.ToString())
+					.Replace("#ORDERTOTAL#", order.OrderTotal.ToString());
+
+				sms.SmsServerResponse = POSTRequest(sms);
+				_smsRepository.Insert(sms);
 			}
 
 			#endregion
@@ -247,21 +253,12 @@ namespace Nop.Plugin.Misc.SMS
 			if (adminMessage != null)
 			{
 				var message = adminMessage.GetLocalized(x => x.MessageText);
-				var adminSms = new Domain.SMS
-				{
-					Login = _smsSettings.Login,
-					Password = _smsSettings.Password,
-					ApiUrl = _smsSettings.ApiUrl,
-					AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
-					Date = DateTime.UtcNow,
-					EventType = eventType,
-					PhoneNumber = _smsSettings.AdminPhoneNumber,
-					Message = message
-						.Replace("#ORDERNUMBER#", order.Id.ToString())
-						.Replace("#ORDERTOTAL#", order.OrderTotal.ToString())
-				};
-				adminSms.SmsServerResponse = POSTRequest(adminSms);
-				_smsRepository.Insert(adminSms);
+				sms.PhoneNumber = _smsSettings.AdminPhoneNumber;
+				sms.Message = message
+					.Replace("#ORDERNUMBER#", order.Id.ToString())
+					.Replace("#ORDERTOTAL#", order.OrderTotal.ToString());
+				sms.SmsServerResponse = POSTRequest(sms);
+				_smsRepository.Insert(sms);
 			}
 
 			#endregion
@@ -269,44 +266,32 @@ namespace Nop.Plugin.Misc.SMS
 
 		private string POSTRequest(Domain.SMS sms)
 		{
-			string api = sms.ApiUrl;
-
-			api = api.Replace("#MESSAGE#", sms.Message);
-			api = api.Replace("#MOBILEPHONE#", sms.PhoneNumber);
-			api = api.Replace("#LOGIN#", sms.Login);
-			api = api.Replace("#PASSWORD#", sms.Password);
-			api = api.Replace("#ALFANAME#", sms.AlfaName);
-
-			string XML = _smsSettings.EnableXML ? _smsSettings.XML : null;
+			string apiUrl = sms.ApiUrl;
+			string XML = _smsSettings.XML;
 
 			if (XML != null)
 			{
-				XML = XML.Replace("#PHONENUMBER#", sms.PhoneNumber);
-				XML = XML.Replace("#ALFANAME#", sms.AlfaName);
-				XML = XML.Replace("#MESSAGE#", sms.Message);
+				//TODO: check are all fields replaced
+				XML = XML.Replace("#PHONENUMBER#", sms.PhoneNumber)
+						 .Replace("#ALFANAME#", sms.AlfaName)
+						 .Replace("#MESSAGE#", sms.Message);
 			}
 
 			try
 			{
-				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(api);
+				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(apiUrl);
 
-				if (_smsSettings.IsHttpBasic)
-				{
-					string authInfo = sms.Login + ":" + sms.Password;
-					authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-					webRequest.Headers["Authorization"] = "Basic " + authInfo;
-				}
+				string authInfo = sms.Login + ":" + sms.Password;
+				authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+				webRequest.Headers["Authorization"] = "Basic " + authInfo;
 
-				if (XML != null)
-				{
-					byte[] requestBytes = System.Text.Encoding.UTF8.GetBytes(XML);
-					webRequest.Method = "POST";
-					webRequest.ContentType = "text/xml;charset=utf-8";
-					webRequest.ContentLength = requestBytes.Length;
-					Stream requestStream = webRequest.GetRequestStream();
-					requestStream.Write(requestBytes, 0, requestBytes.Length);
-					requestStream.Close();
-				}
+				byte[] requestBytes = System.Text.Encoding.UTF8.GetBytes(XML);
+				webRequest.Method = "POST";
+				webRequest.ContentType = "text/xml;charset=utf-8";
+				webRequest.ContentLength = requestBytes.Length;
+				Stream requestStream = webRequest.GetRequestStream();
+				requestStream.Write(requestBytes, 0, requestBytes.Length);
+				requestStream.Close();
 
 				HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
 				StreamReader streamReader = new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8);
@@ -321,25 +306,6 @@ namespace Nop.Plugin.Misc.SMS
 			{
 				throw (ex);
 			}
-			//string xmlwithAlfa = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-			//    "<request>" +
-			//    "<operation>SENDSMS</operation>" +
-			//    "<message start_time = \" AUTO \" end_time = \" AUTO \" lifetime = \"4\" rate = \"120\" desc = \"My first campaign \"  source=\"" + sms.AlfaName + "\" >" +
-			//    "<body>" + sms.Message + "</body>" +
-			//    "<recipient>" + sms.PhoneNumber + "</recipient>" +
-			//    "</message>" +
-			//    "</request>";
-
-			//string xmlwithOutAlfa = "<?xml version = \"1.0\" encoding = \"utf-8\" ?>" +
-			//    "<request>" +
-			//    "<operation>SENDSMS</operation>" +
-			//    "<message start_time = \"AUTO\" end_time = \"AUTO\" lifetime = \"4\" rate = \"60\" desc = \"description\" type = \"single\">" +
-			//    "<recipient>"+sms.PhoneNumber+"</recipient>" +
-			//    "<body>"+sms.Message+"</body>" +
-			//    "</message>" +
-			//    "</request>";
-
-			//string xml = sms.AlfaName != null ? xmlwithAlfa : xmlwithOutAlfa;
 		}
 
 		#region Routes

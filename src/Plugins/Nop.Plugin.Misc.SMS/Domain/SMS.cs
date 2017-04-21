@@ -14,6 +14,8 @@ namespace Nop.Plugin.Misc.SMS.Domain
 
 		public string ApiUrl { get; set; }
 
+		public string XML { get; set; }
+
 		public string AlfaName { get; set; }
 
 		public string PhoneNumber { get; set; }

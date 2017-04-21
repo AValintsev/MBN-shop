@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="UkrainianMain" SupportedVersion="3.90">
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderLogin">
+		<Value>Логін</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderPassword">
+		<Value>Пароль</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderApi">
+		<Value>АПІ Url</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderXML">
+		<Value>XML</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderAlfaName">
+		<Value>Альфа ім'я</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderAdminPhoneNumber">
+		<Value>Номер телефону адміністратора</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderLastmodified">
+		<Value>Дата останньої модифікації</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnableAlfaName">
+		<Value>Активувати альфа ім'я</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnableXML">
+		<Value>Активувати XML</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderIsHttpBasic">
+		<Value>Використовувати базову Http аутинтефікацію</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnabled">
+		<Value>Активувати відправку смс</Value>
+	</LocaleResource>
+</Language>

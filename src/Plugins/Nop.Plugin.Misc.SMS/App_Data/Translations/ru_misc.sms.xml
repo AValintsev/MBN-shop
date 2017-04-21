@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="Русский" SupportedVersion="3.90">
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderLogin">
+		<Value>Логин</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderLogin.Hint">
+		<Value>Логин который используется для авторизации в сервисе отсылки смс.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderPassword">
+		<Value>Пароль</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderPassword.Hint">
+		<Value>Пароль который используется для авторизации в сервисе отсылки смс.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderApi">
+		<Value>АПИ Url</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderApi.Hint">
+		<Value>
+			Url котороый предоставляет сервис отсылки смс.
+			Для коректной работы используйте следующие заменители: #MESSAGE#, #MOBILEPHONE#, #LOGIN#, #PASSWORD#, #ALFANAME#
+		</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderXML">
+		<Value>XML</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderXML.Hint">
+		<Value>Если для отправки смс необходимо использовать XML, введите шаблон в это поле. Используйте следующие заменители: #PHONENUMBER#, #ALFANAME#, #MESSAGE#</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderAlfaName">
+		<Value>Альфа имя</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderAlfaName.Hint">
+		<Value>Альфа имя, если поддерживается. Т.е от кого пришла смс</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderAdminPhoneNumber">
+		<Value>Номер телефона администратора</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderAdminPhoneNumber.Hint">
+		<Value>Если смс будет дублироваться для администратора, введите номер админа</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderLastmodified">
+		<Value>Дата последней модификации</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnableAlfaName">
+		<Value>Активировать альфа имя</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnableAlfaName.Hint">
+		<Value>Если выключено, альфа имя не будет использовано</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnableXML">
+		<Value>Активировать XML</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnableXML.Hint">
+		<Value>Если активно, для отправки запроса к сервису смс, будет использован XML</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderIsHttpBasic">
+		<Value>Использовать базовую Http аутентификацию</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderIsHttpBasic.Hint">
+		<Value>Логин и Пароль будут скрыты в теле запроса. Безопасный метод</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnabled">
+		<Value>Активировать отправку смс</Value>
+	</LocaleResource>
+</Language>

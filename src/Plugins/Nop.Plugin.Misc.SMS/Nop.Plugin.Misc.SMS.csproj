@@ -111,6 +111,15 @@
     <Compile Include="SMSSettings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Translations\en_misc.sms.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\Translations\ru_misc.sms.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\Translations\ua_misc.sms.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Description.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English" SupportedVersion="3.90">
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderLogin">
+		<Value>Login</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderPassword">
+		<Value>Password</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderApi">
+		<Value>API Url</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderXML">
+		<Value>XML</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderAlfaName">
+		<Value>Alfa name</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderAdminPhoneNumber">
+		<Value>Administrator phone number</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderLastmodified">
+		<Value>Last modification date</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnableAlfaName">
+		<Value>Enable alfa name</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnableXML">
+		<Value>Enable XML</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderIsHttpBasic">
+		<Value>Use basic Http authentication</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnabled">
+		<Value>Enable sms sending</Value>
+	</LocaleResource>
+</Language>

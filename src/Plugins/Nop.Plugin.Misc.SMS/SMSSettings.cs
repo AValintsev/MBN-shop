@@ -20,11 +20,7 @@ namespace Nop.Plugin.Misc.SMS
 		public DateTime LastConfigurationDate { get; set; }
 
 		public bool EnableAlfaName { get; set; }
-
-		public bool EnableXML { get; set; }
-
-		public bool IsHttpBasic { get; set; }
-
+		
 		public bool Enabled { get; set; }
 	}
 }

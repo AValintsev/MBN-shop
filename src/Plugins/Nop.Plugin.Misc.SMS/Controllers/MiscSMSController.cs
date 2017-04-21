@@ -70,8 +70,6 @@ namespace Nop.Plugin.Misc.SMS.Controllers
 				ApiUrl = smsSettings.ApiUrl,
 				EnableAlfaName = smsSettings.EnableAlfaName,
 				Enabled = smsSettings.Enabled,
-				EnableXML = smsSettings.EnableXML,
-				IsHttpBasic = smsSettings.IsHttpBasic,
 				LastConfigurationDate = smsSettings.LastConfigurationDate,
 				Login = smsSettings.Login,
 				Password = smsSettings.Password,
@@ -98,9 +96,7 @@ namespace Nop.Plugin.Misc.SMS.Controllers
 			smsSettings.AlfaName = viewModel.AlfaName;
 			smsSettings.ApiUrl = viewModel.ApiUrl;
 			smsSettings.EnableAlfaName = viewModel.EnableAlfaName;
-			smsSettings.Enabled = viewModel.Enabled;
-			smsSettings.EnableXML = viewModel.EnableXML;
-			smsSettings.IsHttpBasic = viewModel.IsHttpBasic;
+			smsSettings.Enabled = viewModel.Enabled;			
 			smsSettings.LastConfigurationDate = DateTime.UtcNow;
 			smsSettings.Login = viewModel.Login;
 			smsSettings.Password = viewModel.Password;

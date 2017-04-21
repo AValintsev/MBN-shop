@@ -28,13 +28,7 @@ namespace Nop.Plugin.Misc.SMS.Models
 
 		[NopResourceDisplayName("Plugins.Misc.SMS.ProviderEnableAlfaName")]
 		public bool EnableAlfaName { get; set; }
-
-		[NopResourceDisplayName("Plugins.Misc.SMS.ProviderEnableXML")]
-		public bool EnableXML { get; set; }
-
-		[NopResourceDisplayName("Plugins.Misc.SMS.ProviderIsHttpBasic")]
-		public bool IsHttpBasic { get; set; }
-
+		
 		[NopResourceDisplayName("Plugins.Misc.SMS.ProviderEnabled")]
 		public bool Enabled { get; set; }
 	}
