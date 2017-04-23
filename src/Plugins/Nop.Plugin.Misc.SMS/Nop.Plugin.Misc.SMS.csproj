@@ -109,6 +109,7 @@
     <Compile Include="Infrustructure\DependencyRegistar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SMSSettings.cs" />
+    <Compile Include="Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Translations\en_misc.sms.xml">

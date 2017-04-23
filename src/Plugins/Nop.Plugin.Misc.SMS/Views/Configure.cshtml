@@ -8,7 +8,9 @@
 
 @using (Html.BeginForm())
 {
-	@Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.AntiForgeryToken()
 
 	<div class="panel-group">
 		<div class="panel panel-default">

@@ -1,5 +1,9 @@
-﻿using Nop.Core.Data;
+﻿using Nop.Core;
+using Nop.Core.Caching;
+using Nop.Core.Data;
+using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Infrastructure;
 using Nop.Core.Plugins;
 using Nop.Plugin.Misc.SMS.Data;
 using Nop.Plugin.Misc.SMS.Domain;
@@ -13,30 +17,44 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web.Routing;
+using System.Xml;
 
 namespace Nop.Plugin.Misc.SMS
 {
 	public class SMSPlugin : BasePlugin, IMiscPlugin, IConsumer<OrderPlacedEvent>
 	{
-		#region fields
+        /// Key pattern to clear cache
+        /// </summary>
+        private const string LOCALSTRINGRESOURCES_PATTERN_KEY = "Nop.lsr.";
 
-		private readonly SMSObjectContext _context;
+        #region fields
+
+        private readonly SMSObjectContext _context;
 		private readonly SMSSettings _smsSettings;
 		private readonly IRepository<Domain.SMS> _smsRepository;
 		private readonly IRepository<SMSMessage> _smsMessageRepository;
 		private readonly ISettingService _settingService;
+        private readonly  IRepository<Language> _languageRepository;
+        //private readonly LanguageService _languageService;
+        private readonly ICacheManager _cacheManager;
 
-		#endregion
+        #endregion
 
-		public SMSPlugin(
-			SMSSettings smsSettings,
+        public SMSPlugin(
+            IRepository<Language> languageRepository,
+            //LanguageService languageService,
+            ICacheManager cacheManager,
+            SMSSettings smsSettings,
 			SMSObjectContext context,
 			ISettingService settingsService,
 			IRepository<Domain.SMS> smsRepository,
 			IRepository<SMSMessage> smsMessageRepostitory
 		)
 		{
-			_context = context;
+            _languageRepository = languageRepository;
+            //_languageService = languageService;
+            _cacheManager = cacheManager;
+            _context = context;
 			_smsSettings = smsSettings;
 			_smsRepository = smsRepository;
 			_settingService = settingsService;
@@ -50,7 +68,9 @@ namespace Nop.Plugin.Misc.SMS
 
 		public override void Install()
 		{
-			_context.Install();
+            InstallLocaleResources();
+
+            _context.Install();
 
 			var settings = new SMSSettings
 			{
@@ -60,30 +80,6 @@ namespace Nop.Plugin.Misc.SMS
 			};
 			_settingService.SaveSetting(settings);
 
-			#region Localization Resources Add
-
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ConfigurationPage", "SMS Sender Configuration");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderEnabled", "Enable sending sms");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderLogin", "Login");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderLoginRequired", "Login is Required");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderPassword", "Password");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderPasswordRequired", "Password is Required");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderApi", "Api");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderApi.Hint", "For <strong>HTTP API</strong> replace Login with #LOGIN#, Password  #PASSWORD#, recipient phone number #MOBILEPHONE# and message text with #MESSAGE# .");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderApiRequired", "Api is Required");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName", "AlfaName");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName.Hint", "Alfa Name will be displayed as sms sender for client.");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderEnableAlfaName", "Enable");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderAdminPhoneNumber", "Admin PhoneNumber");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.ProviderLastmodified", "Last modified");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageName", "Message");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageName.Hint", "Please use #ORDERNUMBER# to insert order number in message text");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageText", "Text of Message");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageEventType", "Event");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageEnabled", "Enabled");
-			this.AddOrUpdatePluginLocaleResource("Plugins.Misc.SMS.MessageIsForAdmin", "Is for Admin");
-
-			#endregion
 
 			#region Add default messages
 
@@ -93,16 +89,16 @@ namespace Nop.Plugin.Misc.SMS
 				EventType = "Nop.Core.Domain.Orders.OrderPlacedEvent",
 				IsforAdmin = false,
 				MessageText = "Your order #ORDERNUMBER# is placed. Total: #ORDERTOTAL#",
-				Name = "Nop.Core.Domain.Orders.OrderPlacedEvent"
-			};
+				Name = "Plugins.Misc.SMS.OrderPlacedEvent"
+            };
 			var message1Admin = new SMSMessage
 			{
 				Enabled = true,
 				EventType = "Nop.Core.Domain.Orders.OrderPlacedEvent",
 				IsforAdmin = true,
 				MessageText = "Client has ordered #ORDERNUMBER#. Total: #ORDERTOTAL#",
-				Name = "Nop.Core.Domain.Orders.OrderPlacedEvent"
-			};
+				Name = "Plugins.Misc.SMS.OrderPlacedEvent.ForAdmin"
+            };
 
 			var message2 = new SMSMessage
 			{
@@ -110,7 +106,7 @@ namespace Nop.Plugin.Misc.SMS
 				EventType = "Nop.Core.Domain.Orders.OrderPaidEvent",
 				IsforAdmin = false,
 				MessageText = "Order #ORDERNUMBER# has been successfully paid. Total: #ORDERTOTAL#",
-				Name = "Nop.Core.Domain.Orders.OrderPaidEvent"
+				Name = "Plugins.Misc.SMS.OrderPaidEvent"
 			};
 			var message2Admin = new SMSMessage
 			{
@@ -118,8 +114,8 @@ namespace Nop.Plugin.Misc.SMS
 				EventType = "Nop.Core.Domain.Orders.OrderPaidEvent",
 				IsforAdmin = true,
 				MessageText = "Client has paid #ORDERNUMBER#. Total: #ORDERTOTAL#",
-				Name = "Nop.Core.Domain.Orders.OrderPaidEvent"
-			};
+				Name = "Plugins.Misc.SMS.OrderPaidEvent.ForAdmin"
+            };
 
 			var message3 = new SMSMessage
 			{
@@ -127,16 +123,16 @@ namespace Nop.Plugin.Misc.SMS
 				EventType = "Nop.Core.Domain.Orders.OrderCancelledEvent",
 				IsforAdmin = false,
 				MessageText = "Order #ORDERNUMBER# has been canceled",
-				Name = "Nop.Core.Domain.Orders.OrderCancelledEvent"
-			};
+				Name = "Plugins.Misc.SMS.OrderCancelledEvent"
+            };
 			var message3Admin = new SMSMessage
 			{
 				Enabled = true,
 				EventType = "Nop.Core.Domain.Orders.OrderCancelledEvent",
 				IsforAdmin = true,
 				MessageText = "Client has canceled #ORDERNUMBER#.",
-				Name = "Nop.Core.Domain.Orders.OrderCancelledEvent"
-			};
+				Name = "Plugins.Misc.SMS.OrderCancelledEvent.ForAdmin"
+            };
 
 			_context.Set<SMSMessage>().Add(message1);
 			_context.Set<SMSMessage>().Add(message1Admin);
@@ -152,34 +148,56 @@ namespace Nop.Plugin.Misc.SMS
 			base.Install();
 		}
 
-		public override void Uninstall()
-		{
-			#region Localization Resources Delete
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ConfigurationPage");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderEnabled");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderLogin");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderLoginRequired");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderPassword");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderPasswordRequired");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderApi");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderApi.Hint");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderApiRequired");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderAlfaName.Hint");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderEnableAlfaName");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderAdminPhoneNumber");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.ProviderLastmodified");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageName");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageName.Hint");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageText");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageEventType");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageEnabled");
-			this.DeletePluginLocaleResource("Plugins.Misc.SMS.MessageIsForAdmin");
-			#endregion
+        protected virtual void InstallLocaleResources()
+        {
+            //English language
+            var languageEng = _languageRepository.Table.Single(l => l.Name == "English");
 
+            if (languageEng != null)
+            {
+                //save resources
+                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.SMS/App_Data/Translations"), "en_misc.sms.xml", SearchOption.TopDirectoryOnly))
+                {
+                    var localesXml = File.ReadAllText(filePath);
+                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+                    localizationService.ImportResourcesFromXml(languageEng, localesXml);
+                }
+            }
+
+            //Russian language
+           var languageRu = _languageRepository.Table.SingleOrDefault(l => l.Name == "Russian");
+
+            if (languageRu != null)
+            {
+                //save resources
+                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.SMS/App_Data/Translations"), "ru_misc.sms.xml", SearchOption.TopDirectoryOnly))
+                {
+                    var localesXml = File.ReadAllText(filePath);
+                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+                    localizationService.ImportResourcesFromXml(languageRu, localesXml);
+                }
+            }
+
+
+                //Ukrainian language
+                var languageUa = _languageRepository.Table.Single(l => l.Name == "Ukrainian");
+                if (languageUa != null)
+                {
+                    //save resources
+                    foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.SMS/App_Data/Translations"), "ua_misc.sms.xml", SearchOption.TopDirectoryOnly))
+                {
+                    var localesXml = File.ReadAllText(filePath);
+                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+                    localizationService.ImportResourcesFromXml(languageUa, localesXml);
+                }
+            }
+        }
+        
+        public override void Uninstall()
+		{
 			_settingService.DeleteSetting<SMSSettings>();
 
-			_context.Uninstall();
+            _context.Uninstall();
 
 			base.Uninstall();
 		}

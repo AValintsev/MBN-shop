@@ -84,8 +84,11 @@ namespace Nop.Plugin.Misc.SMS.Controllers
 		[FormValueRequired("save")]
 		public ActionResult Configure(ConfigurationModel viewModel)
 		{
-			if (!ModelState.IsValid)
-				return Configure();
+            if (!ModelState.IsValid)
+            {
+                return Configure();
+            }
+
 
 			//load settings for a chosen store scope
 			var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);

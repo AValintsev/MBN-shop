@@ -9,7 +9,7 @@
 	@Html.AntiForgeryToken()
 	<div class="panel-group">
 		<div class="panel panel-default">
-			<div class="panel-heading">@T("Plugins.Misc.SMS.MessageName.Hint")</div>
+			<div class="panel-heading"><h3><strong>@T("Plugins.Misc.SMS.Messages.Hint")</strong></h3></div>
 			<div class="panel-body">
 				@for(int i = 0; i < Model.Count; i++)
 				{
@@ -17,11 +17,7 @@
 					<div class="form-group col-md-12">
 						@Html.HiddenFor(model => Model[i].Id)
 						<div class="col-md-3">
-							@if (Model[i].IsforAdmin)
-							{
-								<text>For ADMIN</text>
-							}
-							@Html.NopDisplayFor(model => Model[i].Name)
+							@T(Model[i].Name)
 							@Html.HiddenFor(model => Model[i].Name)
 							@Html.HiddenFor(model => Model[i].EventType)
 						</div>
