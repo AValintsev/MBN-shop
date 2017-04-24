@@ -231,20 +231,20 @@ namespace Nop.Plugin.Misc.SMS
 				return;
 			}
 
-			var sms = new Domain.SMS
-			{
-				Login = _smsSettings.Login,
-				Password = _smsSettings.Password,
-				ApiUrl = _smsSettings.ApiUrl,
-				XML = _smsSettings.XML,
-				AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
-				Date = DateTime.UtcNow,
-				EventType = eventType
-			};
+            #region Send message to client
 
-			#region Send message to client
+            var sms = new Domain.SMS
+            {
+                Login = _smsSettings.Login,
+                Password = _smsSettings.Password,
+                ApiUrl = _smsSettings.ApiUrl,
+                XML = _smsSettings.XML,
+                AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
+                Date = DateTime.UtcNow,
+                EventType = eventType
+            };
 
-			var clientMessage = _smsMessageRepository.Table
+            var clientMessage = _smsMessageRepository.Table
 				.FirstOrDefault(m => !m.IsforAdmin && m.Enabled && m.EventType == eventType);
 
 			if (clientMessage != null)
@@ -261,22 +261,33 @@ namespace Nop.Plugin.Misc.SMS
 				_smsRepository.Insert(sms);
 			}
 
-			#endregion
+            #endregion
 
-			#region Send message to admin
+            #region Send message to admin
 
-			var adminMessage = _smsMessageRepository.Table
+            var smsForAdmin = new Domain.SMS
+            {
+                Login = _smsSettings.Login,
+                Password = _smsSettings.Password,
+                ApiUrl = _smsSettings.ApiUrl,
+                XML = _smsSettings.XML,
+                AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
+                Date = DateTime.UtcNow,
+                EventType = eventType
+            };
+
+            var adminMessage = _smsMessageRepository.Table
 				.FirstOrDefault(m => m.IsforAdmin && m.Enabled && m.EventType == eventType);
 
 			if (adminMessage != null)
 			{
 				var message = adminMessage.GetLocalized(x => x.MessageText);
-				sms.PhoneNumber = _smsSettings.AdminPhoneNumber;
-				sms.Message = message
+				smsForAdmin.PhoneNumber = _smsSettings.AdminPhoneNumber;
+                smsForAdmin.Message = message
 					.Replace("#ORDERNUMBER#", order.Id.ToString())
 					.Replace("#ORDERTOTAL#", order.OrderTotal.ToString());
-				sms.SmsServerResponse = POSTRequest(sms);
-				_smsRepository.Insert(sms);
+                smsForAdmin.SmsServerResponse = POSTRequest(smsForAdmin);
+				_smsRepository.Insert(smsForAdmin);
 			}
 
 			#endregion
@@ -285,12 +296,11 @@ namespace Nop.Plugin.Misc.SMS
 		private string POSTRequest(Domain.SMS sms)
 		{
 			string apiUrl = sms.ApiUrl;
-			string XML = _smsSettings.XML;
 
-			if (XML != null)
+			if (sms.XML != null)
 			{
-				//TODO: check are all fields replaced
-				XML = XML.Replace("#PHONENUMBER#", sms.PhoneNumber)
+                //TODO: check are all fields replaced
+                sms.XML = sms.XML.Replace("#PHONENUMBER#", sms.PhoneNumber)
 						 .Replace("#ALFANAME#", sms.AlfaName)
 						 .Replace("#MESSAGE#", sms.Message);
 			}
@@ -303,7 +313,7 @@ namespace Nop.Plugin.Misc.SMS
 				authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 				webRequest.Headers["Authorization"] = "Basic " + authInfo;
 
-				byte[] requestBytes = System.Text.Encoding.UTF8.GetBytes(XML);
+				byte[] requestBytes = System.Text.Encoding.UTF8.GetBytes(sms.XML);
 				webRequest.Method = "POST";
 				webRequest.ContentType = "text/xml;charset=utf-8";
 				webRequest.ContentLength = requestBytes.Length;

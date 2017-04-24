@@ -1,6 +1,7 @@
 ﻿using FluentValidation.Attributes;
 using Nop.Web.Framework;
 using System;
+using System.Web.Mvc;
 
 namespace Nop.Plugin.Misc.SMS.Models
 {
@@ -16,6 +17,7 @@ namespace Nop.Plugin.Misc.SMS.Models
         [NopResourceDisplayName("Plugins.Misc.SMS.SettingsApiUrl")]
 		public string ApiUrl { get; set; }
 
+        [AllowHtml]
         [NopResourceDisplayName("Plugins.Misc.SMS.SettingsXML")]
 		public string XML { get; set; }
 
