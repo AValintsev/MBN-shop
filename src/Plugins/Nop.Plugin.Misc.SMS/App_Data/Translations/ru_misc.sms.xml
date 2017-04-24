@@ -10,7 +10,7 @@
     <Value>Введите логин</Value>
   </LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsLogin.Hint">
-		<Value>Логин который используется для авторизации в сервисе отсылки смс.</Value>
+		<Value>Логин, который используется для авторизации в сервисе отсылки смс.</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsPassword">
 		<Value>Пароль</Value>
@@ -19,7 +19,7 @@
     <Value>Введите пароль</Value>
   </LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsPassword.Hint">
-		<Value>Пароль который используется для авторизации в сервисе отсылки смс.</Value>
+		<Value>Пароль, который используется для авторизации в сервисе отсылки смс.</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsApiUrl">
 		<Value>АПИ Url</Value>
@@ -31,19 +31,19 @@
     <Value>Url введен некоректно. Проверте правльность ввода</Value>
   </LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsApiUrl.Hint">
-		<Value>Url котороый предоставляет сервис отсылки смс.</Value>
+		<Value>Url, котороый предоставляет сервис отсылки смс.</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsXML">
 		<Value>XML</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsXML.Hint">
-		<Value>Если для отправки смс необходимо использовать XML, введите шаблон в это поле. Используйте следующие заменители: #PHONENUMBER# (телефона адрессата), #ALFANAME#, #MESSAGE#</Value>
+		<Value>Вы можете получить специальный XML для отправки смс у вашего провайдера, введите шаблон в это поле. Используйте следующие заменители: #PHONENUMBER# (телефона адрессата), #ALFANAME#, #MESSAGE#</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsAlfaName">
 		<Value>Альфа имя</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsAlfaName.Hint">
-		<Value>Альфа имя. Отображаеться адрессату в качистве имени отправителя смс (Если поддерживаеться провайдером)</Value>
+		<Value>Альфа имя. Отображаеться адрессату в качистве имени отправителя смс (Если поддерживается провайдером)</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsAdminPhoneNumber">
 		<Value>Номер телефона администратора</Value>
@@ -70,27 +70,30 @@
 		<Value>Если активно, для отправки запроса к сервису смс, будет использован XML</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsEnabled">
-		<Value>Активировать отправку смс</Value>
+		<Value>Активировать плагин</Value>
 	</LocaleResource>
   <LocaleResource Name="Plugins.Misc.SMS.Messages.Hint">
     <Value>Здесь Вы можете редактировать сообщения для каждого собития. используйте следующие заменители #ORDERNUMBER# , #ORDERTOTAL# в тексте сообщения.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.MessageEnabled">
+    <Value>Активировать</Value>
   </LocaleResource>
   <LocaleResource Name="Plugins.Misc.SMS.OrderPlacedEvent">
     <Value>Новий заказ поступил</Value>
   </LocaleResource>
   <LocaleResource Name="Plugins.Misc.SMS.OrderPlacedEvent.ForAdmin">
-    <Value>Новий заказ поступил Для Админа</Value>
+    <Value>Новий заказ поступил (Для Админа)</Value>
   </LocaleResource>
   <LocaleResource Name="Plugins.Misc.SMS.OrderPaidEvent">
     <Value>Заказ оплачен</Value>
   </LocaleResource>
   <LocaleResource Name="Plugins.Misc.SMS.OrderPaidEvent.ForAdmin">
-    <Value>Заказ оплачен Для Админа</Value>
+    <Value>Заказ оплачен (Для Админа)</Value>
   </LocaleResource>
   <LocaleResource Name="Plugins.Misc.SMS.OrderCancelledEvent">
     <Value>Заказ отменен</Value>
   </LocaleResource>
   <LocaleResource Name="Plugins.Misc.SMS.OrderCancelledEvent.ForAdmin">
-    <Value>Заказ отменен Для Админа</Value>
+    <Value>Заказ отменен (Для Админа)</Value>
   </LocaleResource>
 </Language>

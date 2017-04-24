@@ -70,27 +70,30 @@
 		<Value>If enabled XML will be used to send request to Provider service</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Misc.SMS.SettingsEnabled">
-		<Value>Enable sms sending</Value>
+		<Value>Enable plugin</Value>
 	</LocaleResource>
   <LocaleResource Name="Plugins.Misc.SMS.Messages.Hint">
-    <Value>Here you can edit text of messages for each Event. Use #ORDERNUMBER# , #ORDERTOTAL# to be replaced in text of message.</Value>
+    <Value>Here you can edit text of messages for each Event. Replace Order number field with #ORDERNUMBER# and Order total with #ORDERTOTAL#.</Value>
+  </LocaleResource>
+   <LocaleResource Name="Plugins.Misc.SMS.MessageEnabled">
+    <Value>Enabled</Value>
   </LocaleResource>
 <LocaleResource Name="Plugins.Misc.SMS.OrderPlacedEvent">
 		<Value>New Order Placed</Value>
 	</LocaleResource>
 <LocaleResource Name="Plugins.Misc.SMS.OrderPlacedEvent.ForAdmin">
-		<Value>New Order Placed For Admin</Value>
+		<Value>New Order Placed (For Admin)</Value>
 	</LocaleResource>
 <LocaleResource Name="Plugins.Misc.SMS.OrderPaidEvent">
 		<Value>Order Paid </Value>
 	</LocaleResource>
 <LocaleResource Name="Plugins.Misc.SMS.OrderPaidEvent.ForAdmin">
-		<Value>Order Paid for Admin</Value>
+		<Value>Order Paid (For Admin)</Value>
 	</LocaleResource>
 <LocaleResource Name="Plugins.Misc.SMS.OrderCancelledEvent">
 		<Value>Order Cancelled</Value>
 	</LocaleResource>
 <LocaleResource Name="Plugins.Misc.SMS.OrderCancelledEvent.ForAdmin">
-		<Value>Order Cancelled For Admin</Value>
+		<Value>Order Cancelled (For Admin)</Value>
 	</LocaleResource>
 </Language>

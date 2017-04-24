@@ -307,26 +307,26 @@ namespace Nop.Plugin.Misc.SMS
 
 			try
 			{
-				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(apiUrl);
+				    HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(apiUrl);
 
-				string authInfo = sms.Login + ":" + sms.Password;
-				authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-				webRequest.Headers["Authorization"] = "Basic " + authInfo;
+				    string authInfo = sms.Login + ":" + sms.Password;
+				    authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+				    webRequest.Headers["Authorization"] = "Basic " + authInfo;
 
-				byte[] requestBytes = System.Text.Encoding.UTF8.GetBytes(sms.XML);
-				webRequest.Method = "POST";
-				webRequest.ContentType = "text/xml;charset=utf-8";
-				webRequest.ContentLength = requestBytes.Length;
-				Stream requestStream = webRequest.GetRequestStream();
-				requestStream.Write(requestBytes, 0, requestBytes.Length);
-				requestStream.Close();
+				    byte[] requestBytes = System.Text.Encoding.UTF8.GetBytes(sms.XML);
+				    webRequest.Method = "POST";
+				    webRequest.ContentType = "text/xml;charset=utf-8";
+				    webRequest.ContentLength = requestBytes.Length;
+				    Stream requestStream = webRequest.GetRequestStream();
+				    requestStream.Write(requestBytes, 0, requestBytes.Length);
+				    requestStream.Close();
 
-				HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
-				StreamReader streamReader = new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8);
-				string responce = streamReader.ReadToEnd();
+				    HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
+				    StreamReader streamReader = new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8);
+				    string responce = streamReader.ReadToEnd();
 
-				streamReader.Close();
-				webResponse.Close();
+				    streamReader.Close();
+				    webResponse.Close();
 
 				return responce;
 			}
