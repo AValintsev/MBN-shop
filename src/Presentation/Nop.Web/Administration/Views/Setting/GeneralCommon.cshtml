@@ -164,6 +164,16 @@
                                 @Html.ValidationMessageFor(model => model.StoreInformationSettings.FacebookLink)
                             </div>
                         </div>
+						<div class="form-group">
+							<div class="col-md-3">
+								@Html.OverrideStoreCheckboxFor(model => model.StoreInformationSettings.VKLink_OverrideForStore, model => model.StoreInformationSettings.VKLink, Model.ActiveStoreScopeConfiguration)
+								@Html.NopLabelFor(model => model.StoreInformationSettings.VKLink)
+							</div>
+							<div class="col-md-9">
+								@Html.NopEditorFor(model => model.StoreInformationSettings.VKLink)
+								@Html.ValidationMessageFor(model => model.StoreInformationSettings.VKLink)
+							</div>
+						</div>
                         <div class="form-group">
                             <div class="col-md-3">
                                 @Html.OverrideStoreCheckboxFor(model => model.StoreInformationSettings.TwitterLink_OverrideForStore, model => model.StoreInformationSettings.TwitterLink, Model.ActiveStoreScopeConfiguration)

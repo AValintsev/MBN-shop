@@ -1240,6 +1240,7 @@
     <Content Include="Themes\NopElectro\Views\Common\CurrencySelector.cshtml" />
     <Content Include="Themes\NopElectro\Views\Catalog\TopMenu.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Themes\NopElectro\Views\Common\Social.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Thumbs\" />
