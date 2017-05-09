@@ -17,10 +17,11 @@ namespace Nop.Web.Models.Catalog
         public bool BlogEnabled { get; set; }
         public bool NewProductsEnabled { get; set; }
         public bool ForumEnabled { get; set; }
+		public bool NewsEnabled { get; set; }
+		
+		#region Nested classes
 
-        #region Nested classes
-
-        public class TopMenuTopicModel : BaseNopEntityModel
+		public class TopMenuTopicModel : BaseNopEntityModel
         {
             public string Name { get; set; }
             public string SeName { get; set; }

@@ -1,0 +1,138 @@
+﻿@model Nop.Plugin.Misc.SMS.Models.ConfigurationModel
+@using Nop.Web.Framework
+
+@{
+	Layout = "";
+}
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    @Html.AntiForgeryToken()
+
+	<div class="panel-group">
+		<div class="panel panel-default">
+            <div class="panel-heading"><h5><strong>@T("Plugins.Misc.SMS.ConfigurationPage")</strong></h5></div>
+			<div class="panel-body">
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.Enabled)
+					</div>
+					<div class="col-md-9">
+						@Html.EditorFor(model => model.Enabled)
+					</div>
+				</div>
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.Login)
+					</div>
+					<div class="col-md-9">
+						@Html.NopEditorFor(model => model.Login)
+						@Html.ValidationMessageFor(model => model.Login)
+					</div>
+				</div>
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.Password)
+					</div>
+					<div class="col-md-9">
+						@Html.NopEditorFor(model => model.Password)
+						@Html.ValidationMessageFor(model => model.Password)
+					</div>
+				</div>
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.ApiUrl)
+					</div>
+					<div class="col-md-9">
+						@Html.NopEditorFor(model => model.ApiUrl)
+						@Html.ValidationMessageFor(model => model.ApiUrl)
+					</div>
+				</div>
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.XML)
+					</div>
+					<div class="col-md-9">
+						@Html.NopTextAreaFor(model => model.XML)
+						@Html.ValidationMessageFor(model => model.XML)
+					</div>
+				</div>
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.EnableAlfaName)
+					</div>
+					<div class="col-md-9">
+						@Html.EditorFor(model => model.EnableAlfaName, new { htmlAttributes = new { @refference_name = "AlfaName" }, })
+						@Html.ValidationMessageFor(model => model.EnableAlfaName)
+					</div>
+				</div>
+				<div class="form-group col-md-12" style="display: @(Model.EnableAlfaName ? "block" : "none")">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.AlfaName)
+					</div>
+					<div class="col-md-9">
+						@Html.NopEditorFor(model => model.AlfaName)
+						@Html.ValidationMessageFor(model => model.AlfaName)
+					</div>
+				</div>
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.AdminPhoneNumber)
+					</div>
+					<div class="col-md-9">
+						@Html.NopEditorFor(model => model.AdminPhoneNumber)
+						@Html.ValidationMessageFor(model => model.AdminPhoneNumber)
+					</div>
+				</div>
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.LastConfigurationDate)
+					</div>
+					<div class="col-md-9">
+						@Html.DisplayFor(model => model.LastConfigurationDate)
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-3">
+						&nbsp;
+					</div>
+					<div class="col-md-9">
+						<input type="submit" name="save" class="btn bg-blue" value="@T("Admin.Common.Save")" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+@Html.Action("MessagesPartial", "MiscSMS")
+
+<script type="text/javascript">
+	var sms = (function () {
+		function _bindEvents() {
+			$('input[refference-name]').on('change', function () {
+				var checked = $(this).is(':checked');
+				var elementName = $(this).attr('refference-name');
+				var $par = $('#' + elementName).parents('.form-group');
+				if (checked) {
+					$par.show('slow');
+				}
+				else {
+					$par.hide('slow');
+				}
+			});
+		}
+
+		function _init() {
+			_bindEvents();
+		}
+
+		return {
+			init: _init
+		}
+	})();
+
+	$(function () { sms.init(); });
+
+</script>

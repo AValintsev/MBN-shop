@@ -2,6 +2,7 @@
 using Nop.Core.Caching;
 using Nop.Core.Data;
 using Nop.Core.Domain.Catalog;
+using Nop.Services.Directory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,21 +20,27 @@ namespace Nop.Services.Catalog
 		private readonly IRepository<ProductCategory> _productCategoryRepository;
 		private readonly IRepository<Product> _productRepository;
 
+		private readonly IWorkContext _workContext;
 		private readonly IStoreContext _storeContext;
 		private readonly ICacheManager _cacheManager;
+		private readonly ICurrencyService _currencyService;
 
 		#endregion
 
 		#region Ctor
 
 		public PriceRangeService(
+			IWorkContext _workContext,
 			ICacheManager cacheManager,
+			ICurrencyService currencyService,
 			IRepository<ProductCategory> productCategoryRepository,
 			IRepository<Product> productRepository,
 			IStoreContext storeContext)
 		{
+			this._workContext = _workContext;
 			this._cacheManager = cacheManager;
 			this._storeContext = storeContext;
+			this._currencyService = currencyService;
 			this._productRepository = productRepository;
 			this._productCategoryRepository = productCategoryRepository;
 		}
@@ -57,7 +64,14 @@ namespace Nop.Services.Catalog
 							};
 
 				var result = query.ToList();
-				return result.SingleOrDefault();
+
+				var priceRange = result.SingleOrDefault();
+				if (priceRange != null)
+				{
+					priceRange.From = _currencyService.ConvertFromPrimaryStoreCurrency(priceRange.From.Value, _workContext.WorkingCurrency);
+					priceRange.To = _currencyService.ConvertFromPrimaryStoreCurrency(priceRange.To.Value, _workContext.WorkingCurrency);
+				}
+				return priceRange;
 			});
 		}
 	}

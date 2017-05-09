@@ -27,6 +27,7 @@ using Nop.Web.Framework.Events;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Media;
+using Nop.Core.Domain.News;
 
 namespace Nop.Web.Factories
 {
@@ -61,6 +62,7 @@ namespace Nop.Web.Factories
 		private readonly CatalogSettings _catalogSettings;
 		private readonly VendorSettings _vendorSettings;
 		private readonly BlogSettings _blogSettings;
+		private readonly NewsSettings _newsSettings;
 		private readonly ForumSettings _forumSettings;
 		private readonly ICacheManager _cacheManager;
 
@@ -94,6 +96,7 @@ namespace Nop.Web.Factories
 			MediaSettings mediaSettings,
 			CatalogSettings catalogSettings,
 			VendorSettings vendorSettings,
+			NewsSettings newsSettings,
 			BlogSettings blogSettings,
 			ForumSettings forumSettings,
 			ICacheManager cacheManager)
@@ -124,6 +127,7 @@ namespace Nop.Web.Factories
 			this._mediaSettings = mediaSettings;
 			this._catalogSettings = catalogSettings;
 			this._vendorSettings = vendorSettings;
+			this._newsSettings = newsSettings;
 			this._blogSettings = blogSettings;
 			this._forumSettings = forumSettings;
 			this._cacheManager = cacheManager;
@@ -664,6 +668,7 @@ namespace Nop.Web.Factories
 				Categories = cachedCategoriesModel,
 				Topics = cachedTopicModel,
 				NewProductsEnabled = _catalogSettings.NewProductsEnabled,
+				NewsEnabled = _newsSettings.Enabled,
 				BlogEnabled = _blogSettings.Enabled,
 				ForumEnabled = _forumSettings.ForumsEnabled
 			};
@@ -1194,10 +1199,10 @@ namespace Nop.Web.Factories
 			{
 				//first empty entry
 				model.AvailableCategories.Add(new SelectListItem
-					{
-						Value = "0",
-						Text = _localizationService.GetResource("Common.All")
-					});
+				{
+					Value = "0",
+					Text = _localizationService.GetResource("Common.All")
+				});
 				//all other categories
 				foreach (var c in categories)
 				{
