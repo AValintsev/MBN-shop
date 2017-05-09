@@ -1,9 +1,0 @@
-﻿Group: Info Sms
-FriendlyName: Sms sender
-SystemName: Info.Sms
-Version: 1
-SupportedVersions: 3.90
-Author: DigitalLeader team
-DisplayOrder: 1
-FileName: Nop.Plugin.Info.Sms.dll
-Description: This plugin allows to send sms to clients or administrators when user ordered something e.t.c

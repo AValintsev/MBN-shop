@@ -23,7 +23,11 @@ namespace Nop.Plugin.Widgets.NivoSliderLocalized
 		private readonly IRepository<SliderItem> _sliderItemRepository;
 		private readonly IPictureService _pictureService;
 		private readonly ISettingService _settingService;
+
 		private readonly IWebHelper _webHelper;
+
+		private readonly ILocalizedEntityService _localizedEntityService;
+		private readonly ILanguageService _languageService;
 
 		public NivoSliderPluginLocalizedPlugin(
 			SliderObjectContext context,
@@ -31,6 +35,8 @@ namespace Nop.Plugin.Widgets.NivoSliderLocalized
 			IRepository<Language> languageRepository,
 			IPictureService pictureService,
 			ISettingService settingService,
+			ILocalizedEntityService localizedEntityService,
+			ILanguageService languageService,
 			IWebHelper webHelper)
 		{
 			this._context = context;
@@ -38,6 +44,8 @@ namespace Nop.Plugin.Widgets.NivoSliderLocalized
 			this._sliderItemRepository = sliderItemRepository;
 			this._pictureService = pictureService;
 			this._settingService = settingService;
+			this._localizedEntityService = localizedEntityService;
+			this._languageService = languageService;
 			this._webHelper = webHelper;
 		}
 
@@ -130,7 +138,7 @@ namespace Nop.Plugin.Widgets.NivoSliderLocalized
 			this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSliderLocalized.Text.Hint", "Enter comment for picture. Leave empty if you don't want to display any text.");
 			this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSliderLocalized.Link", "URL");
 			this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSliderLocalized.Link.Hint", "Enter URL. Leave empty if you don't want this picture to be clickable.");
-			
+
 			//Russian language
 			var languageRu = _languageRepository.Table.Single(l => l.Name == "Russian");
 
@@ -171,10 +179,18 @@ namespace Nop.Plugin.Widgets.NivoSliderLocalized
 			{
 				if (entity != null)
 				{
-					var picutre = _pictureService.GetPictureById(int.Parse(entity.PictureId));
-					if (picutre != null)
+					foreach (var lang in _languageService.GetAllLanguages())
 					{
-						_pictureService.DeletePicture(picutre);
+						var pictureId = entity.GetLocalized(x => x.PictureId, lang.Id);
+						var picutre = _pictureService.GetPictureById(int.Parse(pictureId));
+						if (picutre != null)
+						{
+							_pictureService.DeletePicture(picutre);
+						}
+
+						_localizedEntityService.SaveLocalizedValue(entity, e => e.Text, "", lang.Id);
+						_localizedEntityService.SaveLocalizedValue(entity, e => e.Link, "", lang.Id);
+						_localizedEntityService.SaveLocalizedValue(entity, e => e.PictureId, "", lang.Id);
 					}
 
 					_sliderItemRepository.Delete(entity);

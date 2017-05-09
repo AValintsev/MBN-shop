@@ -23,38 +23,38 @@ namespace Nop.Plugin.Misc.SMS
 {
 	public class SMSPlugin : BasePlugin, IMiscPlugin, IConsumer<OrderPlacedEvent>
 	{
-        /// Key pattern to clear cache
-        /// </summary>
-        private const string LOCALSTRINGRESOURCES_PATTERN_KEY = "Nop.lsr.";
+		/// Key pattern to clear cache
+		/// </summary>
+		private const string LOCALSTRINGRESOURCES_PATTERN_KEY = "Nop.lsr.";
 
-        #region fields
+		#region fields
 
-        private readonly SMSObjectContext _context;
+		private readonly SMSObjectContext _context;
 		private readonly SMSSettings _smsSettings;
 		private readonly IRepository<Domain.SMS> _smsRepository;
 		private readonly IRepository<SMSMessage> _smsMessageRepository;
 		private readonly ISettingService _settingService;
-        private readonly  IRepository<Language> _languageRepository;
-        //private readonly LanguageService _languageService;
-        private readonly ICacheManager _cacheManager;
+		private readonly IRepository<Language> _languageRepository;
+		//private readonly LanguageService _languageService;
+		private readonly ICacheManager _cacheManager;
 
-        #endregion
+		#endregion
 
-        public SMSPlugin(
-            IRepository<Language> languageRepository,
-            //LanguageService languageService,
-            ICacheManager cacheManager,
-            SMSSettings smsSettings,
+		public SMSPlugin(
+			IRepository<Language> languageRepository,
+			//LanguageService languageService,
+			ICacheManager cacheManager,
+			SMSSettings smsSettings,
 			SMSObjectContext context,
 			ISettingService settingsService,
 			IRepository<Domain.SMS> smsRepository,
 			IRepository<SMSMessage> smsMessageRepostitory
 		)
 		{
-            _languageRepository = languageRepository;
-            //_languageService = languageService;
-            _cacheManager = cacheManager;
-            _context = context;
+			_languageRepository = languageRepository;
+			//_languageService = languageService;
+			_cacheManager = cacheManager;
+			_context = context;
 			_smsSettings = smsSettings;
 			_smsRepository = smsRepository;
 			_settingService = settingsService;
@@ -68,9 +68,9 @@ namespace Nop.Plugin.Misc.SMS
 
 		public override void Install()
 		{
-            InstallLocaleResources();
+			_context.Install();
 
-            _context.Install();
+			InstallLocaleResources();
 
 			var settings = new SMSSettings
 			{
@@ -90,7 +90,7 @@ namespace Nop.Plugin.Misc.SMS
 				IsforAdmin = false,
 				MessageText = "Your order #ORDERNUMBER# is placed. Total: #ORDERTOTAL#",
 				Name = "Plugins.Misc.SMS.OrderPlacedEvent"
-            };
+			};
 			var message1Admin = new SMSMessage
 			{
 				Enabled = true,
@@ -98,7 +98,7 @@ namespace Nop.Plugin.Misc.SMS
 				IsforAdmin = true,
 				MessageText = "Client has ordered #ORDERNUMBER#. Total: #ORDERTOTAL#",
 				Name = "Plugins.Misc.SMS.OrderPlacedEvent.ForAdmin"
-            };
+			};
 
 			var message2 = new SMSMessage
 			{
@@ -115,7 +115,7 @@ namespace Nop.Plugin.Misc.SMS
 				IsforAdmin = true,
 				MessageText = "Client has paid #ORDERNUMBER#. Total: #ORDERTOTAL#",
 				Name = "Plugins.Misc.SMS.OrderPaidEvent.ForAdmin"
-            };
+			};
 
 			var message3 = new SMSMessage
 			{
@@ -124,7 +124,7 @@ namespace Nop.Plugin.Misc.SMS
 				IsforAdmin = false,
 				MessageText = "Order #ORDERNUMBER# has been canceled",
 				Name = "Plugins.Misc.SMS.OrderCancelledEvent"
-            };
+			};
 			var message3Admin = new SMSMessage
 			{
 				Enabled = true,
@@ -132,7 +132,7 @@ namespace Nop.Plugin.Misc.SMS
 				IsforAdmin = true,
 				MessageText = "Client has canceled #ORDERNUMBER#.",
 				Name = "Plugins.Misc.SMS.OrderCancelledEvent.ForAdmin"
-            };
+			};
 
 			_context.Set<SMSMessage>().Add(message1);
 			_context.Set<SMSMessage>().Add(message1Admin);
@@ -148,56 +148,55 @@ namespace Nop.Plugin.Misc.SMS
 			base.Install();
 		}
 
-        protected virtual void InstallLocaleResources()
-        {
-            //English language
-            var languageEng = _languageRepository.Table.Single(l => l.Name == "English");
+		protected virtual void InstallLocaleResources()
+		{
+			//English language
+			var languageEng = _languageRepository.Table.SingleOrDefault(l => l.Name == "English");
 
-            if (languageEng != null)
-            {
-                //save resources
-                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.SMS/App_Data/Translations"), "en_misc.sms.xml", SearchOption.TopDirectoryOnly))
-                {
-                    var localesXml = File.ReadAllText(filePath);
-                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
-                    localizationService.ImportResourcesFromXml(languageEng, localesXml);
-                }
-            }
+			if (languageEng != null)
+			{
+				//save resources
+				foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.SMS/App_Data/Translations"), "en_misc.sms.xml", SearchOption.TopDirectoryOnly))
+				{
+					var localesXml = File.ReadAllText(filePath);
+					var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+					localizationService.ImportResourcesFromXml(languageEng, localesXml);
+				}
+			}
 
-            //Russian language
-           var languageRu = _languageRepository.Table.SingleOrDefault(l => l.Name == "Russian");
+			//Russian language
+			var languageRu = _languageRepository.Table.SingleOrDefault(l => l.Name == "Russian");
 
-            if (languageRu != null)
-            {
-                //save resources
-                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.SMS/App_Data/Translations"), "ru_misc.sms.xml", SearchOption.TopDirectoryOnly))
-                {
-                    var localesXml = File.ReadAllText(filePath);
-                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
-                    localizationService.ImportResourcesFromXml(languageRu, localesXml);
-                }
-            }
+			if (languageRu != null)
+			{
+				//save resources
+				foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.SMS/App_Data/Translations"), "ru_misc.sms.xml", SearchOption.TopDirectoryOnly))
+				{
+					var localesXml = File.ReadAllText(filePath);
+					var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+					localizationService.ImportResourcesFromXml(languageRu, localesXml);
+				}
+			}
+			
+			//Ukrainian language
+			var languageUa = _languageRepository.Table.Single(l => l.Name == "Ukrainian");
+			if (languageUa != null)
+			{
+				//save resources
+				foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.SMS/App_Data/Translations"), "ua_misc.sms.xml", SearchOption.TopDirectoryOnly))
+				{
+					var localesXml = File.ReadAllText(filePath);
+					var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+					localizationService.ImportResourcesFromXml(languageUa, localesXml);
+				}
+			}
+		}
 
-
-                //Ukrainian language
-                var languageUa = _languageRepository.Table.Single(l => l.Name == "Ukrainian");
-                if (languageUa != null)
-                {
-                    //save resources
-                    foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.SMS/App_Data/Translations"), "ua_misc.sms.xml", SearchOption.TopDirectoryOnly))
-                {
-                    var localesXml = File.ReadAllText(filePath);
-                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
-                    localizationService.ImportResourcesFromXml(languageUa, localesXml);
-                }
-            }
-        }
-        
-        public override void Uninstall()
+		public override void Uninstall()
 		{
 			_settingService.DeleteSetting<SMSSettings>();
 
-            _context.Uninstall();
+			_context.Uninstall();
 
 			base.Uninstall();
 		}
@@ -231,20 +230,20 @@ namespace Nop.Plugin.Misc.SMS
 				return;
 			}
 
-            #region Send message to client
+			#region Send message to client
 
-            var sms = new Domain.SMS
-            {
-                Login = _smsSettings.Login,
-                Password = _smsSettings.Password,
-                ApiUrl = _smsSettings.ApiUrl,
-                XML = _smsSettings.XML,
-                AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
-                Date = DateTime.UtcNow,
-                EventType = eventType
-            };
+			var sms = new Domain.SMS
+			{
+				Login = _smsSettings.Login,
+				Password = _smsSettings.Password,
+				ApiUrl = _smsSettings.ApiUrl,
+				XML = _smsSettings.XML,
+				AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
+				Date = DateTime.UtcNow,
+				EventType = eventType
+			};
 
-            var clientMessage = _smsMessageRepository.Table
+			var clientMessage = _smsMessageRepository.Table
 				.FirstOrDefault(m => !m.IsforAdmin && m.Enabled && m.EventType == eventType);
 
 			if (clientMessage != null)
@@ -261,32 +260,32 @@ namespace Nop.Plugin.Misc.SMS
 				_smsRepository.Insert(sms);
 			}
 
-            #endregion
+			#endregion
 
-            #region Send message to admin
+			#region Send message to admin
 
-            var smsForAdmin = new Domain.SMS
-            {
-                Login = _smsSettings.Login,
-                Password = _smsSettings.Password,
-                ApiUrl = _smsSettings.ApiUrl,
-                XML = _smsSettings.XML,
-                AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
-                Date = DateTime.UtcNow,
-                EventType = eventType
-            };
+			var smsForAdmin = new Domain.SMS
+			{
+				Login = _smsSettings.Login,
+				Password = _smsSettings.Password,
+				ApiUrl = _smsSettings.ApiUrl,
+				XML = _smsSettings.XML,
+				AlfaName = _smsSettings.EnableAlfaName ? _smsSettings.AlfaName : null,
+				Date = DateTime.UtcNow,
+				EventType = eventType
+			};
 
-            var adminMessage = _smsMessageRepository.Table
+			var adminMessage = _smsMessageRepository.Table
 				.FirstOrDefault(m => m.IsforAdmin && m.Enabled && m.EventType == eventType);
 
 			if (adminMessage != null)
 			{
 				var message = adminMessage.GetLocalized(x => x.MessageText);
 				smsForAdmin.PhoneNumber = _smsSettings.AdminPhoneNumber;
-                smsForAdmin.Message = message
+				smsForAdmin.Message = message
 					.Replace("#ORDERNUMBER#", order.Id.ToString())
 					.Replace("#ORDERTOTAL#", order.OrderTotal.ToString());
-                smsForAdmin.SmsServerResponse = POSTRequest(smsForAdmin);
+				smsForAdmin.SmsServerResponse = POSTRequest(smsForAdmin);
 				_smsRepository.Insert(smsForAdmin);
 			}
 
@@ -299,34 +298,34 @@ namespace Nop.Plugin.Misc.SMS
 
 			if (sms.XML != null)
 			{
-                //TODO: check are all fields replaced
-                sms.XML = sms.XML.Replace("#PHONENUMBER#", sms.PhoneNumber)
+				//TODO: check are all fields replaced
+				sms.XML = sms.XML.Replace("#PHONENUMBER#", sms.PhoneNumber)
 						 .Replace("#ALFANAME#", sms.AlfaName)
 						 .Replace("#MESSAGE#", sms.Message);
 			}
 
 			try
 			{
-				    HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(apiUrl);
+				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(apiUrl);
 
-				    string authInfo = sms.Login + ":" + sms.Password;
-				    authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-				    webRequest.Headers["Authorization"] = "Basic " + authInfo;
+				string authInfo = sms.Login + ":" + sms.Password;
+				authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+				webRequest.Headers["Authorization"] = "Basic " + authInfo;
 
-				    byte[] requestBytes = System.Text.Encoding.UTF8.GetBytes(sms.XML);
-				    webRequest.Method = "POST";
-				    webRequest.ContentType = "text/xml;charset=utf-8";
-				    webRequest.ContentLength = requestBytes.Length;
-				    Stream requestStream = webRequest.GetRequestStream();
-				    requestStream.Write(requestBytes, 0, requestBytes.Length);
-				    requestStream.Close();
+				byte[] requestBytes = System.Text.Encoding.UTF8.GetBytes(sms.XML);
+				webRequest.Method = "POST";
+				webRequest.ContentType = "text/xml;charset=utf-8";
+				webRequest.ContentLength = requestBytes.Length;
+				Stream requestStream = webRequest.GetRequestStream();
+				requestStream.Write(requestBytes, 0, requestBytes.Length);
+				requestStream.Close();
 
-				    HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
-				    StreamReader streamReader = new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8);
-				    string responce = streamReader.ReadToEnd();
+				HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
+				StreamReader streamReader = new StreamReader(webResponse.GetResponseStream(), System.Text.Encoding.UTF8);
+				string responce = streamReader.ReadToEnd();
 
-				    streamReader.Close();
-				    webResponse.Close();
+				streamReader.Close();
+				webResponse.Close();
 
 				return responce;
 			}

@@ -125,42 +125,46 @@ namespace Nop.Plugin.Widgets.NivoSliderLocalized.Controllers
 			//load settings for a chosen store scope
 			var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
 
-			viewModelList.ForEach(vm =>
+			if (viewModelList != null && viewModelList.Count > 0)
 			{
-				if (vm.PictureId > 0)
+				viewModelList.ForEach(vm =>
 				{
-					var entity = _sliderItemRepository.Table.FirstOrDefault(si => si.Id == vm.Id);
-
-					if (entity != null)
+					if (vm.PictureId > 0)
 					{
-						entity.Link = vm.Link;
-						entity.PictureId = vm.PictureId.ToString();
-						entity.Text = vm.Text;
+						var entity = _sliderItemRepository.Table.FirstOrDefault(si => si.Id == vm.Id);
 
-						_sliderItemRepository.Update(entity);
-					}
-					else
-					{
-						entity = new SliderItem
+						if (entity != null)
 						{
-							Link = vm.Link,
-							PictureId = vm.PictureId.ToString(),
-							Text = vm.Text
-						};
+							entity.Link = vm.Link;
+							entity.PictureId = vm.PictureId.ToString();
+							entity.Text = vm.Text;
 
-						_sliderItemRepository.Insert(entity);
+							_sliderItemRepository.Update(entity);
+						}
+						else
+						{
+							entity = new SliderItem
+							{
+								Link = vm.Link,
+								PictureId = vm.PictureId.ToString(),
+								Text = vm.Text
+							};
+
+							_sliderItemRepository.Insert(entity);
+						}
+
+						foreach (var locale in vm.Locales)
+						{
+							_localizedEntityService.SaveLocalizedValue(entity, e => e.Text, locale.Text, locale.LanguageId);
+							_localizedEntityService.SaveLocalizedValue(entity, e => e.Link, locale.Link, locale.LanguageId);
+							_localizedEntityService.SaveLocalizedValue(entity, e => e.PictureId, locale.PictureId.ToString(), locale.LanguageId);
+						}
 					}
+				});
 
-					foreach (var locale in vm.Locales)
-					{
-						_localizedEntityService.SaveLocalizedValue(entity, e => e.Text, locale.Text, locale.LanguageId);
-						_localizedEntityService.SaveLocalizedValue(entity, e => e.Link, locale.Link, locale.LanguageId);
-						_localizedEntityService.SaveLocalizedValue(entity, e => e.PictureId, locale.PictureId.ToString(), locale.LanguageId);
-					}
-				}
-			});
+				SuccessNotification(_localizationService.GetResource("Admin.Plugins.Saved"));
+			}
 
-			SuccessNotification(_localizationService.GetResource("Admin.Plugins.Saved"));
 			return Configure();
 		}
 
@@ -174,10 +178,18 @@ namespace Nop.Plugin.Widgets.NivoSliderLocalized.Controllers
 
 				if (entity != null)
 				{
-					var picutre = _pictureService.GetPictureById(int.Parse(entity.PictureId));
-					if (picutre != null)
+					foreach (var lang in _languageService.GetAllLanguages())
 					{
-						_pictureService.DeletePicture(picutre);
+						var pictureId = entity.GetLocalized(x => x.PictureId, lang.Id);
+						var picutre = _pictureService.GetPictureById(int.Parse(pictureId));
+						if (picutre != null)
+						{
+							_pictureService.DeletePicture(picutre);
+						}
+
+						_localizedEntityService.SaveLocalizedValue(entity, e => e.Text, "", lang.Id);
+						_localizedEntityService.SaveLocalizedValue(entity, e => e.Link, "", lang.Id);
+						_localizedEntityService.SaveLocalizedValue(entity, e => e.PictureId, "", lang.Id);
 					}
 
 					_sliderItemRepository.Delete(entity);

@@ -16,6 +16,9 @@
 
 		@for (int i = 0; i < Model.Count; i++)
 		{
+			var sliderPictureId = string.Format("sliderPictureId{0}", i);
+			var sliderTextId = string.Format("sliderTextId{0}", i);
+			var sliderLinkId = string.Format("sliderLinkId{0}", i);
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					@T("Plugins.Widgets.NivoSliderLocalized.Picture") @(i + 1)
@@ -30,7 +33,7 @@
 						</div>
 						<div class="col-md-9">
 							@(Html.LocalizedEditor<ConfigurationModel, ConfigurationModel.ConfigurationLocalizedModel>(
-							"slider-PictureId",
+							sliderPictureId,
 							@<div>
 								@Html.NopEditorFor(model => Model[i].Locales[item].PictureId)
 								@Html.ValidationMessageFor(model => Model[i].Locales[item].PictureId)
@@ -48,7 +51,7 @@
 						</div>
 						<div class="col-md-9">
 							@(Html.LocalizedEditor<ConfigurationModel, ConfigurationModel.ConfigurationLocalizedModel>(
-							"slider-Text",
+							sliderTextId,
 							@<div>
 								@Html.NopTextAreaFor(model => Model[i].Locales[item].Text)
 								@Html.ValidationMessageFor(model => Model[i].Locales[item].Text)
@@ -66,7 +69,7 @@
 						</div>
 						<div class="col-md-9">
 							@(Html.LocalizedEditor<ConfigurationModel, ConfigurationModel.ConfigurationLocalizedModel>(
-							"slider-Link",
+							sliderLinkId,
 							@<div>
 								@Html.NopEditorFor(model => Model[i].Locales[item].Link)
 								@Html.ValidationMessageFor(model => Model[i].Locales[item].Link)
