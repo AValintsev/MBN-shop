@@ -1,0 +1,99 @@
+﻿@using Nop.Plugin.Widgets.NivoSliderLocalized.Models;
+@using Nop.Web.Framework;
+@using Nop.Plugin.Widgets.NivoSliderLocalized.Extensions;
+@model List<ConfigurationModel>
+@{
+	Layout = "";
+	Html.AddScriptParts("~/Plugins/Widgets.NivoSliderLocalized/Scripts/sliderManager.js");
+}
+
+@Html.Action("StoreScopeConfiguration", "Setting", new { area = "Admin" })
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div class="panel-group">
+
+		@for (int i = 0; i < Model.Count; i++)
+		{
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					@T("Plugins.Widgets.NivoSliderLocalized.Picture") @(i + 1)
+					<input type="button" class="btn bg-red pull-right" value="@T("Plugins.Widgets.NivoSliderLocalized.RemoveSlide")" remove-slide="@Model[i].Id" />
+					<div class="clearfix"></div>
+				</div>
+				<div class="panel-body">
+					<input type="hidden" name="[@i].Id" value="@Model[i].Id" />
+					<div class="form-group">
+						<div class="col-md-3">
+							@Html.NopLabelFor(model => Model[i].PictureId)
+						</div>
+						<div class="col-md-9">
+							@(Html.LocalizedEditor<ConfigurationModel, ConfigurationModel.ConfigurationLocalizedModel>(
+							"slider-PictureId",
+							@<div>
+								@Html.NopEditorFor(model => Model[i].Locales[item].PictureId)
+								@Html.ValidationMessageFor(model => Model[i].Locales[item].PictureId)
+								@Html.HiddenFor(model => Model[i].Locales[item].LanguageId)
+							</div>,
+							@<div>
+								@Html.NopEditorFor(model => Model[i].PictureId)
+								@Html.ValidationMessageFor(model => Model[i].PictureId)
+							</div>, true))
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-3">
+							@Html.NopLabelFor(model => Model[i].Text)
+						</div>
+						<div class="col-md-9">
+							@(Html.LocalizedEditor<ConfigurationModel, ConfigurationModel.ConfigurationLocalizedModel>(
+							"slider-Text",
+							@<div>
+								@Html.NopTextAreaFor(model => Model[i].Locales[item].Text)
+								@Html.ValidationMessageFor(model => Model[i].Locales[item].Text)
+								@Html.HiddenFor(model => Model[i].Locales[item].LanguageId)
+							</div>,
+							@<div>
+								@Html.NopTextAreaFor(model => Model[i].Text)
+								@Html.ValidationMessageFor(model => Model[i].Text)
+							</div>, true))
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-3">
+							@Html.NopLabelFor(model => Model[i].Link)
+						</div>
+						<div class="col-md-9">
+							@(Html.LocalizedEditor<ConfigurationModel, ConfigurationModel.ConfigurationLocalizedModel>(
+							"slider-Link",
+							@<div>
+								@Html.NopEditorFor(model => Model[i].Locales[item].Link)
+								@Html.ValidationMessageFor(model => Model[i].Locales[item].Link)
+								@Html.HiddenFor(model => Model[i].Locales[item].LanguageId)
+							</div>,
+							@<div>
+								@Html.NopEditorFor(model => Model[i].Link)
+								@Html.ValidationMessageFor(model => Model[i].Link)
+							</div>, true))
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="form-group">
+					<div class="col-md-3">
+						&nbsp;
+					</div>
+					<div class="col-md-9">
+						<input type="submit" name="save" class="btn bg-blue" value="@T("Admin.Common.Save")" />
+						<input type="submit" name="addNew" class="btn bg-green" value="@T("Plugins.Widgets.NivoSliderLocalized.AddNewSlide")" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}

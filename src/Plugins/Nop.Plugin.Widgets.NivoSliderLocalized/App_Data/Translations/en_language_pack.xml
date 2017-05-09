@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English" SupportedVersion="3.90">
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Picture">
+		<Value>Slide</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.RemoveSlide">
+		<Value>Remove slide</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.AddNewSlide">
+		<Value>Add new slide</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Picture.Hint">
+		<Value>Upload picture</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Text">
+		<Value>Slide botoom text</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Text.Hint">
+		<Value>
+			Enter comment for picture. Leave empty if you don't want to display any text.
+		</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Link">
+		<Value>
+			URL
+		</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Link.Hint">
+		<Value>Enter URL. Leave empty if you don't want this picture to be clickable.</Value>
+	</LocaleResource>
+</Language>

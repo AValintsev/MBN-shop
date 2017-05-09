@@ -1,0 +1,9 @@
+﻿Group: Widgets
+FriendlyName: Nivo Slider Localized
+SystemName: Widgets.NivoSliderLocalized
+Version: 1.0
+SupportedVersions: 3.90
+Author: Digital Leader team
+DisplayOrder: 1
+FileName: Nop.Plugin.Widgets.NivoSliderLocalized.dll
+Description: This plugin allows you to change the contents of main page slider and localize it

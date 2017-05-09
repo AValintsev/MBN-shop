@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English" SupportedVersion="3.90">
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Picture">
+		<Value>Слайд</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.RemoveSlide">
+		<Value>Удалить слайд</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.AddNewSlide">
+		<Value>Добавить новый слайд</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Picture.Hint">
+		<Value>Закгрузить изображение</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Text">
+		<Value>Текст внизу слайда</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Text.Hint">
+		<Value>
+			Введите текст, который будет отображен внизу слайда. Оставьте пустым, если ни какого текста не требуется.
+		</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Link">
+		<Value>
+			URL
+		</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Widgets.NivoSliderLocalized.Link.Hint">
+		<Value>
+			Введите URL, по которому будет переход по нажатию на картинку. Или оставьте пустым, если не хотите сделать картинку кликабельной.
+		</Value>
+	</LocaleResource>
+</Language>
