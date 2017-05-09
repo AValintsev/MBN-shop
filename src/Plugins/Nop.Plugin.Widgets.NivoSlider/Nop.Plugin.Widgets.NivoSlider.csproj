@@ -127,9 +127,7 @@
     <Content Include="Content\nivoslider\themes\custom\bullets.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\nivoslider\themes\custom\custom.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Content\nivoslider\themes\custom\custom.css" />
     <Content Include="Content\nivoslider\themes\custom\loading.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

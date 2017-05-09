@@ -1,36 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Language Name="UkrainianMain" SupportedVersion="3.90">
-	<LocaleResource Name="Plugins.Misc.SMS.ProviderLogin">
+  <LocaleResource Name="Plugins.Misc.SMS.ConfigurationPage">
+    <Value>Конфігурація SMS плагіна</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.SettingsLogin">
 		<Value>Логін</Value>
 	</LocaleResource>
-	<LocaleResource Name="Plugins.Misc.SMS.ProviderPassword">
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsLogin.Required">
+    <Value>Введіть логін</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsLogin.Hint">
+    <Value>Логін, котрий використовується для авторизації в сервісі розсилки смс.</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.SettingsPassword">
 		<Value>Пароль</Value>
 	</LocaleResource>
-	<LocaleResource Name="Plugins.Misc.SMS.ProviderApi">
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsPassword.Required">
+    <Value>Введіть пароль</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsPassword.Hint">
+    <Value>Пароль, котрий використовується для авторизації в сервісі розсилки смс.</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.SettingsApiUrl">
 		<Value>АПІ Url</Value>
 	</LocaleResource>
-	<LocaleResource Name="Plugins.Misc.SMS.ProviderXML">
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsApiUrl.Required">
+    <Value>Введіть АПІ Url </Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsApiUrl.ErrorMessage">
+    <Value>Url введено некоректно. Перевірте правильність вводу</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsApiUrl.Hint">
+    <Value>Url, котрий надає сервіс розсилки смс.</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.SettingsXML">
 		<Value>XML</Value>
 	</LocaleResource>
-	<LocaleResource Name="Plugins.Misc.SMS.ProviderAlfaName">
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsXML.Hint">
+    <Value>Ви можете отримати спеціальний XML для відправки смс, введіть шаблон в це поле. Використовуйте наступні замінники: #PHONENUMBER# (телефон адрессата), #ALFANAME#, #MESSAGE# (текст повідомлення)</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.MessageEnabled">
+    <Value>Активувати</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.SettingsAlfaName">
 		<Value>Альфа ім'я</Value>
 	</LocaleResource>
-	<LocaleResource Name="Plugins.Misc.SMS.ProviderAdminPhoneNumber">
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsAlfaName.Hint">
+    <Value>Альфа ім'я. Відображається адрессату в якості імені відправника смс(Якщо підтримується вашим провайдером)</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.SettingsAdminPhoneNumber">
 		<Value>Номер телефону адміністратора</Value>
 	</LocaleResource>
-	<LocaleResource Name="Plugins.Misc.SMS.ProviderLastmodified">
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsAdminPhoneNumber.ErrorMessage">
+    <Value>Номер телефону введено некоректно. Введіть номер в міжнародному форматі.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsAdminPhoneNumber.Hint">
+    <Value>Якщо смс буде дублюватися для администратора, введіть номер адміна</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.SettingsLastmodified">
 		<Value>Дата останньої модифікації</Value>
 	</LocaleResource>
-	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnableAlfaName">
+	<LocaleResource Name="Plugins.Misc.SMS.SettingsEnableAlfaName">
 		<Value>Активувати альфа ім'я</Value>
 	</LocaleResource>
-	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnableXML">
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsEnableAlfaName.Hint">
+    <Value>Якщо вимкнуто, альфа ім'я не буде використовуватися</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.SettingsEnableXML">
 		<Value>Активувати XML</Value>
 	</LocaleResource>
-	<LocaleResource Name="Plugins.Misc.SMS.ProviderIsHttpBasic">
-		<Value>Використовувати базову Http аутинтефікацію</Value>
+  <LocaleResource Name="Plugins.Misc.SMS.SettingsEnableXML.Hint">
+    <Value>Якщо активно, для відпраки запита до сервісу смс, буде використаний XML</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Misc.SMS.SettingsEnabled">
+		<Value>Активувати плагин</Value>
 	</LocaleResource>
-	<LocaleResource Name="Plugins.Misc.SMS.ProviderEnabled">
-		<Value>Активувати відправку смс</Value>
-	</LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.Messages.Hint">
+    <Value>Тут Ви можете редагувати повідомлення для кожної події. Використовуйте наступні замінники #ORDERNUMBER# , #ORDERTOTAL# в тексті повідомлення .</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.OrderPlacedEvent">
+    <Value>Нове замовлення надійшло</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.OrderPlacedEvent.ForAdmin">
+    <Value>Нове замовлення надійшло (Для Адміна)</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.OrderPaidEvent">
+    <Value>Замовлення оплачено</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.OrderPaidEvent.ForAdmin">
+    <Value>Замовлення оплачено (Для Адміна)</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.OrderCancelledEvent">
+    <Value>Замовлення відмінено</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.SMS.OrderCancelledEvent.ForAdmin">
+    <Value>Замовлення відмінено (Для Адміна)</Value>
+  </LocaleResource>
 </Language>
