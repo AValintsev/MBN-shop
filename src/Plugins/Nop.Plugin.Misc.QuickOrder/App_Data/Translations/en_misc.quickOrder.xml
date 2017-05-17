@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English" SupportedVersion="3.90">
+  <LocaleResource Name="Plugins.Misc.QuickOrder.ConfigurationPage">
+    <Value>Quick Order Form Configuration</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Misc.QuickOrder.Enabled">
+    <Value>Plugin Enabled</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Misc.QuickOrder.NameEnabled">
+    <Value>Name Enabled</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Misc.QuickOrder.NameRequired">
+    <Value>Name Required</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Misc.QuickOrder.EmailAddressEnabled">
+    <Value>Email Address Enabled</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Misc.QuickOrder.EmailAddressRequired">
+    <Value>Email Address Required</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Misc.QuickOrder.PhoneEnabled">
+    <Value>Phone Enabled</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Misc.QuickOrder.PhoneRequired">
+    <Value>Phone Required</Value>
+  </LocaleResource>
+<LocaleResource Name="Admin.Misc.QuickOrder.WidgetZone">
+    <Value>WidgetZone</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Misc.QuickOrder.WidgetZone.Hint">
+    <Value>The widget zone is a part of UI (user-interface) in the public store where this widget will be displayed or rendered.</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Misc.QuickOrder.CustomerName">
+    <Value>Name</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Misc.QuickOrder.CustomerEmail">
+    <Value>Email</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Misc.QuickOrder.CustomerPhone">
+    <Value>Phone number</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Misc.QuickOrder.CustomerName.Required">
+    <Value>Please enter your name</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Misc.QuickOrder.CustomerPhone.Required">
+    <Value>Please enter your phone</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Misc.QuickOrder.CustomerEmail.Required">
+    <Value>Please enter your email</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Misc.QuickOrder.CustomerEmail.ErrorMessage">
+    <Value>Please check your email. Exmple example@gmail.com</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Misc.QuickOrder.CustomerPhone.ErrorMessage">
+    <Value>Please enter your phone number in international format</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Misc.QuickOrder.FormTitle">
+    <Value>Quick Order Form</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Misc.QuickOrder.Button">
+    <Value>Order</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.QuickOrder.Tab">
+    <Value>Quick Order</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Misc.QuickOrder.OrderTab">
+    <Value>Заказ</Value>
+  </LocaleResource>
+</Language>

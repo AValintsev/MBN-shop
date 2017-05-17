@@ -1,0 +1,9 @@
+﻿Group: Misc
+FriendlyName: Quick Order
+SystemName: Misc.QuickOrder
+Version: 1.00
+SupportedVersions: 3.90
+Author: DigitalLeader team
+DisplayOrder: 1
+FileName: Nop.Plugin.Misc.QuickOrder.dll
+Description: This plugin allows user to place an oder without registration.
