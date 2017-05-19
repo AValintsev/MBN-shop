@@ -3,32 +3,32 @@ using Nop.Web.Framework.Mvc;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace Nop.Plugin.Misc.QuickOrder.Models
+namespace Nop.Plugin.Order.QuickOrder.Models
 {
     public class ConfigurationModel : BaseNopModel
     {
-        [NopResourceDisplayName("Admin.Misc.QuickOrder.Enabled")]
+        [NopResourceDisplayName("Admin.Order.QuickOrder.Enabled")]
         public bool Enabled { get; set; }
 
-        [NopResourceDisplayName("Admin.Misc.QuickOrder.EmailAddressRequired")]
+        [NopResourceDisplayName("Admin.Order.QuickOrder.EmailAddressRequired")]
         public bool EmailAddressRequired { get; set; }
 
-        [NopResourceDisplayName("Admin.Misc.QuickOrder.EmailAddressEnabled")]
+        [NopResourceDisplayName("Admin.Order.QuickOrder.EmailAddressEnabled")]
         public bool EmailAddressEnabled { get; set; }
 
-        [NopResourceDisplayName("Admin.Misc.QuickOrder.PhoneRequired")]
+        [NopResourceDisplayName("Admin.Order.QuickOrder.PhoneRequired")]
         public bool PhoneRequired { get; set; }
 
-        [NopResourceDisplayName("Admin.Misc.QuickOrder.PhoneEnabled")]
+        [NopResourceDisplayName("Admin.Order.QuickOrder.PhoneEnabled")]
         public bool PhoneEnabled { get; set; }
 
-        [NopResourceDisplayName("Admin.Misc.QuickOrder.NameRequired")]
+        [NopResourceDisplayName("Admin.Order.QuickOrder.NameRequired")]
         public bool NameRequired { get; set; }
 
-        [NopResourceDisplayName("Admin.Misc.QuickOrder.NameEnabled")]
+        [NopResourceDisplayName("Admin.Order.QuickOrder.NameEnabled")]
         public bool NameEnabled { get; set; }
 
-        [NopResourceDisplayName("Admin.Misc.QuickOrder.WidgetZone")]
+        [NopResourceDisplayName("Admin.Order.QuickOrder.WidgetZone")]
         public string WidgetZone { get; set; }
 
         public IList<SelectListItem> AvailableWidgets { get; set; }

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English" SupportedVersion="3.90">
+  <LocaleResource Name="Plugins.Order.QuickOrder.ConfigurationPage">
+    <Value>Quick Order Form Configuration</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Order.QuickOrder.Enabled">
+    <Value>Plugin Enabled</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Order.QuickOrder.NameEnabled">
+    <Value>Name Enabled</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Order.QuickOrder.NameRequired">
+    <Value>Name Required</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Order.QuickOrder.EmailAddressEnabled">
+    <Value>Email Address Enabled</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Order.QuickOrder.EmailAddressRequired">
+    <Value>Email Address Required</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Order.QuickOrder.PhoneEnabled">
+    <Value>Phone Enabled</Value>
+  </LocaleResource>
+    <LocaleResource Name="Admin.Order.QuickOrder.PhoneRequired">
+    <Value>Phone Required</Value>
+  </LocaleResource>
+<LocaleResource Name="Admin.Order.QuickOrder.WidgetZone">
+    <Value>WidgetZone</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Order.QuickOrder.WidgetZone.Hint">
+    <Value>The widget zone is a part of UI (user-interface) in the public store where this widget will be displayed or rendered.</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Order.QuickOrder.CustomerName">
+    <Value>Name</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Order.QuickOrder.CustomerEmail">
+    <Value>Email</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Order.QuickOrder.CustomerPhone">
+    <Value>Phone number</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Order.QuickOrder.CustomerName.Required">
+    <Value>Please enter your name</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Order.QuickOrder.CustomerPhone.Required">
+    <Value>Please enter your phone</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Order.QuickOrder.CustomerEmail.Required">
+    <Value>Please enter your email</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Order.QuickOrder.CustomerEmail.ErrorMessage">
+    <Value>Please check your email. Exmple example@gmail.com</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Order.QuickOrder.CustomerPhone.ErrorMessage">
+    <Value>Please enter your phone number in international format</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Order.QuickOrder.FormTitle">
+    <Value>Quick Order Form</Value>
+  </LocaleResource>
+<LocaleResource Name="Plugins.Order.QuickOrder.Button">
+    <Value>Order</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.Tab">
+    <Value>Quick Order</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.OrderTab">
+    <Value>Заказ</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.PluginUnabled">
+		<Value>Sorry, but quick order is unabled now</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.CartIsEmpty">
+		<Value>Your cart is empty</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.NotAllowedForGuest">
+		<Value>It is not allowed for guests to place orders. Please register</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.NoPaymentMethods">
+		<Value>No Payment Methods were found</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.CartErrors">
+		<Value>Error in Shopping Cart</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.WrongBillingAddress">
+		<Value>Error. Wrong Billing Address</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.AddressCantBeLoaded">
+		<Value>Address can not be loaded</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.OrderConfirmFaild">
+		<Value>Error.Order Confirm faild</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.RegisteredUser">
+		<Value>Sorry, Quick Order Form is only available for unregistered users.</Value>
+	</LocaleResource>
+</Language>

@@ -1,98 +1,70 @@
-﻿@model Nop.Plugin.Misc.QuickOrder.Models.QOrderModel
+﻿@model Nop.Plugin.Order.QuickOrder.Models.QOrderModel
 @using System
 @using Nop.Web.Framework
 @using Nop.Web.Framework.UI
 
 @{
-    Html.AddScriptParts(Url.Content("~/Plugins/Misc.QuickOrder/Scripts/bootstrap.js"));
-    Html.AppendCssFileParts(Url.Content("~/Plugins/Misc.QuickOrder/Styles/bootstrap.css"));
+	Html.AddScriptParts(Url.Content("~/Plugins/Order.QuickOrder/Scripts/bootstrap.js"));
+	Html.AppendCssFileParts(Url.Content("~/Plugins/Order.QuickOrder/Styles/bootstrap.css"));
 }
-
-<!-- Button trigger modal -->
-@*<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    @T("Plugins.Misc.QuickOrder.Button")
-</button>*@
-
-<!-- Modal -->
-@*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">@T("Plugins.Misc.QuickOrder.FormTitle")</h4>
-            </div>*@
 <div class="content">
-    <div class="form-horizontal">
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h5><strong>@T("Plugins.Misc.QuickOrder.FormTitle")</strong></h5></div>
-                <div class="panel-body">
-                    @using (@Html.BeginForm())
-            {
-                        @Html.AntiForgeryToken()
+	<div class="form-horizontal">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading"><h5><strong>@T("Plugins.Order.QuickOrder.FormTitle")</strong></h5></div>
+				<div class="panel-body">
+					@using (@Html.BeginForm())
+					{
+						@Html.AntiForgeryToken()
 
-                        @Html.ValidationSummary(true)
+						@Html.ValidationSummary(true)
 
-                        <div class="modal-body">
+						<div class="panel-group">
+							@if (Model.NameEnable)
+							{
+								<div class="form-group col-md-12">
+									<div class="col-md-3">
+										@Html.NopLabelFor(model => model.CustomerName)
+									</div>
+									<div class="col-md-9">
+										@Html.EditorFor(model => model.CustomerName)
+										@Html.ValidationMessageFor(model => model.CustomerName
+									   )
+									</div>
+								</div>
+							}
+							@if (Model.EmailEnable)
+							{
+								<div class="form-group col-md-12">
+									<div class="col-md-3">
+										@Html.NopLabelFor(model => model.CustomerEmail)
+									</div>
+									<div class="col-md-9">
+										@Html.NopEditorFor(model => model.CustomerEmail)
+										@Html.ValidationMessageFor(model => model.CustomerEmail)
+									</div>
+								</div>
+							}
+							@if (Model.PhoneEnable)
+							{
+								<div class="form-group col-md-12">
+									<div class="col-md-3">
+										@Html.NopLabelFor(model => model.CustomerPhone)
+									</div>
+									<div class="col-md-9">
+										@Html.NopEditorFor(model => model.CustomerPhone)
+										@Html.ValidationMessageFor(model => model.CustomerPhone)
+									</div>
+								</div>}
+						</div>
 
-                            <div class="panel-group">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        @if (Model.NameEnable)
-                                        {
-                                            <div class="form-group col-md-12">
-                                                <div class="col-md-3">
-                                                    @Html.NopLabelFor(model => model.CustomerName)
-                                                </div>
-                                                <div class="col-md-9">
-                                                    @Html.EditorFor(model => model.CustomerName)
-                                                    @Html.ValidationMessageFor(model => model.CustomerName
-                                       )
-                                                </div>
-                                            </div>
-                                        }
-                                        @if (Model.EmailEnable)
-                                        {
-                                            <div class="form-group col-md-12">
-                                                <div class="col-md-3">
-                                                    @Html.NopLabelFor(model => model.CustomerEmail)
-                                                </div>
-                                                <div class="col-md-9">
-                                                    @Html.NopEditorFor(model => model.CustomerEmail)
-                                                    @Html.ValidationMessageFor(model => model.CustomerEmail)
-                                                </div>
-                                            </div>
-                                        }
-                                        @if (Model.PhoneEnable)
-                                        {
-                                            <div class="form-group col-md-12">
-                                                <div class="col-md-3">
-                                                    @Html.NopLabelFor(model => model.CustomerPhone)
-                                                </div>
-                                                <div class="col-md-9">
-                                                    @Html.NopEditorFor(model => model.CustomerPhone)
-                                                    @Html.ValidationMessageFor(model => model.CustomerPhone)
-                                                </div>
-                                            </div>}
-                                    </div>
-                                </div>
-                            </div>
+							<div class="form-group">
+								<button type="submit" class="button-1 checkout-button" style="margin-left:30px">@T("Plugins.Order.QuickOrder.Button")</button>
+							</div>
+					}
+				</div>
 
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="button-1 checkout-button" style="margin-left:30px">@T("Plugins.Misc.QuickOrder.Button")</button>
-                        </div>
-                    }
-                </div>
-
-            </div>
-        </div>
-        </div>
-    </div>
-
-        @*<script>
-                $(docoment).ready(function () {
-                    var productidTemp = $('add-to-cart-button').data('productid');
-                    $('#ProductId').val(productidTemp);
-                });
-            </script>*@
+			</div>
+		</div>
+	</div>
+</div>

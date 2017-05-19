@@ -7,8 +7,8 @@
     <ProjectGuid>{E9A61365-19D6-4C3E-8C63-F793E32ADBB5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nop.Plugin.Misc.QuickOrder</RootNamespace>
-    <AssemblyName>Nop.Plugin.Misc.QuickOrder</AssemblyName>
+    <RootNamespace>Nop.Plugin.Order.QuickOrder</RootNamespace>
+    <AssemblyName>Nop.Plugin.Order.QuickOrder</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Presentation\Nop.Web\Plugins\Misc.QuickOrder\</OutputPath>
+    <OutputPath>..\..\Presentation\Nop.Web\Plugins\Order.QuickOrder\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -95,14 +95,15 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Translations\en_misc.quickOrder.xml">
+    <Content Include="App_Data\Translations\en_order.quickOrder.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\Translations\ru_misc.quickOrder.xml">
+    <Content Include="App_Data\Translations\ru_order.quickOrder.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\Translations\ua_misc.quickOrder.xml">
+    <Content Include="App_Data\Translations\ua_order.quickOrder.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Description.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

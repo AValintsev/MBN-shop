@@ -1,6 +1,6 @@
 ﻿using Nop.Core.Configuration;
 
-namespace Nop.Plugin.Misc.QuickOrder
+namespace Nop.Plugin.Order.QuickOrder
 {
     public class QOrderSettings : ISettings
     {

@@ -1,9 +1,9 @@
-﻿Group: Misc
+﻿Group: Order
 FriendlyName: Quick Order
-SystemName: Misc.QuickOrder
+SystemName: Order.QuickOrder
 Version: 1.00
 SupportedVersions: 3.90
 Author: DigitalLeader team
 DisplayOrder: 1
-FileName: Nop.Plugin.Misc.QuickOrder.dll
-Description: This plugin allows user to place an oder without registration.
+FileName: Nop.Plugin.Order.QuickOrder.dll
+Description: This plugin allows user to place an oder without registration. To use this widget you have to install "Payments.CashOnDelivery" Payment Method.

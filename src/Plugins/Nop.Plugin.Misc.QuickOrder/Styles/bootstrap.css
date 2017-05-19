@@ -1096,10 +1096,10 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
-a {
+/*a {
   color: #337ab7;
   text-decoration: none;
-}
+}*/
 a:hover,
 a:focus {
   color: #23527c;
@@ -1216,7 +1216,7 @@ h6 .small,
   line-height: 1;
   color: #777;
 }
-h1,
+/*h1,
 .h1,
 h2,
 .h2,
@@ -1224,7 +1224,7 @@ h3,
 .h3 {
   margin-top: 20px;
   margin-bottom: 10px;
-}
+}*/
 h1 small,
 .h1 small,
 h2 small,
@@ -1412,11 +1412,11 @@ a.bg-danger:focus {
   margin: 40px 0 20px;
   border-bottom: 1px solid #eee;
 }
-ul,
+/*ul,
 ol {
   margin-top: 0;
   margin-bottom: 10px;
-}
+}*/
 ul ul,
 ol ul,
 ul ol,

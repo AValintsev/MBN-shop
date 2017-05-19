@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="UkrainianMain" SupportedVersion="3.90">
+  <LocaleResource Name="Plugins.Order.QuickOrder.ConfigurationPage">
+    <Value>Конфігурація форми швидкого замовлення</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Order.QuickOrder.NameEnabled">
+    <Value>Активувати ім'я</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Order.QuickOrder.NameRequired">
+    <Value>Ім'я обов'язково</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Order.QuickOrder.EmailAddressEnabled">
+    <Value>Активувати Email адресу</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Order.QuickOrder.EmailAddressRequired">
+    <Value>Email адреса обов'язково</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Order.QuickOrder.PhoneEnabled">
+    <Value>Активувати Номер телефону</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Order.QuickOrder.PhoneRequired">
+    <Value>Номер телефону обов'язково</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Order.QuickOrder.WidgetZone">
+    <Value>WidgetZone</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Order.QuickOrder.WidgetZone.Hint">
+    <Value>Widget zone це частина UI (user-interface) в інтернет-магазині, де буде відображатися або рендеритися ваш виджет.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.CustomerName">
+    <Value>Ім'я</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.CustomerEmail">
+    <Value>Email</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.CustomerPhone">
+    <Value>Номер телефону</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.CustomerName.Required">
+    <Value>Будь ласка введіть ваше Ім'я</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.CustomerPhone.Required">
+    <Value>Будь ласка введіть ваш Номер телефону</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.CustomerEmail.Required">
+    <Value>Будь ласка введіть ваш email</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.CustomerEmail.ErrorMessage">
+    <Value>>Будь ласка перевірте ваш email. Приклад example@gmail.com</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.CustomerPhone.ErrorMessage">
+    <Value>>Будь ласка введіть ваш  Номер телефону в міжнародному форматі</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.FormTitle">
+    <Value>Форма швидкого замовлення</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.Button">
+    <Value>Замовити</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.Tab">
+    <Value>Швидке замовлення</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Order.QuickOrder.OrderTab">
+    <Value>Замовлення</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.PluginUnabled">
+		<Value>Функція швидкого замовлення недоступна на данний момент</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.CartIsEmpty">
+		<Value>Ваш кошик пустий</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.NotAllowedForGuest">
+		<Value>Гості не можуть здійснювати замовлення. Будь ласка зараєеструйтесь</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.NoPaymentMethods">
+		<Value>Помилка.Не було знайдено жоного метод оплаты</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.CartErrors">
+		<Value>Помилка. Проблеми з еошиком товарів</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.WrongBillingAddress">
+		<Value>Помилка. Не корректна адресса оплати</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.AddressCantBeLoaded">
+		<Value>Помилка. Не вдається завантажити адрессу</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Error.OrderConfirmFaild">
+		<Value>Помилка. Не вдалося здійснити підтверження замовлення</Value>
+	</LocaleResource>
+<LocaleResource Name="Plugins.Order.QuickOrder.Error.RegisteredUser">
+		<Value>Форма швидкого замовлення доступна лише для незареєстрованих користувачів.</Value>
+	</LocaleResource>
+</Language>

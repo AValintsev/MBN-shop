@@ -79,7 +79,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Plugin.ExchangeRate.Pri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Plugin.Misc.SMS", "Plugins\Nop.Plugin.Misc.SMS\Nop.Plugin.Misc.SMS.csproj", "{77A24BD8-13C1-4FC6-AB9C-32849BB166BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Plugin.Misc.QuickOrder", "Plugins\Nop.Plugin.Misc.QuickOrder\Nop.Plugin.Misc.QuickOrder.csproj", "{E9A61365-19D6-4C3E-8C63-F793E32ADBB5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Plugin.Order.QuickOrder", "Plugins\Nop.Plugin.Misc.QuickOrder\Nop.Plugin.Order.QuickOrder.csproj", "{E9A61365-19D6-4C3E-8C63-F793E32ADBB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

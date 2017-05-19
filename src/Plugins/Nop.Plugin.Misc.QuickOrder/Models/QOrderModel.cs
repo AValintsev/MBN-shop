@@ -2,18 +2,18 @@
 using Nop.Core;
 using Nop.Web.Framework;
 
-namespace Nop.Plugin.Misc.QuickOrder.Models
+namespace Nop.Plugin.Order.QuickOrder.Models
 {
     [Validator(typeof(Validator))]
     public class QOrderModel : BaseEntity
     {
-        [NopResourceDisplayName("Plugins.Misc.QuickOrder.CustomerName")]
+        [NopResourceDisplayName("Plugins.Order.QuickOrder.CustomerName")]
         public string CustomerName { get; set; }
 
-        [NopResourceDisplayName("Plugins.Misc.QuickOrder.CustomerEmail")]
+        [NopResourceDisplayName("Plugins.Order.QuickOrder.CustomerEmail")]
         public string CustomerEmail { get; set; }
 
-        [NopResourceDisplayName("Plugins.Misc.QuickOrder.CustomerPhone")]
+        [NopResourceDisplayName("Plugins.Order.QuickOrder.CustomerPhone")]
         public string CustomerPhone { get; set; }
 
         public bool NameEnable { get; set; }

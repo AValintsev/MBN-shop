@@ -1,1 +1,9 @@
-﻿<h2>@ViewBag.message</h2>
+﻿@{
+	Html.AddScriptParts(Url.Content("~/Plugins/Order.QuickOrder/Scripts/bootstrap.js"));
+	Html.AppendCssFileParts(Url.Content("~/Plugins/Order.QuickOrder/Styles/bootstrap.css"));
+}
+<div>
+	<div class="alert alert-danger alert-dismissable">
+		<strong>@ViewBag.message</strong> 
+	</div>
+</div>

@@ -12,9 +12,9 @@ using System.Linq;
 using System.Web.Routing;
 using System.Collections.Generic;
 
-namespace Nop.Plugin.Misc.QuickOrder
+namespace Nop.Plugin.Order.QuickOrder
 {
-    public class QOrderPlugin : BasePlugin, IMiscPlugin , IWidgetPlugin
+    public class QOrderPlugin : BasePlugin, IMiscPlugin, IWidgetPlugin
     {
         #region fields
 
@@ -46,14 +46,14 @@ namespace Nop.Plugin.Misc.QuickOrder
 
             var settings = new QOrderSettings()
             {
-               Enabled = false,
-               NameEnabled = true,
-               NameRequired = true,
-               EmailAddressEnabled = true,
-               EmailAddressRequired = true,
-               PhoneEnabled = false,
-               PhoneRequired = false,
-               WidgetZone = "order_summary_content_after"
+                Enabled = false,
+                NameEnabled = true,
+                NameRequired = true,
+                EmailAddressEnabled = true,
+                EmailAddressRequired = true,
+                PhoneEnabled = false,
+                PhoneRequired = false,
+                WidgetZone = "order_summary_content_custom"
             };
             _settingService.SaveSetting(settings);
 
@@ -62,19 +62,19 @@ namespace Nop.Plugin.Misc.QuickOrder
 
         protected virtual void InstallLocaleResources()
         {
-            ////English language
-            //var languageEng = _languageRepository.Table.Single(l => l.Name == "English");
+			//English language
+			var languageEng = _languageRepository.Table.SingleOrDefault(l => l.Name == "English");
 
-            //if (languageEng != null)
-            //{
-            //    //save resources
-            //    foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.QuickOrder/App_Data/Translations"), "en_misc.quickOrder.xml", SearchOption.TopDirectoryOnly))
-            //    {
-            //        var localesXml = File.ReadAllText(filePath);
-            //        var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
-            //        localizationService.ImportResourcesFromXml(languageEng, localesXml);
-            //    }
-            //}
+			if (languageEng != null)
+            {
+                //save resources
+                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Order.QuickOrder/App_Data/Translations"), "en_order.quickOrder.xml", SearchOption.TopDirectoryOnly))
+                {
+                    var localesXml = File.ReadAllText(filePath);
+                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+                    localizationService.ImportResourcesFromXml(languageEng, localesXml);
+                }
+            }
 
             //Russian language
             var languageRu = _languageRepository.Table.SingleOrDefault(l => l.Name == "Russian");
@@ -82,7 +82,7 @@ namespace Nop.Plugin.Misc.QuickOrder
             if (languageRu != null)
             {
                 //save resources
-                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.QuickOrder/App_Data/Translations"), "ru_misc.quickOrder.xml", SearchOption.TopDirectoryOnly))
+                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Order.QuickOrder/App_Data/Translations"), "ru_order.quickOrder.xml", SearchOption.TopDirectoryOnly))
                 {
                     var localesXml = File.ReadAllText(filePath);
                     var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
@@ -96,7 +96,7 @@ namespace Nop.Plugin.Misc.QuickOrder
             if (languageUa != null)
             {
                 //save resources
-                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Misc.QuickOrder/App_Data/Translations"), "ua_misc.quickOrder.xml", SearchOption.TopDirectoryOnly))
+                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Order.QuickOrder/App_Data/Translations"), "ua_orderc.quickOrder.xml", SearchOption.TopDirectoryOnly))
                 {
                     var localesXml = File.ReadAllText(filePath);
                     var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
@@ -127,7 +127,7 @@ namespace Nop.Plugin.Misc.QuickOrder
             controllerName = "QuickOrder";
             routeValues = new RouteValueDictionary
             {
-                { "Namespaces", "Nop.Plugin.Misc.QuickOrder.Controllers" },
+                { "Namespaces", "Nop.Plugin.Order.QuickOrder.Controllers" },
                 { "area", null }
             };
         }
@@ -136,16 +136,20 @@ namespace Nop.Plugin.Misc.QuickOrder
         {
             List<string> stringList;
             if (!string.IsNullOrWhiteSpace(_qOrderSettings.WidgetZone))
+            {
                 stringList = new List<string>()
-        {
-          _qOrderSettings.WidgetZone
-        };
+                {
+                  _qOrderSettings.WidgetZone
+                };
+            }
             else
+            {
                 stringList = new List<string>()
-        {
-          "order_summary_content_after"
-        };
-            return (IList<string>) stringList;
+                {
+                  "order_summary_content_custom"
+                };
+            }
+            return (IList<string>)stringList;
         }
 
         public void GetDisplayWidgetRoute(string widgetZone, out string actionName, out string controllerName, out RouteValueDictionary routeValues)
@@ -154,7 +158,7 @@ namespace Nop.Plugin.Misc.QuickOrder
             controllerName = "QuickOrder";
             routeValues = new RouteValueDictionary
                   {
-                      {"Namespaces", "Nop.Plugin.Misc.QuickOrder.Controllers"},
+                      {"Namespaces", "Nop.Plugin.Order.QuickOrder.Controllers"},
                       {"area", null},
                       {"widgetZone", widgetZone}
                   };
