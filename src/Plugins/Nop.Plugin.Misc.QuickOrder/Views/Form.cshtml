@@ -4,67 +4,43 @@
 @using Nop.Web.Framework.UI
 
 @{
-	Html.AddScriptParts(Url.Content("~/Plugins/Order.QuickOrder/Scripts/bootstrap.js"));
-	Html.AppendCssFileParts(Url.Content("~/Plugins/Order.QuickOrder/Styles/bootstrap.css"));
+	Html.AppendCssFileParts(Url.Content("~/Plugins/Order.QuickOrder/Styles/quick-order.css"));
 }
-<div class="content">
-	<div class="form-horizontal">
-		<div class="panel-group">
-			<div class="panel panel-default">
-				<div class="panel-heading"><h5><strong>@T("Plugins.Order.QuickOrder.FormTitle")</strong></h5></div>
-				<div class="panel-body">
-					@using (@Html.BeginForm())
-					{
-						@Html.AntiForgeryToken()
 
-						@Html.ValidationSummary(true)
+<div class="form-horizontal">
+	@using (@Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
 
-						<div class="panel-group">
-							@if (Model.NameEnable)
-							{
-								<div class="form-group col-md-12">
-									<div class="col-md-3">
-										@Html.NopLabelFor(model => model.CustomerName)
-									</div>
-									<div class="col-md-9">
-										@Html.EditorFor(model => model.CustomerName)
-										@Html.ValidationMessageFor(model => model.CustomerName
-									   )
-									</div>
-								</div>
-							}
-							@if (Model.EmailEnable)
-							{
-								<div class="form-group col-md-12">
-									<div class="col-md-3">
-										@Html.NopLabelFor(model => model.CustomerEmail)
-									</div>
-									<div class="col-md-9">
-										@Html.NopEditorFor(model => model.CustomerEmail)
-										@Html.ValidationMessageFor(model => model.CustomerEmail)
-									</div>
-								</div>
-							}
-							@if (Model.PhoneEnable)
-							{
-								<div class="form-group col-md-12">
-									<div class="col-md-3">
-										@Html.NopLabelFor(model => model.CustomerPhone)
-									</div>
-									<div class="col-md-9">
-										@Html.NopEditorFor(model => model.CustomerPhone)
-										@Html.ValidationMessageFor(model => model.CustomerPhone)
-									</div>
-								</div>}
-						</div>
-
-							<div class="form-group">
-								<button type="submit" class="button-1 checkout-button" style="margin-left:30px">@T("Plugins.Order.QuickOrder.Button")</button>
-							</div>
-					}
+		@Html.ValidationSummary(true)
+		<div class="quick-order">
+			@if (Model.NameEnable)
+			{
+				<div class="inputs">
+					@Html.NopLabelFor(model => model.CustomerName)
+					@Html.NopEditorFor(model => model.CustomerName)
+					@Html.ValidationMessageFor(model => model.CustomerName)
 				</div>
-
-			</div>
+			}
+			@if (Model.EmailEnable)
+			{
+				<div class="inputs">
+					@Html.NopLabelFor(model => model.CustomerEmail)
+					@Html.NopEditorFor(model => model.CustomerEmail)
+					@Html.ValidationMessageFor(model => model.CustomerEmail)
+				</div>
+			}
+			@if (Model.PhoneEnable)
+			{
+				<div class="inputs">
+					@Html.NopLabelFor(model => model.CustomerPhone)
+					@Html.NopEditorFor(model => model.CustomerPhone)
+					@Html.ValidationMessageFor(model => model.CustomerPhone)
+				</div>
+			}
 		</div>
-	</div>
+		<div class="inputs">
+			<button type="submit" class="button-1 checkout-button" style="margin-left:30px">@T("Plugins.Order.QuickOrder.Button")</button>
+		</div>
+			}
 </div>

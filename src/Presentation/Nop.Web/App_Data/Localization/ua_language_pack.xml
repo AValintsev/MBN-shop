@@ -13871,7 +13871,7 @@
 		<Value>Товар додано у Кошик</Value>
 	</LocaleResource>
 	<LocaleResource Name="products.producthasbeenaddedtothecart.link">
-		<Value>Товар додано в &lt;a href="{0}"&gt;Смітник&lt;/a&gt;</Value>
+		<Value>Товар додано в &lt;a href="{0}"&gt;Кошик&lt;/a&gt;</Value>
 	</LocaleResource>
 	<LocaleResource Name="products.producthasbeenaddedtothewishlist">
 		<Value>Товар доданий в Список побажань</Value>

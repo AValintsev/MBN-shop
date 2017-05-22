@@ -36,8 +36,6 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 		private readonly IStoreService _storeService;
 		private readonly ISettingService _settingService;
 		private readonly IStoreContext _storeContext;
-		private readonly QOrderSettings _qOrderSettings;
-
 		private readonly ILanguageService _languageService;
 		private readonly ILocalizationService _localizationService;
 		private readonly ILocalizedEntityService _localizedEntityService;
@@ -94,7 +92,6 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 			ISettingService settingService,
 			IStoreContext storeContext,
 			IProductService productService,
-			QOrderSettings qOrderSettings,
 			ILanguageService languageService,
 			ILocalizationService localizationService,
 			ILocalizedEntityService localizedEntityService,
@@ -119,7 +116,6 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 			this._settingService = settingService;
 			this._storeContext = storeContext;
 			this._productService = productService;
-			this._qOrderSettings = qOrderSettings;
 
 			this._languageService = languageService;
 			this._localizationService = localizationService;
@@ -149,6 +145,12 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 		{
 			var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
 			var qOrderSettings = _settingService.LoadSetting<QOrderSettings>(storeScope);
+			var model = new QOrderModel
+			{
+				NameEnable = qOrderSettings.NameEnabled,
+				EmailEnable = qOrderSettings.NameEnabled,
+				PhoneEnable = qOrderSettings.PhoneEnabled
+			};
 
 			if (!qOrderSettings.Enabled)
 				return DONE(_localizationService.GetResource("Plugins.Order.QuickOrder.Error.PluginUnabled"));
@@ -163,8 +165,16 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 			bool downloadableProductsRequireRegistration =
 				_customerSettings.RequireRegistrationForDownloadableProducts && cart.Any(sci => sci.Product.IsDownload);
 
+			//Allow to all users
+
 			if (_workContext.CurrentCustomer.IsRegistered())
-				return DONE(_localizationService.GetResource("Plugins.Order.QuickOrder.Error.RegisteredUser"));
+			{
+				model.CustomerEmail = _workContext.CurrentCustomer.Email;
+				model.CustomerName = _workContext.CurrentCustomer.GetFullName();
+				model.CustomerPhone = _workContext.CurrentCustomer.Addresses.Any()
+					? _workContext.CurrentCustomer.Addresses.First().PhoneNumber : "";
+			}
+			//	return DONE(_localizationService.GetResource("Plugins.Order.QuickOrder.Error.RegisteredUser"));
 
 			if (_workContext.CurrentCustomer.IsGuest()
 				&& (!_orderSettings.AnonymousCheckoutAllowed
@@ -215,12 +225,6 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 					return DONE(_localizationService.GetResource("Plugins.Order.QuickOrder.Error.CartErrors"));
 			}
 
-			var model = new QOrderModel
-			{
-				NameEnable = _qOrderSettings.NameEnabled,
-				EmailEnable = _qOrderSettings.NameEnabled,
-				PhoneEnable = _qOrderSettings.PhoneEnabled
-			};
 			return View("~/Plugins/Order.QuickOrder/Views/Form.cshtml", model);
 		}
 

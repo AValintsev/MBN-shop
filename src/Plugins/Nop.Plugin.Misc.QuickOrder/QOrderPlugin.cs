@@ -14,156 +14,156 @@ using System.Collections.Generic;
 
 namespace Nop.Plugin.Order.QuickOrder
 {
-    public class QOrderPlugin : BasePlugin, IMiscPlugin, IWidgetPlugin
-    {
-        #region fields
+	public class QOrderPlugin : BasePlugin, IMiscPlugin, IWidgetPlugin
+	{
+		#region fields
 
-        private readonly ISettingService _settingService;
-        private readonly IRepository<Language> _languageRepository;
-        private readonly QOrderSettings _qOrderSettings;
+		private readonly ISettingService _settingService;
+		private readonly IRepository<Language> _languageRepository;
+		private readonly QOrderSettings _qOrderSettings;
 
-        #endregion
+		#endregion
 
-        public QOrderPlugin(
-            IRepository<Language> languageRepository,
-            ISettingService settingsService,
-            QOrderSettings qrderSettings
-        )
-        {
-            _languageRepository = languageRepository;
-            _settingService = settingsService;
-            _qOrderSettings = qrderSettings;
-        }
+		public QOrderPlugin(
+			IRepository<Language> languageRepository,
+			ISettingService settingsService,
+			QOrderSettings qrderSettings
+		)
+		{
+			_languageRepository = languageRepository;
+			_settingService = settingsService;
+			_qOrderSettings = qrderSettings;
+		}
 
-        public bool Authenticate()
-        {
-            return true;
-        }
+		public bool Authenticate()
+		{
+			return true;
+		}
 
-        public override void Install()
-        {
-            InstallLocaleResources();
+		public override void Install()
+		{
+			InstallLocaleResources();
 
-            var settings = new QOrderSettings()
-            {
-                Enabled = false,
-                NameEnabled = true,
-                NameRequired = true,
-                EmailAddressEnabled = true,
-                EmailAddressRequired = true,
-                PhoneEnabled = false,
-                PhoneRequired = false,
-                WidgetZone = "order_summary_content_custom"
-            };
-            _settingService.SaveSetting(settings);
+			var settings = new QOrderSettings()
+			{
+				Enabled = false,
+				NameEnabled = true,
+				NameRequired = true,
+				EmailAddressEnabled = true,
+				EmailAddressRequired = true,
+				PhoneEnabled = false,
+				PhoneRequired = false,
+				WidgetZone = "order_summary_content_custom"
+			};
+			_settingService.SaveSetting(settings);
 
-            base.Install();
-        }
+			base.Install();
+		}
 
-        protected virtual void InstallLocaleResources()
-        {
+		protected virtual void InstallLocaleResources()
+		{
 			//English language
 			var languageEng = _languageRepository.Table.SingleOrDefault(l => l.Name == "English");
 
 			if (languageEng != null)
-            {
-                //save resources
-                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Order.QuickOrder/App_Data/Translations"), "en_order.quickOrder.xml", SearchOption.TopDirectoryOnly))
-                {
-                    var localesXml = File.ReadAllText(filePath);
-                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
-                    localizationService.ImportResourcesFromXml(languageEng, localesXml);
-                }
-            }
+			{
+				//save resources
+				foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Order.QuickOrder/App_Data/Translations"), "en_order.quickOrder.xml", SearchOption.TopDirectoryOnly))
+				{
+					var localesXml = File.ReadAllText(filePath);
+					var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+					localizationService.ImportResourcesFromXml(languageEng, localesXml);
+				}
+			}
 
-            //Russian language
-            var languageRu = _languageRepository.Table.SingleOrDefault(l => l.Name == "Russian");
+			//Russian language
+			var languageRu = _languageRepository.Table.SingleOrDefault(l => l.Name == "Russian");
 
-            if (languageRu != null)
-            {
-                //save resources
-                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Order.QuickOrder/App_Data/Translations"), "ru_order.quickOrder.xml", SearchOption.TopDirectoryOnly))
-                {
-                    var localesXml = File.ReadAllText(filePath);
-                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
-                    localizationService.ImportResourcesFromXml(languageRu, localesXml);
-                }
-            }
-
-
-            //Ukrainian language
-            var languageUa = _languageRepository.Table.Single(l => l.Name == "Ukrainian");
-            if (languageUa != null)
-            {
-                //save resources
-                foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Order.QuickOrder/App_Data/Translations"), "ua_orderc.quickOrder.xml", SearchOption.TopDirectoryOnly))
-                {
-                    var localesXml = File.ReadAllText(filePath);
-                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
-                    localizationService.ImportResourcesFromXml(languageUa, localesXml);
-                }
-            }
-        }
-
-        public override void Uninstall()
-        {
-            _settingService.DeleteSetting<QOrderSettings>();
+			if (languageRu != null)
+			{
+				//save resources
+				foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Order.QuickOrder/App_Data/Translations"), "ru_order.quickOrder.xml", SearchOption.TopDirectoryOnly))
+				{
+					var localesXml = File.ReadAllText(filePath);
+					var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+					localizationService.ImportResourcesFromXml(languageRu, localesXml);
+				}
+			}
 
 
-            base.Uninstall();
-        }
+			//Ukrainian language
+			var languageUa = _languageRepository.Table.SingleOrDefault(l => l.Name == "Ukrainian");
+			if (languageUa != null)
+			{
+				//save resources
+				foreach (var filePath in System.IO.Directory.EnumerateFiles(CommonHelper.MapPath("~/Plugins/Order.QuickOrder/App_Data/Translations"), "ua_order.quickOrder.xml", SearchOption.TopDirectoryOnly))
+				{
+					var localesXml = File.ReadAllText(filePath);
+					var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+					localizationService.ImportResourcesFromXml(languageUa, localesXml);
+				}
+			}
+		}
 
-        #region Routes
+		public override void Uninstall()
+		{
+			_settingService.DeleteSetting<QOrderSettings>();
 
-        /// <summary>
-        /// Gets a route for provider configuration
-        /// </summary>
-        /// <param name="actionName">Action name</param>
-        /// <param name="controllerName">Controller name</param>
-        /// <param name="routeValues">Route values</param>
-        public void GetConfigurationRoute(out string actionName, out string controllerName, out RouteValueDictionary routeValues)
-        {
-            actionName = "Configure";
-            controllerName = "QuickOrder";
-            routeValues = new RouteValueDictionary
-            {
-                { "Namespaces", "Nop.Plugin.Order.QuickOrder.Controllers" },
-                { "area", null }
-            };
-        }
 
-        public IList<string> GetWidgetZones()
-        {
-            List<string> stringList;
-            if (!string.IsNullOrWhiteSpace(_qOrderSettings.WidgetZone))
-            {
-                stringList = new List<string>()
-                {
-                  _qOrderSettings.WidgetZone
-                };
-            }
-            else
-            {
-                stringList = new List<string>()
-                {
-                  "order_summary_content_custom"
-                };
-            }
-            return (IList<string>)stringList;
-        }
+			base.Uninstall();
+		}
 
-        public void GetDisplayWidgetRoute(string widgetZone, out string actionName, out string controllerName, out RouteValueDictionary routeValues)
-        {
-            actionName = "Form";
-            controllerName = "QuickOrder";
-            routeValues = new RouteValueDictionary
-                  {
-                      {"Namespaces", "Nop.Plugin.Order.QuickOrder.Controllers"},
-                      {"area", null},
-                      {"widgetZone", widgetZone}
-                  };
-        }
+		#region Routes
 
-        #endregion
-    }
+		/// <summary>
+		/// Gets a route for provider configuration
+		/// </summary>
+		/// <param name="actionName">Action name</param>
+		/// <param name="controllerName">Controller name</param>
+		/// <param name="routeValues">Route values</param>
+		public void GetConfigurationRoute(out string actionName, out string controllerName, out RouteValueDictionary routeValues)
+		{
+			actionName = "Configure";
+			controllerName = "QuickOrder";
+			routeValues = new RouteValueDictionary
+			{
+				{ "Namespaces", "Nop.Plugin.Order.QuickOrder.Controllers" },
+				{ "area", null }
+			};
+		}
+
+		public IList<string> GetWidgetZones()
+		{
+			List<string> stringList;
+			if (!string.IsNullOrWhiteSpace(_qOrderSettings.WidgetZone))
+			{
+				stringList = new List<string>()
+				{
+				  _qOrderSettings.WidgetZone
+				};
+			}
+			else
+			{
+				stringList = new List<string>()
+				{
+				  "order_summary_content_custom"
+				};
+			}
+			return (IList<string>)stringList;
+		}
+
+		public void GetDisplayWidgetRoute(string widgetZone, out string actionName, out string controllerName, out RouteValueDictionary routeValues)
+		{
+			actionName = "Form";
+			controllerName = "QuickOrder";
+			routeValues = new RouteValueDictionary
+				  {
+					  {"Namespaces", "Nop.Plugin.Order.QuickOrder.Controllers"},
+					  {"area", null},
+					  {"widgetZone", widgetZone}
+				  };
+		}
+
+		#endregion
+	}
 }
