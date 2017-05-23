@@ -60,12 +60,15 @@
   <LocaleResource Name="Plugins.Order.QuickOrder.Button">
     <Value>Заказать</Value>
   </LocaleResource>
-<LocaleResource Name="Plugins.Order.QuickOrder.Tab">
-    <Value>Быстрий заказ</Value>
-  </LocaleResource>
-<LocaleResource Name="Plugins.Order.QuickOrder.OrderTab">
-    <Value>Заказ</Value>
-  </LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Tab.NewCustomer">
+		<Value>Я новый покупатель</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Tab.RegisteredCustomer">
+		<Value>Я зарегистрированный покупатель</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Tab.Quickorder">
+		<Value>Быстрый заказ</Value>
+	</LocaleResource>
 	<LocaleResource Name="Plugins.Order.QuickOrder.Error.PluginUnabled">
 		<Value>Функция быстрого заказа недоступна на данный момент</Value>
 	</LocaleResource>

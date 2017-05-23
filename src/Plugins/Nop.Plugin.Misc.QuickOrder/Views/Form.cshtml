@@ -10,34 +10,39 @@
 <div class="form-horizontal">
 	@using (@Html.BeginForm())
 	{
+		<div class="title">
+			<strong>@T("Plugins.Order.QuickOrder.FormTitle")</strong>
+		</div>
 		@Html.AntiForgeryToken()
 
 		@Html.ValidationSummary(true)
 		<div class="quick-order">
-			@if (Model.NameEnable)
-			{
-				<div class="inputs">
-					@Html.NopLabelFor(model => model.CustomerName)
-					@Html.NopEditorFor(model => model.CustomerName)
-					@Html.ValidationMessageFor(model => model.CustomerName)
-				</div>
-			}
-			@if (Model.EmailEnable)
-			{
-				<div class="inputs">
-					@Html.NopLabelFor(model => model.CustomerEmail)
-					@Html.NopEditorFor(model => model.CustomerEmail)
-					@Html.ValidationMessageFor(model => model.CustomerEmail)
-				</div>
-			}
-			@if (Model.PhoneEnable)
-			{
-				<div class="inputs">
-					@Html.NopLabelFor(model => model.CustomerPhone)
-					@Html.NopEditorFor(model => model.CustomerPhone)
-					@Html.ValidationMessageFor(model => model.CustomerPhone)
-				</div>
-			}
+			<div class="form-fields">
+				@if (Model.NameEnable)
+				{
+					<div class="inputs">
+						@Html.NopLabelFor(model => model.CustomerName)
+						@Html.NopEditorFor(model => model.CustomerName)
+						@Html.ValidationMessageFor(model => model.CustomerName)
+					</div>
+				}
+				@if (Model.EmailEnable)
+				{
+					<div class="inputs">
+						@Html.NopLabelFor(model => model.CustomerEmail)
+						@Html.NopEditorFor(model => model.CustomerEmail)
+						@Html.ValidationMessageFor(model => model.CustomerEmail)
+					</div>
+				}
+				@if (Model.PhoneEnable)
+				{
+					<div class="inputs">
+						@Html.NopLabelFor(model => model.CustomerPhone)
+						@Html.NopEditorFor(model => model.CustomerPhone)
+						@Html.ValidationMessageFor(model => model.CustomerPhone)
+					</div>
+				}
+			</div>
 		</div>
 		<div class="inputs">
 			<button type="submit" class="button-1 checkout-button" style="margin-left:30px">@T("Plugins.Order.QuickOrder.Button")</button>

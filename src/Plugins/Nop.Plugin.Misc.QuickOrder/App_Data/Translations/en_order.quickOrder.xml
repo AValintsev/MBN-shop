@@ -60,11 +60,14 @@
 <LocaleResource Name="Plugins.Order.QuickOrder.Button">
     <Value>Order</Value>
   </LocaleResource>
-  <LocaleResource Name="Plugins.Order.QuickOrder.Tab">
-    <Value>Quick Order</Value>
+  <LocaleResource Name="Plugins.Order.QuickOrder.Tab.NewCustomer">
+    <Value>I'm a new Customer</Value>
   </LocaleResource>
-  <LocaleResource Name="Plugins.Order.QuickOrder.OrderTab">
-    <Value>Заказ</Value>
+  <LocaleResource Name="Plugins.Order.QuickOrder.Tab.OrderTab">
+    <Value>I'm a registered Customer</Value>
+  </LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Tab.OrderTab">
+    <Value>Quick order</Value>
   </LocaleResource>
 	<LocaleResource Name="Plugins.Order.QuickOrder.Error.PluginUnabled">
 		<Value>Sorry, but quick order is unabled now</Value>

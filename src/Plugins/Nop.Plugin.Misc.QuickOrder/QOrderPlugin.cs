@@ -51,8 +51,8 @@ namespace Nop.Plugin.Order.QuickOrder
 				NameRequired = true,
 				EmailAddressEnabled = true,
 				EmailAddressRequired = true,
-				PhoneEnabled = false,
-				PhoneRequired = false,
+				PhoneEnabled = true,
+				PhoneRequired = true,
 				WidgetZone = "order_summary_content_custom"
 			};
 			_settingService.SaveSetting(settings);

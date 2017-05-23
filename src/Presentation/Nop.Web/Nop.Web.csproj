@@ -1241,6 +1241,7 @@
     <Content Include="Themes\NopElectro\Views\Catalog\TopMenu.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Themes\NopElectro\Views\Common\Social.cshtml" />
+    <Content Include="Themes\NopElectro\Views\Customer\Login.cshtml" />
     <Content Include="Themes\NopElectro\Views\ShoppingCart\OrderSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>

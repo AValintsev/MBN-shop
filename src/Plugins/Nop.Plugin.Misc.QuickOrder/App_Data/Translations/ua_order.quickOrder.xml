@@ -3,6 +3,9 @@
   <LocaleResource Name="Plugins.Order.QuickOrder.ConfigurationPage">
     <Value>Конфігурація форми швидкого замовлення</Value>
   </LocaleResource>
+	<LocaleResource Name="Admin.Order.QuickOrder.Enabled">
+		<Value>Активувати плагин</Value>
+	</LocaleResource>
   <LocaleResource Name="Admin.Order.QuickOrder.NameEnabled">
     <Value>Активувати ім'я</Value>
   </LocaleResource>
@@ -57,12 +60,15 @@
   <LocaleResource Name="Plugins.Order.QuickOrder.Button">
     <Value>Замовити</Value>
   </LocaleResource>
-  <LocaleResource Name="Plugins.Order.QuickOrder.Tab">
-    <Value>Швидке замовлення</Value>
-  </LocaleResource>
-  <LocaleResource Name="Plugins.Order.QuickOrder.OrderTab">
-    <Value>Замовлення</Value>
-  </LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Tab.NewCustomer">
+		<Value>Я новий покупець</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Tab.RegisteredCustomer">
+		<Value>Я зареэстрований покупець</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Order.QuickOrder.Tab.Quickorder">
+		<Value>Швидке замовлення</Value>
+	</LocaleResource>
 	<LocaleResource Name="Plugins.Order.QuickOrder.Error.PluginUnabled">
 		<Value>Функція швидкого замовлення недоступна на данний момент</Value>
 	</LocaleResource>
