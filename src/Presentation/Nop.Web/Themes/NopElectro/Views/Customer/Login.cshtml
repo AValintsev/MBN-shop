@@ -34,27 +34,18 @@
 				<div id="tabs-order">
 					<ul>
 						<li>
-							<a data-toggle="tab" href="#newcustomer">@T("Plugins.Order.QuickOrder.Tab.NewCustomer")</a>
+							<a data-toggle="tab" href="#quickform">@T("Plugins.Order.QuickOrder.Tab.Quickorder")</a>
 						</li>
 						<li>
 							<a data-toggle="tab" href="#registereduser">@T("Plugins.Order.QuickOrder.Tab.RegisteredCustomer")</a>
 						</li>
 						<li>
-							<a data-toggle="tab" href="#quickform">@T("Plugins.Order.QuickOrder.Tab.Quickorder")</a>
+							<a data-toggle="tab" href="#newcustomer">@T("Plugins.Order.QuickOrder.Tab.NewCustomer")</a>
 						</li>
 					</ul>
-					<div id="newcustomer" class="tab-pane">
-						<div class="new-wrapper checkout-as-guest-or-register-block">
-						<div class="title">
-							<strong>@T("Account.Login.CheckoutAsGuestOrRegister")</strong>
-						</div>
-						<div class="text">
-								@Html.Action("TopicBlock", "Topic", new { systemName = "CheckoutAsGuestOrRegister" })
-							</div>
-						<div class="buttons">
-							<input type="button" class="button-1 checkout-as-guest-button" onclick="location.href='@Url.RouteUrl("Checkout")'" value="@T("Account.Login.CheckoutAsGuest")" />
-							<input type="button" class="button-1 register-button" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
-						</div>
+					<div id="quickform" class="tab-pane">
+						<div class="returning-wrapper fieldset" style="float:none">
+							@Html.Widget("order_summary_content_custom")
 						</div>
 					</div>
 
@@ -63,61 +54,70 @@
 							@using (Html.BeginForm())
 				{
 					var validationSummary = Html.ValidationSummary(true, T("Account.Login.Unsuccessful").Text);
-								<div class="title">
-									<strong>@T("Account.Login.ReturningCustomer")</strong>
-								</div>
+								@*<div class="title">
+										<strong>@T("Account.Login.ReturningCustomer")</strong>
+									</div>*@
 					if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
 					{
-									<div class="message-error">@validationSummary</div>
+								<div class="message-error">@validationSummary</div>
 					}
-								<div class="form-fields">
-									@if (Model.UsernamesEnabled)
-									{
-										<div class="inputs">
-											@Html.LabelFor(m => m.Username, new { }, ":")
-											@Html.TextBoxFor(m => m.Username, new { @class = "username", autofocus = "autofocus", @style = "font-size:initial" })
-											@Html.ValidationMessageFor(m => m.Username)
-										</div>
-									}
-									else
-									{
-										<div class="inputs">
-											@Html.LabelFor(m => m.Email, new { }, ":")
-											@Html.TextBoxFor(m => m.Email, new { @class = "email", autofocus = "autofocus", @style = "font-size:initial"})
-											@Html.ValidationMessageFor(m => m.Email)
-										</div>
-									}
+							<div class="form-fields">
+								@if (Model.UsernamesEnabled)
+								{
 									<div class="inputs">
-										@Html.LabelFor(m => m.Password, new { }, ":")
-										@Html.PasswordFor(m => m.Password, new { @class = "password", @style = "font-size:initial" })
-										@Html.ValidationMessageFor(m => m.Password)
+										@Html.LabelFor(m => m.Username, new { }, ":")
+										@Html.TextBoxFor(m => m.Username, new { @class = "username", autofocus = "autofocus", @style = "font-size:initial" })
+										@Html.ValidationMessageFor(m => m.Username)
 									</div>
-									<div class="inputs reversed">
-										@Html.CheckBoxFor(m => m.RememberMe)
-										@Html.LabelFor(m => m.RememberMe)
-										<span class="forgot-password">
-											@Html.RouteLink(T("Account.Login.ForgotPassword").Text, "PasswordRecovery")
-										</span>
+								}
+								else
+								{
+									<div class="inputs">
+										@Html.LabelFor(m => m.Email, new { }, ":")
+										@Html.TextBoxFor(m => m.Email, new { @class = "email", autofocus = "autofocus", @style = "font-size:initial" })
+										@Html.ValidationMessageFor(m => m.Email)
 									</div>
-									@if (Model.DisplayCaptcha)
-									{
-										<div class="captcha-box">
-											@Html.Raw(Html.GenerateCaptcha())
-										</div>
-									}
+								}
+								<div class="inputs">
+									@Html.LabelFor(m => m.Password, new { }, ":")
+									@Html.PasswordFor(m => m.Password, new { @class = "password", @style = "font-size:initial" })
+									@Html.ValidationMessageFor(m => m.Password)
 								</div>
-								<div class="buttons">
-									<input class="button-1 login-button" type="submit" value="@T("Account.Login.LoginButton")" />
+								<div class="inputs reversed">
+									@Html.CheckBoxFor(m => m.RememberMe)
+									@Html.LabelFor(m => m.RememberMe)
+									<span class="forgot-password">
+										@Html.RouteLink(T("Account.Login.ForgotPassword").Text, "PasswordRecovery")
+									</span>
 								</div>
+								@if (Model.DisplayCaptcha)
+								{
+									<div class="captcha-box">
+										@Html.Raw(Html.GenerateCaptcha())
+									</div>
+								}
+							</div>
+							<div class="buttons">
+								<input class="button-1 login-button" type="submit" value="@T("Account.Login.LoginButton")" />
+							</div>
 				}
 						</div>
 					</div>
 
-					<div id="quickform" class="tab-pane">
-						<div class="returning-wrapper fieldset" style="float:none">
-							@Html.Widget("order_summary_content_custom")
+					<div id="newcustomer" class="tab-pane">
+						<div class="new-wrapper checkout-as-guest-or-register-block">
+							@*<div class="title">
+									<strong>@T("Account.Login.CheckoutAsGuestOrRegister")</strong>
+								</div>*@
+							<div class="text">
+								@Html.Action("TopicBlock", "Topic", new { systemName = "CheckoutAsGuestOrRegister" })
+							</div>
+							<div class="buttons">
+								@*<input type="button" class="button-1 checkout-as-guest-button" onclick="location.href='@Url.RouteUrl("Checkout")'" value="@T("Account.Login.CheckoutAsGuest")" />*@
+								<input type="button" class="button-1 register-button" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
 							</div>
 						</div>
+					</div>
 				</div>
 
 			}
@@ -134,58 +134,58 @@
 						<input type="button" class="button-1 register-button" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
 					</div>
 				</div>
-			<div class="returning-wrapper fieldset">
-				@using (Html.BeginForm())
+				<div class="returning-wrapper fieldset">
+					@using (Html.BeginForm())
 				{
 					var validationSummary = Html.ValidationSummary(true, T("Account.Login.Unsuccessful").Text);
-					<div class="title">
-						<strong>@T("Account.Login.ReturningCustomer")</strong>
-					</div>
+						<div class="title">
+							<strong>@T("Account.Login.ReturningCustomer")</strong>
+						</div>
 					if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
 					{
-						<div class="message-error">@validationSummary</div>
+							<div class="message-error">@validationSummary</div>
 					}
-					<div class="form-fields">
-						@if (Model.UsernamesEnabled)
-						{
+						<div class="form-fields">
+							@if (Model.UsernamesEnabled)
+							{
+								<div class="inputs">
+									@Html.LabelFor(m => m.Username, new { }, ":")
+									@Html.TextBoxFor(m => m.Username, new { @class = "username", autofocus = "autofocus" })
+									@Html.ValidationMessageFor(m => m.Username)
+								</div>
+							}
+							else
+							{
+								<div class="inputs">
+									@Html.LabelFor(m => m.Email, new { }, ":")
+									@Html.TextBoxFor(m => m.Email, new { @class = "email", autofocus = "autofocus" })
+									@Html.ValidationMessageFor(m => m.Email)
+								</div>
+							}
 							<div class="inputs">
-								@Html.LabelFor(m => m.Username, new { }, ":")
-								@Html.TextBoxFor(m => m.Username, new { @class = "username", autofocus = "autofocus" })
-								@Html.ValidationMessageFor(m => m.Username)
+								@Html.LabelFor(m => m.Password, new { }, ":")
+								@Html.PasswordFor(m => m.Password, new { @class = "password" })
+								@Html.ValidationMessageFor(m => m.Password)
 							</div>
-						}
-						else
-						{
-							<div class="inputs">
-								@Html.LabelFor(m => m.Email, new { }, ":")
-								@Html.TextBoxFor(m => m.Email, new { @class = "email", autofocus = "autofocus" })
-								@Html.ValidationMessageFor(m => m.Email)
+							<div class="inputs reversed">
+								@Html.CheckBoxFor(m => m.RememberMe)
+								@Html.LabelFor(m => m.RememberMe)
+								<span class="forgot-password">
+									@Html.RouteLink(T("Account.Login.ForgotPassword").Text, "PasswordRecovery")
+								</span>
 							</div>
-						}
-						<div class="inputs">
-							@Html.LabelFor(m => m.Password, new { }, ":")
-							@Html.PasswordFor(m => m.Password, new { @class = "password" })
-							@Html.ValidationMessageFor(m => m.Password)
+							@if (Model.DisplayCaptcha)
+							{
+								<div class="captcha-box">
+									@Html.Raw(Html.GenerateCaptcha())
+								</div>
+							}
 						</div>
-						<div class="inputs reversed">
-							@Html.CheckBoxFor(m => m.RememberMe)
-							@Html.LabelFor(m => m.RememberMe)
-							<span class="forgot-password">
-								@Html.RouteLink(T("Account.Login.ForgotPassword").Text, "PasswordRecovery")
-							</span>
+						<div class="buttons">
+							<input class="button-1 login-button" type="submit" value="@T("Account.Login.LoginButton")" />
 						</div>
-						@if (Model.DisplayCaptcha)
-						{
-							<div class="captcha-box">
-								@Html.Raw(Html.GenerateCaptcha())
-							</div>
-						}
-					</div>
-					<div class="buttons">
-						<input class="button-1 login-button" type="submit" value="@T("Account.Login.LoginButton")" />
-					</div>
 				}
-			</div>
+				</div>
 			}
 		</div>
 		<div class="external-authentication">

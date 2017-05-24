@@ -3,16 +3,9 @@
 @using Nop.Web.Framework
 @using Nop.Web.Framework.UI
 
-@{
-	Html.AppendCssFileParts(Url.Content("~/Plugins/Order.QuickOrder/Styles/quick-order.css"));
-}
-
 <div class="form-horizontal">
 	@using (@Html.BeginForm())
 	{
-		<div class="title">
-			<strong>@T("Plugins.Order.QuickOrder.FormTitle")</strong>
-		</div>
 		@Html.AntiForgeryToken()
 
 		@Html.ValidationSummary(true)
@@ -21,24 +14,24 @@
 				@if (Model.NameEnable)
 				{
 					<div class="inputs">
-						@Html.NopLabelFor(model => model.CustomerName)
-						@Html.NopEditorFor(model => model.CustomerName)
+						@Html.LabelFor(model => model.CustomerName, new { }, ":")
+						@Html.TextBoxFor(model => model.CustomerName, new { @class = "username", autofocus = "autofocus", @style = "font-size:initial" })
 						@Html.ValidationMessageFor(model => model.CustomerName)
 					</div>
 				}
 				@if (Model.EmailEnable)
 				{
 					<div class="inputs">
-						@Html.NopLabelFor(model => model.CustomerEmail)
-						@Html.NopEditorFor(model => model.CustomerEmail)
+						@Html.LabelFor(model => model.CustomerEmail, new { }, ":")
+						@Html.TextBoxFor(model => model.CustomerEmail, new { @class = "mail", autofocus = "autofocus", @style = "font-size:initial" })
 						@Html.ValidationMessageFor(model => model.CustomerEmail)
 					</div>
 				}
 				@if (Model.PhoneEnable)
 				{
 					<div class="inputs">
-						@Html.NopLabelFor(model => model.CustomerPhone)
-						@Html.NopEditorFor(model => model.CustomerPhone)
+						@Html.LabelFor(model => model.CustomerPhone, new { }, ":")
+						@Html.TextBoxFor(model => model.CustomerPhone, new { @class = "phone", autofocus = "autofocus", @style = "font-size:initial" })
 						@Html.ValidationMessageFor(model => model.CustomerPhone)
 					</div>
 				}

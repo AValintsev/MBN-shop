@@ -52,7 +52,7 @@
     <Value>Будь ласка перевірте ваш email. Приклад example@gmail.com</Value>
   </LocaleResource>
   <LocaleResource Name="Plugins.Order.QuickOrder.CustomerPhone.ErrorMessage">
-    <Value>Будь ласка введіть ваш  Номер телефону в міжнародному форматі</Value>
+    <Value>Будь ласка введіть ваш  Номер телефону в міжнародному форматі. Наприклад 380ХХХХХХХХХ</Value>
   </LocaleResource>
   <LocaleResource Name="Plugins.Order.QuickOrder.FormTitle">
     <Value>Форма швидкого замовлення</Value>
