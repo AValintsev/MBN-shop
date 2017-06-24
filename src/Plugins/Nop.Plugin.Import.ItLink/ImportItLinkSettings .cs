@@ -11,3 +11,5 @@ namespace Nop.Plugin.Import.ItLink
 		public string Password { get; set; }
 	}
 }
+
+

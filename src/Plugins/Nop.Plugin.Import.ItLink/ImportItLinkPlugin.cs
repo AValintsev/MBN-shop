@@ -52,7 +52,7 @@ namespace Nop.Plugin.Import.ItLink
 
 			var settings = new ImportItLinkSettings
 			{
-				XmlUrl = "http://price.it-link.com.ua/price",
+				XmlUrl = "http://price.it-link.com.ua/price/xml",
 				Username = "Martyn12345",
 				Password = "Martyn12345+"
 			};

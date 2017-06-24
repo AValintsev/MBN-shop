@@ -10,12 +10,14 @@ using Nop.Services.Stores;
 using Nop.Web.Framework.Controllers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Xml;
+using System.Xml.Xsl;
 
 namespace Nop.Plugin.Import.ItLink.Controllers
 {
@@ -152,7 +154,8 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 					settings.XmlUrl,
 					new XmlReaderSettings
 					{
-						XmlResolver = xmlResolver
+						XmlResolver = null,
+						ProhibitDtd = false
 					});
 
 				//Как вариант можно сразу пробовать загрузить xml в xsl и поменять ему колонки
@@ -166,9 +169,11 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 
 				//Сам конвертер не реализован. Только заглушка
 				var file = _xmlConverter.ConvertFromXml(xmlDoc);
+
 				if (file != null && file.Length > 0)
 				{
 					_importManager.ImportProductsFromXlsx(file);
+
 				}
 				else
 				{
