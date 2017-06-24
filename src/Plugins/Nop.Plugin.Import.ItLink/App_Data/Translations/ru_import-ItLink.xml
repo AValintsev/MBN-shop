@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="Русский" SupportedVersion="3.90">
+	<LocaleResource Name="Plugins.Import.ItLink.XmlUrl">
+		<Value>Url к xml файлу от it-link</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.Username">
+		<Value>Username для доступа к price.it-link.com.ua</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.Password">
+		<Value>Password для доступа к price.it-link.com.ua</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.ImportButton">
+		<Value>Импорт с It-Link</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.ImportPrompt">
+		<Value>Все товары с It-Link будут скопированны в систему. Существующие продукты будут обновлены.</Value>
+	</LocaleResource>
+</Language>

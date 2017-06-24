@@ -1,0 +1,9 @@
+﻿Group: Import
+FriendlyName: Import from ItLink
+SystemName: Import.ItLink
+Version: 1.00
+SupportedVersions: 3.90
+Author: DigitalLeader team
+DisplayOrder: 1
+FileName: Nop.Plugin.Import.ItLink.dll
+Description: This plugin allows to load products from it-link site.

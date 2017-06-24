@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English" SupportedVersion="3.90">
+	<LocaleResource Name="Plugins.Import.ItLink.XmlUrl">
+		<Value>Url to xml file from it-link</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.Username">
+		<Value>Username to access price.it-link.com.ua</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.Password">
+		<Value>Password to access price.it-link.com.ua</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.ImportButton">
+		<Value>Import from It-Link</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.ImportPrompt">
+		<Value>All products from It-Link will be imported to the system. If product exists then data will be merged.</Value>
+	</LocaleResource>
+</Language>

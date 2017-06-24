@@ -1,0 +1,79 @@
+﻿@model Nop.Plugin.Import.ItLink.Models.ConfigurationModel
+@using Nop.Web.Framework
+
+@{
+	Layout = "";
+}
+@using (Html.BeginForm())
+{
+	@Html.ValidationSummary(true)
+
+	@Html.AntiForgeryToken()
+
+	<div class="panel-group">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.XmlUrl)
+					</div>
+					<div class="col-md-9">
+						@Html.NopEditorFor(model => model.XmlUrl)
+						@Html.ValidationMessageFor(model => model.XmlUrl)
+					</div>
+				</div>
+
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.Username)
+					</div>
+					<div class="col-md-9">
+						@Html.NopEditorFor(model => model.Username)
+						@Html.ValidationMessageFor(model => model.Username)
+					</div>
+				</div>
+
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.Password)
+					</div>
+					<div class="col-md-9">
+						@Html.NopEditorFor(model => model.Password)
+						@Html.ValidationMessageFor(model => model.Password)
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-3">
+					&nbsp;
+				</div>
+				<div class="col-md-9">
+					<input type="submit" name="save" class="btn bg-blue" value="@T("Admin.Common.Save")" />
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+@using (Html.BeginForm())
+{
+	@Html.ValidationSummary(true)
+
+	@Html.AntiForgeryToken()
+
+	<div class="panel-group">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				@T("Plugins.Import.ItLink.ImportPrompt")
+			</div>
+			<div class="form-group">
+				<div class="col-md-3">
+					&nbsp;
+				</div>
+				<div class="col-md-9">
+					<input type="submit" name="ImportFromItLink" class="btn bg-blue" value="@T("Plugins.Import.ItLink.ImportButton")" />
+				</div>
+			</div>
+		</div>
+	</div>
+}
