@@ -154,8 +154,8 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 					settings.XmlUrl,
 					new XmlReaderSettings
 					{
-						XmlResolver = null,
-						ProhibitDtd = false
+						XmlResolver = xmlResolver,
+						DtdProcessing = DtdProcessing.Ignore
 					});
 
 				//Как вариант можно сразу пробовать загрузить xml в xsl и поменять ему колонки
