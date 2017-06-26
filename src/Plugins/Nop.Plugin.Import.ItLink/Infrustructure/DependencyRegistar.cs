@@ -13,6 +13,10 @@ namespace Nop.Plugin.Import.ItLink.Infrustructure
 			builder.RegisterType<XmlToXlsConverter>()
 				.As<IXmlToXlsConverter>()
 				.InstancePerLifetimeScope();
+
+			builder.RegisterType<XmlImporter>()
+				.As<IXmlImporter>()
+				.InstancePerLifetimeScope();
 		}
 
 		public int Order

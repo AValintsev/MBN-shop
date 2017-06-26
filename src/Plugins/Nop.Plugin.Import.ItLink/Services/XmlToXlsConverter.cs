@@ -1,10 +1,6 @@
-﻿using Microsoft.Office.Interop.Excel;
-using Nop.Admin.Models.Catalog;
-using Nop.Core.Domain.Catalog;
-using System;
+﻿using System;
 using System.IO;
 using System.Xml;
-using Exel = Microsoft.Office.Interop.Excel;
 
 namespace Nop.Plugin.Import.ItLink.Services
 {
@@ -15,9 +11,35 @@ namespace Nop.Plugin.Import.ItLink.Services
 		/// </summary>
 		/// <param name="xmlDocument">Xml document to convert.</param>
 		/// <returns>Excel (xls) stream.</returns>
-		public Stream ConvertFromXml(XmlDocument xmlDocument)
+		public Stream ConvertFromXml(XmlDocument recievedDocument)
 		{
+
+			XmlNodeList offers = recievedDocument.GetElementsByTagName("offers");
+
+			//Шаблон из Nopcommerce
+			XmlDocument doc = new XmlDocument();
+			doc.Load("~/products.xml");
+
+			XmlNode productPatern = doc.SelectSingleNode("//Prodct");
+
+
 			//Создать новый XmlDocument
+			XmlDocument xmlDoc = new XmlDocument();
+			XmlNode rootNode = xmlDoc.CreateElement("Products");
+			xmlDoc.AppendChild(rootNode);
+
+
+
+			foreach (XmlNode offer in offers)
+			{
+				XmlElement product = doc.CreateElement("Product");
+				xmlDoc.AppendChild(product);
+
+				productPatern.SelectSingleNode("/Name").InnerText = offer.SelectSingleNode("/name").InnerText;
+				productPatern.SelectSingleNode("/Price").InnerText = offer.SelectSingleNode("/name").InnerText;
+				productPatern.SelectSingleNode("/OldPrice").InnerText = offer.SelectSingleNode("/oldprice").InnerText;
+
+			}
 
 			//Потом конвертировать в нужную нам структуру
 
@@ -28,6 +50,11 @@ namespace Nop.Plugin.Import.ItLink.Services
 			//Потом конвертировать в нужную нам структуру
 
 			//Потом получить xlsx из xml");
+
+
+
+
+
 
 		}
 	}

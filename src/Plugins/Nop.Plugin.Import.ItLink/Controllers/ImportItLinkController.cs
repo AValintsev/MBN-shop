@@ -9,15 +9,9 @@ using Nop.Services.Security;
 using Nop.Services.Stores;
 using Nop.Web.Framework.Controllers;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Xml;
-using System.Xml.Xsl;
 
 namespace Nop.Plugin.Import.ItLink.Controllers
 {
@@ -43,6 +37,8 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 		private readonly IImportManager _importManager;
 		private readonly IXmlToXlsConverter _xmlConverter;
 
+		private readonly IXmlImporter _xmlImporter;
+
 
 		#endregion
 
@@ -57,7 +53,8 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 			ILocalizationService localizationService,
 			ILocalizedEntityService localizedEntityService,
 			IXmlToXlsConverter xmlConverter,
-			IPermissionService permissionService)
+			IPermissionService permissionService,
+			IXmlImporter xmlImporter)
 		{
 			this._workContext = workContext;
 			this._storeContext = storeContext;
@@ -75,6 +72,8 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 
 			this._importManager = importManager;
 			this._xmlConverter = xmlConverter;
+
+			this._xmlImporter = xmlImporter;
 		}
 
 		[ChildActionOnly]
@@ -168,19 +167,21 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 				xmlDoc.Load(xmlReader);
 
 				//Сам конвертер не реализован. Только заглушка
-				var file = _xmlConverter.ConvertFromXml(xmlDoc);
+				//var file = _xmlConverter.ConvertFromXml(xmlDoc);
 
-				if (file != null && file.Length > 0)
-				{
-					_importManager.ImportProductsFromXlsx(file);
+				//if (file != null && file.Length > 0)
+				//{
+				//	_importManager.ImportProductsFromXlsx(file);
 
-				}
-				else
-				{
-					ErrorNotification(_localizationService.GetResource("Admin.Common.UploadFile"));
-					return Configure();
+				_xmlImporter.ImportXml(xmlDoc);
 
-				}
+				//}
+				//else
+				//{
+				//	ErrorNotification(_localizationService.GetResource("Admin.Common.UploadFile"));
+				//	return Configure();
+
+				//}
 				SuccessNotification(_localizationService.GetResource("Admin.Catalog.Products.Imported"));
 			}
 			catch (Exception exc)
