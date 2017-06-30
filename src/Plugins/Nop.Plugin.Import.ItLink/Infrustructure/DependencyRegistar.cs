@@ -17,6 +17,10 @@ namespace Nop.Plugin.Import.ItLink.Infrustructure
 			builder.RegisterType<XmlImporter>()
 				.As<IXmlImporter>()
 				.InstancePerLifetimeScope();
+
+			builder.RegisterType<ImportManager>()
+				.As<IImportManager>()
+				.InstancePerLifetimeScope();
 		}
 
 		public int Order

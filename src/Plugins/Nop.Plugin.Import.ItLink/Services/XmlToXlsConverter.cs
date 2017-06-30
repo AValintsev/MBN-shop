@@ -13,7 +13,6 @@ namespace Nop.Plugin.Import.ItLink.Services
 		/// <returns>Excel (xls) stream.</returns>
 		public Stream ConvertFromXml(XmlDocument recievedDocument)
 		{
-
 			XmlNodeList offers = recievedDocument.GetElementsByTagName("offers");
 
 			//Шаблон из Nopcommerce
@@ -22,14 +21,11 @@ namespace Nop.Plugin.Import.ItLink.Services
 
 			XmlNode productPatern = doc.SelectSingleNode("//Prodct");
 
-
 			//Создать новый XmlDocument
 			XmlDocument xmlDoc = new XmlDocument();
 			XmlNode rootNode = xmlDoc.CreateElement("Products");
 			xmlDoc.AppendChild(rootNode);
-
-
-
+			
 			foreach (XmlNode offer in offers)
 			{
 				XmlElement product = doc.CreateElement("Product");
@@ -46,16 +42,8 @@ namespace Nop.Plugin.Import.ItLink.Services
 			//Потом получить xlsx из xml
 
 			throw new NotImplementedException(@"//Создать новый XmlDocument
-
 			//Потом конвертировать в нужную нам структуру
-
 			//Потом получить xlsx из xml");
-
-
-
-
-
-
 		}
 	}
 }

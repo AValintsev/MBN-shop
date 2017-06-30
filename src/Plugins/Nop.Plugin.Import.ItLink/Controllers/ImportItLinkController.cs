@@ -2,6 +2,7 @@
 using Nop.Core.Domain.Vendors;
 using Nop.Plugin.Import.ItLink.Models;
 using Nop.Plugin.Import.ItLink.Services;
+using Nop.Services.Catalog;
 using Nop.Services.Configuration;
 using Nop.Services.ExportImport;
 using Nop.Services.Localization;
@@ -34,10 +35,12 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 
 		private readonly IPermissionService _permissionService;
 
-		private readonly IImportManager _importManager;
-		private readonly IXmlToXlsConverter _xmlConverter;
+		private readonly Services.IImportManager _importManager;
+		private readonly ICategoryService _categoryService;
 
-		private readonly IXmlImporter _xmlImporter;
+
+		//private readonly IXmlToXlsConverter _xmlConverter;
+		//private readonly IXmlImporter _xmlImporter;
 
 
 		#endregion
@@ -47,14 +50,14 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 			IStoreService storeService,
 			VendorSettings vendorSettings,
 			ISettingService settingService,
-			IImportManager importManager,
+			Services.IImportManager importManager,
 			IStoreContext storeContext,
 			ILanguageService languageService,
 			ILocalizationService localizationService,
 			ILocalizedEntityService localizedEntityService,
-			IXmlToXlsConverter xmlConverter,
 			IPermissionService permissionService,
-			IXmlImporter xmlImporter)
+			ICategoryService categoryService
+			)
 		{
 			this._workContext = workContext;
 			this._storeContext = storeContext;
@@ -71,9 +74,10 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 			this._permissionService = permissionService;
 
 			this._importManager = importManager;
-			this._xmlConverter = xmlConverter;
+			this._categoryService = categoryService;
 
-			this._xmlImporter = xmlImporter;
+			//this._xmlConverter = xmlConverter;
+			//this._xmlImporter = xmlImporter;
 		}
 
 		[ChildActionOnly]
@@ -166,6 +170,8 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 				var xmlDoc = new XmlDocument();
 				xmlDoc.Load(xmlReader);
 
+				var categoriesMapping = _importManager.GetCategoriesMapping();
+
 				//Сам конвертер не реализован. Только заглушка
 				//var file = _xmlConverter.ConvertFromXml(xmlDoc);
 
@@ -173,7 +179,7 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 				//{
 				//	_importManager.ImportProductsFromXlsx(file);
 
-				_xmlImporter.ImportXml(xmlDoc);
+				//_xmlImporter.ImportXml(xmlDoc);
 
 				//}
 				//else
