@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 
 namespace Nop.Plugin.Import.ItLink.Services
 {
-	public interface IXmlImporter
+	public interface IXmlToXlsConverter
 	{
-		 void ImportXml(XmlDocument recievedDocument);
-
+		Stream XmlToXlsx(XmlDocument recievedDocument);
 	}
 }

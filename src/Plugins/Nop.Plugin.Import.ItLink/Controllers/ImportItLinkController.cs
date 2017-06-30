@@ -35,7 +35,8 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 
 		private readonly IPermissionService _permissionService;
 
-		private readonly Services.IImportManager _importManager;
+		private readonly IXmlToXlsConverter _xmlToXlsxConverter;
+		private readonly IImportManager _importManager;
 		private readonly ICategoryService _categoryService;
 
 
@@ -50,13 +51,14 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 			IStoreService storeService,
 			VendorSettings vendorSettings,
 			ISettingService settingService,
-			Services.IImportManager importManager,
+			IImportManager importManager,
 			IStoreContext storeContext,
 			ILanguageService languageService,
 			ILocalizationService localizationService,
 			ILocalizedEntityService localizedEntityService,
 			IPermissionService permissionService,
-			ICategoryService categoryService
+			ICategoryService categoryService,
+			IXmlToXlsConverter xmlToXlsxConverter
 			)
 		{
 			this._workContext = workContext;
@@ -76,8 +78,7 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 			this._importManager = importManager;
 			this._categoryService = categoryService;
 
-			//this._xmlConverter = xmlConverter;
-			//this._xmlImporter = xmlImporter;
+			this._xmlToXlsxConverter = xmlToXlsxConverter;
 		}
 
 		[ChildActionOnly]
@@ -170,24 +171,19 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 				var xmlDoc = new XmlDocument();
 				xmlDoc.Load(xmlReader);
 
-				var categoriesMapping = _importManager.GetCategoriesMapping();
 
-				//Сам конвертер не реализован. Только заглушка
-				//var file = _xmlConverter.ConvertFromXml(xmlDoc);
+				var file = _xmlToXlsxConverter.XmlToXlsx(xmlDoc);
 
-				//if (file != null && file.Length > 0)
-				//{
-				//	_importManager.ImportProductsFromXlsx(file);
+				if (file != null && file.Length > 0)
+				{
+					_importManager.ImportProductsFromXlsx(file);
+				}
+				else
+				{
+					ErrorNotification(_localizationService.GetResource("Admin.Common.UploadFile"));
+					return Configure();
 
-				//_xmlImporter.ImportXml(xmlDoc);
-
-				//}
-				//else
-				//{
-				//	ErrorNotification(_localizationService.GetResource("Admin.Common.UploadFile"));
-				//	return Configure();
-
-				//}
+				}
 				SuccessNotification(_localizationService.GetResource("Admin.Catalog.Products.Imported"));
 			}
 			catch (Exception exc)
