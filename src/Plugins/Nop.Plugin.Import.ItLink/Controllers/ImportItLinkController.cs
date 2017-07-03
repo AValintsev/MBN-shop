@@ -161,16 +161,9 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 						XmlResolver = xmlResolver,
 						DtdProcessing = DtdProcessing.Ignore
 					});
-
-				//Как вариант можно сразу пробовать загрузить xml в xsl и поменять ему колонки
-				//// Compile the style sheet.
-				//XslCompiledTransform xslt = new XslCompiledTransform();
-				//xslt.Load("http://serverName/data/xsl/order.xsl", XsltSettings.Default, resolver);
-
-				//В этом варианте считывается xml документ
+				
 				var xmlDoc = new XmlDocument();
 				xmlDoc.Load(xmlReader);
-
 
 				var file = _xmlToXlsxConverter.XmlToXlsx(xmlDoc);
 
