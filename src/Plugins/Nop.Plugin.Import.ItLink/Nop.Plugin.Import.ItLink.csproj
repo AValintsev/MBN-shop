@@ -110,7 +110,7 @@
     <Compile Include="Domain\InternalToExternal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImportItLinkSettings .cs" />
-    <Compile Include="RouteProvider.cs" />
+    <Compile Include="Services\ItLinkExportManager.cs" />
     <Compile Include="Services\IXmlToXlsxConverter.cs" />
     <Compile Include="Services\XmlToXlsxConverter.cs" />
   </ItemGroup>

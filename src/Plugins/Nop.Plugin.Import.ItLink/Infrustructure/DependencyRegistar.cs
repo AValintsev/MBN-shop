@@ -3,6 +3,7 @@ using Nop.Core.Configuration;
 using Nop.Core.Infrastructure;
 using Nop.Core.Infrastructure.DependencyManagement;
 using Nop.Plugin.Import.ItLink.Services;
+using Nop.Services.ExportImport;
 using Nop.Plugin.Import.ItLink.Domain;
 using Autofac.Core;
 using Nop.Data;
@@ -23,6 +24,10 @@ namespace Nop.Plugin.Import.ItLink.Infrustructure
 
 			builder.RegisterType<XmlToXlsConverter>()
 				.As<IXmlToXlsConverter>()
+				.InstancePerLifetimeScope();
+
+			builder.RegisterType<ItLinkExportManager>()
+				.As<IExportManager>()
 				.InstancePerLifetimeScope();
 
 
