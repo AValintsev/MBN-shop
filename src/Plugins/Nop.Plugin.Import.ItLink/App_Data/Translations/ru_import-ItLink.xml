@@ -15,4 +15,13 @@
 	<LocaleResource Name="Plugins.Import.ItLink.ImportPrompt">
 		<Value>Все товары с It-Link будут скопированны в систему. Существующие продукты будут обновлены.</Value>
 	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping">
+		<Value>Соответствие категорий товаров Nopcommerce и внешнего ресурса</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Nopcommerce">
+		<Value>Категории Nopcommerce</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.ExternalResource">
+		<Value>Категории из внешнего ресурса</Value>
+	</LocaleResource>
 </Language>

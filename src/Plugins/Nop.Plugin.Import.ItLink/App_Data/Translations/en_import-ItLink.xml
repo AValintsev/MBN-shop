@@ -15,4 +15,13 @@
 	<LocaleResource Name="Plugins.Import.ItLink.ImportPrompt">
 		<Value>All products from It-Link will be imported to the system. If product exists then data will be merged.</Value>
 	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping">
+		<Value>Matching Categories From NopCommerce and External resource</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Nopcommerce">
+		<Value>Nopcommerce categories</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.ExternalResource">
+		<Value>Categories from External Resource</Value>
+	</LocaleResource>
 </Language>

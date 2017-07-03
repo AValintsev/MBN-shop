@@ -9,6 +9,7 @@ using Nop.Services.Localization;
 using System.IO;
 using System.Web.Routing;
 using System.Linq;
+using Nop.Plugin.Import.ItLink.Data;
 
 namespace Nop.Plugin.Import.ItLink
 {
@@ -16,13 +17,16 @@ namespace Nop.Plugin.Import.ItLink
 	{
 		private readonly ISettingService _settingService;
 		private readonly IRepository<Language> _languageRepository;
+		private readonly ImportObjectContext _context;
 
 		public ImportItLinkPlugin(
 			ISettingService settingService, 
-			IRepository<Language> languageRepository)
+			IRepository<Language> languageRepository,
+			ImportObjectContext context)
 		{
 			_settingService = settingService;
 			_languageRepository = languageRepository;
+			_context = context;
 		}
 
 		#region Routes
@@ -48,6 +52,8 @@ namespace Nop.Plugin.Import.ItLink
 
 		public override void Install()
 		{
+			_context.Install();
+
 			InstallLocaleResources();
 
 			var settings = new ImportItLinkSettings
@@ -66,6 +72,8 @@ namespace Nop.Plugin.Import.ItLink
 		public override void Uninstall()
 		{
 			_settingService.DeleteSetting<ImportItLinkSettings>();
+
+			_context.Uninstall();
 
 			base.Uninstall();
 		}

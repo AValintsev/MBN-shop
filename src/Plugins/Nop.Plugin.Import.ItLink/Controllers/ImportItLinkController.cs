@@ -13,6 +13,10 @@ using System;
 using System.Net;
 using System.Web.Mvc;
 using System.Xml;
+using Nop.Plugin.Import.ItLink.Domain;
+using System.Collections.Generic;
+using Nop.Core.Data;
+using System.Linq;
 
 namespace Nop.Plugin.Import.ItLink.Controllers
 {
@@ -39,6 +43,8 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 		private readonly IImportManager _importManager;
 		private readonly ICategoryService _categoryService;
 
+		private readonly IRepository<InternalToExternal> _repos;
+
 
 		//private readonly IXmlToXlsConverter _xmlConverter;
 		//private readonly IXmlImporter _xmlImporter;
@@ -58,6 +64,7 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 			ILocalizedEntityService localizedEntityService,
 			IPermissionService permissionService,
 			ICategoryService categoryService,
+			IRepository<InternalToExternal> repos,
 			IXmlToXlsConverter xmlToXlsxConverter
 			)
 		{
@@ -77,6 +84,8 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 
 			this._importManager = importManager;
 			this._categoryService = categoryService;
+
+			this._repos = repos;
 
 			this._xmlToXlsxConverter = xmlToXlsxConverter;
 		}
@@ -195,13 +204,123 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 
 		}
 
-		/// <summary>
-		/// Access denied view
-		/// </summary>
-		/// <returns>Access denied view</returns>
-		protected virtual ActionResult AccessDeniedView()
+		public ActionResult CategoriesMapping()
 		{
-			return RedirectToAction("AccessDenied", "Security", new { pageUrl = this.Request.RawUrl });
+			var viewModel = new List<CategoriesMappingViewModel>();
+
+			var entites = _repos.Table.ToList();
+
+			var Internalcategories = _categoryService.GetAllCategories().ToList();
+
+
+			entites.ForEach(e =>
+			{
+				var internalCategory = _categoryService.GetCategoryById(e.InternalId);
+
+				viewModel.Add(new CategoriesMappingViewModel
+				{
+					Id = e.Id,
+					InternalId = e.InternalId,
+					ExternalId = e.ExternalId,
+					InternalName = internalCategory !=null ? internalCategory.Name : _categoryService.GetAllCategories().FirstOrDefault().Name,
+					ExternalName = e.ExternalName
+				});
+				}
+			);
+
+			viewModel.ForEach(item =>
+			{
+
+				Internalcategories.ForEach(categ =>
+					item.InternalCategoriesSelectList.Add(new SelectListItem
+					{
+						Text = categ.Name,
+						Value = categ.Id.ToString(),
+						Selected = categ.Name == item.InternalName
+					}));
+			}
+			);
+
+			return PartialView("~/Plugins/Import.ItLink/Views/CategoiresMapping.cshtml", viewModel);
 		}
+
+		public void DownloadExternalCategories()
+		{
+			try
+			{
+				var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
+				var settings = _settingService.LoadSetting<ImportItLinkSettings>(storeScope);
+
+				//Create the credentials
+				var credentials = new NetworkCredential(settings.Username, settings.Password);
+				XmlUrlResolver xmlResolver = new XmlUrlResolver
+				{
+					Credentials = credentials
+				};
+
+				XmlReader xmlReader = XmlTextReader.Create(
+					settings.XmlUrl,
+					new XmlReaderSettings
+					{
+						XmlResolver = xmlResolver,
+						DtdProcessing = DtdProcessing.Ignore
+					});
+
+				//В этом варианте считывается xml документ
+				var xmlDoc = new XmlDocument();
+				xmlDoc.Load(xmlReader);
+
+				foreach (XmlNode category in xmlDoc.GetElementsByTagName("category"))
+				{
+
+					_repos.Insert(new InternalToExternal
+					{
+						ExternalId = category.Attributes["id"].Value,
+						ExternalName = category.InnerText,
+					});
+				}
+			}
+			catch (Exception e)
+			{
+				throw e;
+			}
+}
+
+[HttpPost]
+public ActionResult CategoriesMapping(List<CategoriesMappingViewModel> viewModel)
+{
+	foreach (var item in viewModel)
+	{
+		var entity = _repos.GetById(item.Id);
+		if (entity != null)
+		{
+			entity.InternalId = item.InternalId;
+			entity.ExternalId = item.ExternalId;
+			entity.ExternalName = item.ExternalName;
+			_repos.Update(entity);
+		}
+		else
+		{
+			InternalToExternal newEntity = new InternalToExternal()
+			{
+				InternalId = item.InternalId,
+				ExternalId = item.ExternalId,
+				ExternalName = item.ExternalName
+			};
+			_repos.Insert(newEntity);
+		}
+	}
+
+	return CategoriesMapping();
+}
+
+/// <summary>
+/// Access denied view
+/// </summary>
+/// <returns>Access denied view</returns>
+protected virtual ActionResult AccessDeniedView()
+{
+	return RedirectToAction("AccessDenied", "Security", new { pageUrl = this.Request.RawUrl });
+}
 	}
 }
