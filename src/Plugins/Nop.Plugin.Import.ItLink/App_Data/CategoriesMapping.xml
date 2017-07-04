@@ -1,4 +1,5 @@
 <categories>
+	<category id="7Q135" MbnId="7">SSD</category>
 	<category id="36SK1" MbnId="10">Вентиляторы</category>
 	<category id="NSK1" MbnId="4">Источники питания</category>
 	<category id="HSK1" MbnId="25">Кабели, шлейфы</category>
@@ -26,4 +27,5 @@
 	<category id="3W135" MbnId="41">Геймпады</category>
 	<category id="8SK1" MbnId="42">Карманы и Rack устройства</category>
 	<category id="5SK1" MbnId="16">Процессоры</category>
+	<category id="3SK1" MbnId="3">Материнские платы</category>
 </categories>

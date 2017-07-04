@@ -161,7 +161,7 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 						XmlResolver = xmlResolver,
 						DtdProcessing = DtdProcessing.Ignore
 					});
-				
+
 				var xmlDoc = new XmlDocument();
 				xmlDoc.Load(xmlReader);
 
