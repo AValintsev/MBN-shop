@@ -60,6 +60,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 			}
 		}
 
+
 		public Stream XmlToXlsx(XmlDocument recievedDocument)
 		{
 			XmlNodeList offers = recievedDocument.GetElementsByTagName("offer");
