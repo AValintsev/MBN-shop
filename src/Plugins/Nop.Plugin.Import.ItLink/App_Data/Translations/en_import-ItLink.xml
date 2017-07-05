@@ -24,4 +24,16 @@
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.ExternalResource">
 		<Value>Categories from External Resource</Value>
 	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.EditMatchedCategoriesButton">
+		<Value>Edit matched categories</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.MatchCategoriesButton">
+	<Value>Match categories</Value>
+</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Alert.PleaseMapCategories">
+		<Value>Before Importing you have to Map Product Categories from your shop with categories from external Resource!!!</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Alert.CategoryWasNotMapped">
+		<Value>Categories {0} were not Mapped</Value>
+	</LocaleResource>
 </Language>

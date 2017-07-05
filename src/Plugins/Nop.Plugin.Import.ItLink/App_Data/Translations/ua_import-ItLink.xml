@@ -24,4 +24,16 @@
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.ExternalResource">
 		<Value>Категорії із зовнішнього ресурсу</Value>
 	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.EditMatchedCategoriesButton">
+		<Value>Редагувати відповідність категорій</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.MatchCategoriesButton">
+		<Value>Відповідність категорій</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Alert.PleaseMapCategories">
+		<Value>Перед тим як імпортувати товари Вам необхідно створити відповідність категорій товарів у зовнішньому ресурсі з вже існючими категоріями у вашому магазині.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Alert.CategoryWasNotMapped">
+		<Value>Відсутні відповідності для категорій {0} .Будь ласка додайте їх</Value>
+	</LocaleResource>
 </Language>

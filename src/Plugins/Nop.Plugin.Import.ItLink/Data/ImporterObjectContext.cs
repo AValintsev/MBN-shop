@@ -67,7 +67,7 @@ namespace Nop.Plugin.Import.ItLink.Data
 
         public int ExecuteSqlCommand(string sql, bool doNotEnsureTransaction = false, int? timeout = null, params object[] parameters)
         {
-            throw new System.NotImplementedException();
+			return Database.ExecuteSqlCommand(sql);
         }
 
         public void Detach(object entity)
