@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Xml;
+using Nop.Services.Seo;
 
 namespace Nop.Plugin.Import.ItLink.Services
 {
@@ -129,6 +130,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 									MimeType = MimeTypes.ImagePJpeg,
 									AltAttribute = offer["name"].FirstChild.Value,
 									TitleAttribute = offer["name"].FirstChild.Value,
+									SeoFilename = SeoExtensions.GetSeName(product.Name),
 									PictureBinary = binaryData
 								}
 							});
@@ -150,7 +152,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 					});
 
 				#endregion
-
+				
 				productsList.Add(product);
 			}
 

@@ -979,8 +979,8 @@ namespace Nop.Services.ExportImport
                     if (tempProperty != null)
                     {
                         var seName = tempProperty.StringValue;
-                        //search engine name
-                        _urlRecordService.SaveSlug(product, product.ValidateSeName(seName, product.Name, true), 0);
+                        //search engine name						
+                        _urlRecordService.SaveSlug(product, product.ValidateSeName(seName, product.Name, true), _workContext.WorkingLanguage.Id);
                     }
 
                     tempProperty = manager.GetProperty("Categories");
