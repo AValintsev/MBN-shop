@@ -1,5 +1,7 @@
 ﻿using Nop.Core;
+using Nop.Core.Data;
 using Nop.Core.Domain.Vendors;
+using Nop.Plugin.Import.ItLink.Domain;
 using Nop.Plugin.Import.ItLink.Models;
 using Nop.Plugin.Import.ItLink.Services;
 using Nop.Services.Catalog;
@@ -10,13 +12,11 @@ using Nop.Services.Security;
 using Nop.Services.Stores;
 using Nop.Web.Framework.Controllers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Xml;
-using Nop.Plugin.Import.ItLink.Domain;
-using System.Collections.Generic;
-using Nop.Core.Data;
-using System.Linq;
 
 namespace Nop.Plugin.Import.ItLink.Controllers
 {
@@ -44,11 +44,6 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 		private readonly ICategoryService _categoryService;
 
 		private readonly IRepository<InternalToExternal> _repos;
-
-
-		//private readonly IXmlToXlsConverter _xmlConverter;
-		//private readonly IXmlImporter _xmlImporter;
-
 
 		#endregion
 
@@ -184,8 +179,8 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 				{
 					ErrorNotification(_localizationService.GetResource("Admin.Common.UploadFile"));
 					return Configure();
-
 				}
+
 				SuccessNotification(_localizationService.GetResource("Admin.Catalog.Products.Imported"));
 			}
 			catch (Exception exc)
@@ -203,28 +198,27 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 
 			var entites = _repos.Table.ToList();
 
-			var Internalcategories = _categoryService.GetAllCategories().ToList();
-
+			var internalCategories = _categoryService.GetAllCategories().ToList();
 
 			entites.ForEach(e =>
 			{
-				var internalCategory = _categoryService.GetCategoryById(e.InternalId);
+				var internalCategory = internalCategories.FirstOrDefault(c => c.Id == e.InternalId);
 
 				viewModel.Add(new CategoriesMappingViewModel
 				{
 					Id = e.Id,
 					InternalId = e.InternalId,
 					ExternalId = e.ExternalId,
-					InternalName = internalCategory !=null ? internalCategory.Name : _categoryService.GetAllCategories().FirstOrDefault().Name,
+					InternalName = internalCategory != null ? 
+						internalCategory.Name :
+						internalCategories.FirstOrDefault().Name,
 					ExternalName = e.ExternalName
 				});
-				}
-			);
+			});
 
 			viewModel.ForEach(item =>
 			{
-
-				Internalcategories.ForEach(categ =>
+				internalCategories.ForEach(categ =>
 					item.InternalCategoriesSelectList.Add(new SelectListItem
 					{
 						Text = categ.Name,
@@ -265,7 +259,6 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 
 				foreach (XmlNode category in xmlDoc.GetElementsByTagName("category"))
 				{
-
 					_repos.Insert(new InternalToExternal
 					{
 						ExternalId = category.Attributes["id"].Value,
@@ -277,43 +270,44 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 			{
 				throw e;
 			}
-}
-
-[HttpPost]
-public ActionResult CategoriesMapping(List<CategoriesMappingViewModel> viewModel)
-{
-	foreach (var item in viewModel)
-	{
-		var entity = _repos.GetById(item.Id);
-		if (entity != null)
-		{
-			entity.InternalId = item.InternalId;
-			entity.ExternalId = item.ExternalId;
-			entity.ExternalName = item.ExternalName;
-			_repos.Update(entity);
 		}
-		else
+
+		[HttpPost]
+		public ActionResult CategoriesMapping(List<CategoriesMappingViewModel> viewModel)
 		{
-			InternalToExternal newEntity = new InternalToExternal()
+			foreach (var item in viewModel)
 			{
-				InternalId = item.InternalId,
-				ExternalId = item.ExternalId,
-				ExternalName = item.ExternalName
-			};
-			_repos.Insert(newEntity);
+				var entity = _repos.GetById(item.Id);
+				if (entity != null)
+				{
+					entity.InternalId = item.InternalId;
+					entity.ExternalId = item.ExternalId;
+					entity.ExternalName = item.ExternalName;
+
+					_repos.Update(entity);
+				}
+				else
+				{
+					InternalToExternal newEntity = new InternalToExternal()
+					{
+						InternalId = item.InternalId,
+						ExternalId = item.ExternalId,
+						ExternalName = item.ExternalName
+					};
+					_repos.Insert(newEntity);
+				}
+			}
+
+			return CategoriesMapping();
 		}
-	}
 
-	return CategoriesMapping();
-}
-
-/// <summary>
-/// Access denied view
-/// </summary>
-/// <returns>Access denied view</returns>
-protected virtual ActionResult AccessDeniedView()
-{
-	return RedirectToAction("AccessDenied", "Security", new { pageUrl = this.Request.RawUrl });
-}
+		/// <summary>
+		/// Access denied view
+		/// </summary>
+		/// <returns>Access denied view</returns>
+		protected virtual ActionResult AccessDeniedView()
+		{
+			return RedirectToAction("AccessDenied", "Security", new { pageUrl = this.Request.RawUrl });
+		}
 	}
 }

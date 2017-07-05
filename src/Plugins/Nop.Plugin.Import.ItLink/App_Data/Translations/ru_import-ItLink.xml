@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Language Name="Русский" SupportedVersion="3.90">
+	<LocaleResource Name="Plugins.Import.ItLink.OverrideExistedImages">
+		<Value>Перезаписать все картинки для товаров (может занимать длительное время)</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.NoImage">
+		<Value>Изображения для {0} не найдено</Value>
+	</LocaleResource>
 	<LocaleResource Name="Plugins.Import.ItLink.XmlUrl">
 		<Value>Url к xml файлу от it-link</Value>
 	</LocaleResource>
@@ -22,6 +28,6 @@
 		<Value>Категории Nopcommerce</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.ExternalResource">
-		<Value>Категории из внешнего ресурса</Value>
+		<Value>Категории из ItLink.</Value>
 	</LocaleResource>
 </Language>

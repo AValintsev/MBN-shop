@@ -110,9 +110,8 @@
     <Compile Include="Domain\InternalToExternal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImportItLinkSettings .cs" />
-    <Compile Include="Services\ItLinkExportManager.cs" />
-    <Compile Include="Services\IXmlToXlsxConverter.cs" />
-    <Compile Include="Services\XmlToXlsxConverter.cs" />
+    <Compile Include="Services\ItLinkImportManager.cs" />
+    <Compile Include="Services\IItLinkImportManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\CategoriesMapping.xml">
