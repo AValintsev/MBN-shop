@@ -30,4 +30,16 @@
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.ExternalResource">
 		<Value>Категории из ItLink.</Value>
 	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.EditMatchedCategoriesButton">
+		<Value>Редактировать соответствие категорий</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.MatchCategoriesButton">
+		<Value>Сопоставить категории</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Alert.PleaseMapCategories">
+		<Value>Перед тем как импортировать товары Вам необходимо сопоставить категории товаров во внешнем ресурсе с уже имеющимися категориями в вашем магазине.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Alert.CategoryWasNotMapped">
+		<Value>Отсутствуют соответствия для категорий {0} . Пожалуйста добавьте их</Value>
+	</LocaleResource>
 </Language>

@@ -4,6 +4,7 @@
 @{
 	Layout = "";
 }
+
 @using (Html.BeginForm())
 {
 	@Html.ValidationSummary(true)
@@ -78,4 +79,27 @@
 	</div>
 }
 
-@Html.Action("CategoriesMapping", "ImportItLink")
+<div class="panel-group">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="col-md-6" id="AjaxDiv">
+				<button type="button" class="btn btn-info btn-lg" id="mylink">@T("Plugins.Import.ItLink.MatchCategoriesButton")</button>
+			</div>
+			<div class="col-md-6">
+				@Html.Action("EditCategoriesMapped", "ImportItLink")
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		var url = '@Url.Action("CategoriesMapping", "ImportItLink")';
+
+		$("#mylink").click(function () {
+			$("#AjaxDiv").load(url);
+		});
+	});
+</script>
+
+

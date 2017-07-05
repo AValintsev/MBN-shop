@@ -60,7 +60,8 @@ namespace Nop.Plugin.Import.ItLink
 			{
 				XmlUrl = "http://price.it-link.com.ua/price/xml",
 				Username = "Martyn12345",
-				Password = "Martyn12345+"
+				Password = "Martyn12345+",
+				AreCategoriesMapped = false
 			};
 
 			_settingService.SaveSetting(settings);

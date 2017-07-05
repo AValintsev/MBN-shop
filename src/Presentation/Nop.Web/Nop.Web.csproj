@@ -1245,6 +1245,7 @@
     <Folder Include="Content\Images\Thumbs\" />
     <Folder Include="Plugins\bin\" />
     <Folder Include="Plugins\Import.ItLink\pictures\" />
+    <Folder Include="Plugins\Import.ItLink\Views\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Nop.Core\Nop.Core.csproj">
