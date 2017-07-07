@@ -10,8 +10,13 @@ namespace Nop.Plugin.Import.ItLink.Services
 		/// </summary>
 		/// <param name="xmlDocument">xml document</param>
 		/// <param name="categoriesMap">dictionary key = ItLink cateogry name, value = internal category Id</param>
+		/// <param name="vendorId">Vendor Id (must be ItLink vendor id in this case).</param>
 		/// <param name="overrideExistedImanges">true if want to override existed images (could be clower).</param>
 		/// <returns>Lists with errors.</returns>
-		List<string> Import(XmlDocument xmlDocument, Dictionary<string, int> categoriesMap, bool overrideExistedImanges = false);
+		List<string> Import(
+			XmlDocument xmlDocument,
+			Dictionary<string, int> categoriesMap,
+			int vendorId,
+			bool overrideExistedImanges = false);
 	}
 }

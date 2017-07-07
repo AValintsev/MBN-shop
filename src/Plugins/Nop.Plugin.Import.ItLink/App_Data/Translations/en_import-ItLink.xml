@@ -21,11 +21,16 @@
 	<LocaleResource Name="Plugins.Import.ItLink.ImportPrompt">
 		<Value>All products from It-Link will be imported to the system. If product exists then data will be merged.</Value>
 	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.MapCategoriesPrompt">
+		<Value>
+			To import products from It-Link you have to map It-Links categories with current shop's categories.
+		</Value>
+	</LocaleResource>
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping">
-		<Value>Matching Categories From NopCommerce and External resource</Value>
+		<Value>Matching Categories From current store and External resource</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Nopcommerce">
-		<Value>Nopcommerce categories</Value>
+		<Value>Current store categories</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.ExternalResource">
 		<Value>Categories from External Resource</Value>
@@ -34,12 +39,16 @@
 		<Value>Edit matched categories</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Import.ItLink.MatchCategoriesButton">
-	<Value>Match categories</Value>
-</LocaleResource>
+		<Value>Match categories</Value>
+	</LocaleResource>
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Alert.PleaseMapCategories">
 		<Value>Before Importing you have to Map Product Categories from your shop with categories from external Resource!!!</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Alert.CategoryWasNotMapped">
-		<Value>Categories {0} were not Mapped</Value>
+		<Value>Category {0} is not Mapped</Value>
 	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.ImportResultCaption">
+		<Value>Import results</Value>
+	</LocaleResource>
+	
 </Language>

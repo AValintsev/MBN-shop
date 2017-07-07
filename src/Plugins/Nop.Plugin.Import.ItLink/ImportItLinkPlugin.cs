@@ -3,30 +3,30 @@ using Nop.Core.Data;
 using Nop.Core.Domain.Localization;
 using Nop.Core.Infrastructure;
 using Nop.Core.Plugins;
+using Nop.Plugin.Import.ItLink.Data;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
 using System.IO;
-using System.Web.Routing;
 using System.Linq;
-using Nop.Plugin.Import.ItLink.Data;
+using System.Web.Routing;
 
 namespace Nop.Plugin.Import.ItLink
 {
 	public class ImportItLinkPlugin : BasePlugin, IMiscPlugin
 	{
+		private readonly ImportObjectContext _context;
 		private readonly ISettingService _settingService;
 		private readonly IRepository<Language> _languageRepository;
-		private readonly ImportObjectContext _context;
 
 		public ImportItLinkPlugin(
-			ISettingService settingService, 
-			IRepository<Language> languageRepository,
-			ImportObjectContext context)
+			ImportObjectContext context,
+			ISettingService settingService,
+			IRepository<Language> languageRepository)
 		{
+			_context = context;
 			_settingService = settingService;
 			_languageRepository = languageRepository;
-			_context = context;
 		}
 
 		#region Routes
@@ -60,12 +60,10 @@ namespace Nop.Plugin.Import.ItLink
 			{
 				XmlUrl = "http://price.it-link.com.ua/price/xml",
 				Username = "Martyn12345",
-				Password = "Martyn12345+",
-				AreCategoriesMapped = false
+				Password = "Martyn12345+"
 			};
 
 			_settingService.SaveSetting(settings);
-
 
 			base.Install();
 		}

@@ -9,8 +9,6 @@ namespace Nop.Plugin.Import.ItLink
 		public string Username { get; set; }
 
 		public string Password { get; set; }
-
-		public bool AreCategoriesMapped { get; set; }
 	}
 }
 

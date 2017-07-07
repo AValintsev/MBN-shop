@@ -56,48 +56,78 @@
 	</div>
 }
 
-@using (Html.BeginForm())
-{
-	@Html.ValidationSummary(true)
-
-	@Html.AntiForgeryToken()
-
-	<div class="panel-group">
-		<div class="panel panel-default">
-			<div class="panel-body">
-				@T("Plugins.Import.ItLink.ImportPrompt")
-			</div>
-			<div class="form-group">
-				<div class="col-md-3">
-					&nbsp;
-				</div>
-				<div class="col-md-9">
-					<input type="submit" name="ImportFromItLink" class="btn bg-blue" value="@T("Plugins.Import.ItLink.ImportButton")" />
-				</div>
-			</div>
-		</div>
-	</div>
-}
-
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-body">
-			<div class="col-md-6" id="AjaxDiv">
-				<button type="button" class="btn btn-info btn-lg" id="mylink">@T("Plugins.Import.ItLink.MatchCategoriesButton")</button>
+
+			<div class="form-group">
+				<div class="col-md-3">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoriesMappingModal">
+						@T("Plugins.Import.ItLink.MatchCategoriesButton")
+					</button>
+
+					<!-- Modal -->
+					<div id="categoriesMappingModal" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+							@using (Html.BeginForm())
+							{
+								@Html.AntiForgeryToken()
+								<div class="modal-content"></div>
+							}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-9">
+					@T("Plugins.Import.ItLink.MapCategoriesPrompt")
+				</div>
 			</div>
-			<div class="col-md-6">
-				@Html.Action("EditCategoriesMapped", "ImportItLink")
+
+			@*@using (Html.BeginForm())
+				{
+					@Html.ValidationSummary(true)
+
+					@Html.AntiForgeryToken()*@
+			<div class="form-group">
+				<div class="col-md-3">
+					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#importResult">
+						@T("Plugins.Import.ItLink.ImportButton")
+					</button>
+
+					<!-- Modal -->
+					<div id="importResult" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+							<div class="modal-content"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-9">
+					@T("Plugins.Import.ItLink.ImportPrompt")
+				</div>
 			</div>
+			@*}*@
+
 		</div>
 	</div>
 </div>
 
 <script>
 	$(document).ready(function () {
-		var url = '@Url.Action("CategoriesMapping", "ImportItLink")';
+		$('#categoriesMappingModal').on('show.bs.modal', function (event) {
+			$.get('@Url.Action("CategoriesMapping", "ImportItLink")', function (data) {
+					$('#categoriesMappingModal .modal-content').replaceWith(data);
+				});
+			});
+		$('#categoriesMappingModal').on('hide.bs.modal', function (event) {
+			$('#categoriesMappingModal .modal-content').hide('slow', function () { $(this).html(''); });
+		});
 
-		$("#mylink").click(function () {
-			$("#AjaxDiv").load(url);
+		$('#importResult').on('show.bs.modal', function (event) {
+				$.get('@Url.Action("ImportFromItLink", "ImportItLink")', function (data) {
+					$('#importResult .modal-content').replaceWith(data);
+				});
+			});
+		$('#importResult').on('hide.bs.modal', function (event) {
+			$('#importResult .modal-content').hide("slow", function () { $(this).html(''); });
 		});
 	});
 </script>

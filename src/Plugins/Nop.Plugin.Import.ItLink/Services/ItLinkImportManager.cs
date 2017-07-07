@@ -2,7 +2,6 @@
 using Nop.Core.Data;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Media;
-using Nop.Core.Domain.Vendors;
 using Nop.Services.Catalog;
 using Nop.Services.Localization;
 using Nop.Services.Media;
@@ -10,6 +9,7 @@ using Nop.Services.Seo;
 using Nop.Services.Vendors;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Xml;
@@ -54,31 +54,6 @@ namespace Nop.Plugin.Import.ItLink.Services
 
 		#endregion
 
-		private int _vendorId = 0;
-		private int VendorId
-		{
-			get
-			{
-				if (this._vendorId == 0)
-				{
-					var vendor = _vendorService.GetAllVendors("ItLink", showHidden: true).FirstOrDefault();
-					if (vendor == null)
-					{
-						vendor = new Vendor
-						{
-							Name = "ItLink",
-							Active = true,
-							AdminComment = "Auto added vendor to map to ItLink provider"
-						};
-						_vendorService.InsertVendor(vendor);
-					}
-					this._vendorId = vendor.Id;
-				}
-
-				return this._vendorId;
-			}
-		}
-
 		/// <summary>
 		/// Imports products from ItLinks xml.
 		/// </summary>
@@ -86,8 +61,17 @@ namespace Nop.Plugin.Import.ItLink.Services
 		/// <param name="categoriesMap">dictionary key = ItLink cateogry name, value = internal category Id</param>
 		/// <param name="overrideExistedImanges">true if want to override existed images (could be clower).</param>
 		/// <returns>Lists with errors.</returns>
-		public List<string> Import(XmlDocument xmlDocument, Dictionary<string, int> categoriesMap, bool overrideExistedImanges = false)
+		public List<string> Import(
+			XmlDocument xmlDocument,
+			Dictionary<string, int> categoriesMap,
+			int vendorId,
+			bool overrideExistedImanges = false)
 		{
+			if (categoriesMap == null)
+			{
+				throw new Exception(_localizationService.GetResource("Plugins.Imort.ItLink.CategoriesMapping.Alert.PleaseMapCategories"));
+			}
+
 			var result = new List<string>();
 
 			try
@@ -105,8 +89,25 @@ namespace Nop.Plugin.Import.ItLink.Services
 
 				manufacturerNames = manufacturerNames.Distinct().ToList();
 
+				//performance optimization, the check for the existence of the manufacturers in one SQL request
+				var notExistingManufacturers = _manufacturerService.GetNotExistingManufacturers(manufacturerNames.ToArray());
+				if (notExistingManufacturers.Any())
+				{
+					notExistingManufacturers.ToList().ForEach(m =>
+					{
+						_manufacturerService.InsertManufacturer(
+							new Manufacturer
+							{
+								CreatedOnUtc = DateTime.UtcNow,
+								UpdatedOnUtc = DateTime.UtcNow,
+								Name = m,
+								Published = true
+							});
+					});
+				}
+
 				//performance optimization, load all products by SKU in one SQL request
-				var allProductsBySku = _productService.GetProductsBySku(allSku.ToArray(), VendorId);
+				var allProductsBySku = _productService.GetProductsBySku(allSku.ToArray(), vendorId);
 
 				//performance optimization, load all manufacturers IDs for products in one SQL request
 				var allProductsManufacturerIds = _manufacturerService.GetProductManufacturerIds(allProductsBySku.Select(p => p.Id).ToArray());
@@ -116,11 +117,12 @@ namespace Nop.Plugin.Import.ItLink.Services
 
 				foreach (XmlNode offer in offers)
 				{
+					var sku = offer["vendorCode"].InnerText;
+					
+					var product = allProductsBySku.FirstOrDefault(p => p.Sku == sku);
+
 					try
 					{
-						var sku = offer["vendorCode"].InnerText;
-						var product = allProductsBySku.FirstOrDefault(p => p.Sku == sku);
-
 						var isNew = product == null;
 
 						product = product ?? new Product();
@@ -129,6 +131,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 						{
 							product.CreatedOnUtc = DateTime.UtcNow;
 						}
+						product.UpdatedOnUtc = DateTime.UtcNow;
 
 						#region Setup product
 
@@ -138,7 +141,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 						product.Name = productName;
 						product.ShortDescription = productName;
 						product.FullDescription = productName;
-						product.VendorId = VendorId;
+						product.VendorId = vendorId;
 						product.ProductTemplateId = 1;
 						product.ShowOnHomePage = false;
 						product.MetaKeywords = string.Format("{0}; {1}", offer["vendor"].InnerText, offer["vendorCode"].InnerText);
@@ -152,16 +155,24 @@ namespace Nop.Plugin.Import.ItLink.Services
 						product.RequireOtherProducts = false;
 						product.IsShipEnabled = true;
 						product.StockQuantity = 1;
-						product.DisplayStockQuantity = true; ;
+						product.DisplayStockQuantity = true;
 						product.OldPrice = isNew ? product.OldPrice : product.Price;
-						product.Price = decimal.Parse(offer["param"].FirstChild.Value);
+						product.Price = decimal.Parse(offer["param"].FirstChild.Value, CultureInfo.InvariantCulture);
 						product.MarkAsNew = isNew;
 
-						product.ProductCategories.Add(
-							new ProductCategory
-							{
-								CategoryId = categoriesMap[offer["categoryId"].InnerText]
-							});
+						try
+						{
+							product.ProductCategories.Add(
+								new ProductCategory
+								{
+									CategoryId = categoriesMap[offer["categoryId"].InnerText]
+								});
+						}
+						catch
+						{
+							throw new Exception(
+								string.Format(_localizationService.GetResource("Plugins.Imort.ItLink.CategoriesMapping.Alert.CategoryWasNotMapped"), offer["categoryId"].InnerText));
+						}
 
 						#endregion
 
@@ -178,32 +189,24 @@ namespace Nop.Plugin.Import.ItLink.Services
 
 						#region product Manufacturers
 
-						var manufacturers = isNew || !allProductsManufacturerIds.ContainsKey(product.Id)
-							? new int[0]
-							: allProductsManufacturerIds[product.Id];
-						var importedManufacturers = manufacturerNames.Select(x => allManufacturers.First(m => m.Name == x.Trim()).Id).ToList();
-						foreach (var manufacturerId in importedManufacturers)
+						if (!isNew)
 						{
-							if (manufacturers.Any(c => c == manufacturerId))
-								continue;
-
+							product.ProductManufacturers.ToList().ForEach(pm => _manufacturerService.DeleteProductManufacturer(pm));
+						}
+						var manufacturer = allManufacturers.Where(m => m.Name == offer["vendor"].InnerText).FirstOrDefault();
+						if (manufacturer != null)
+						{
 							var productManufacturer = new ProductManufacturer
 							{
 								ProductId = product.Id,
-								ManufacturerId = manufacturerId,
+								ManufacturerId = manufacturer.Id,
 								IsFeaturedProduct = false,
 								DisplayOrder = 1
 							};
-							_manufacturerService.InsertProductManufacturer(productManufacturer);
-						}
 
-						//delete product manufacturers
-						var deletedProductsManufacturers = manufacturers
-								.Where(manufacturerId => !importedManufacturers.Contains(manufacturerId))
-								.Select(manufacturerId => product.ProductManufacturers.First(pc => pc.ManufacturerId == manufacturerId));
-						foreach (var deletedProductManufacturer in deletedProductsManufacturers)
-						{
-							_manufacturerService.DeleteProductManufacturer(deletedProductManufacturer);
+							_manufacturerService.InsertProductManufacturer(productManufacturer);
+
+							product.ProductManufacturers.Add(productManufacturer);
 						}
 
 						#endregion
@@ -217,12 +220,11 @@ namespace Nop.Plugin.Import.ItLink.Services
 
 						#endregion
 
-						product.UpdatedOnUtc = DateTime.UtcNow;
 						_productService.UpdateProduct(product);
 					}
 					catch (Exception e)
 					{
-						result.Add(e.Message);
+						result.Add(string.Format("SKU: {0}. Item: {1}. Message: {2}", product.Sku, product.Name, e.Message));
 					}
 				}
 			}

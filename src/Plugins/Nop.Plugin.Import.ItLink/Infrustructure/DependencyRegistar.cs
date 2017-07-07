@@ -1,15 +1,14 @@
 ﻿using Autofac;
+using Autofac.Core;
 using Nop.Core.Configuration;
+using Nop.Core.Data;
 using Nop.Core.Infrastructure;
 using Nop.Core.Infrastructure.DependencyManagement;
-using Nop.Plugin.Import.ItLink.Services;
-using Nop.Services.ExportImport;
-using Nop.Plugin.Import.ItLink.Domain;
-using Autofac.Core;
 using Nop.Data;
-using Nop.Core.Data;
-using Nop.Web.Framework.Mvc;
 using Nop.Plugin.Import.ItLink.Data;
+using Nop.Plugin.Import.ItLink.Domain;
+using Nop.Plugin.Import.ItLink.Services;
+using Nop.Web.Framework.Mvc;
 
 namespace Nop.Plugin.Import.ItLink.Infrustructure
 {
@@ -22,18 +21,13 @@ namespace Nop.Plugin.Import.ItLink.Infrustructure
 			//data context
 			this.RegisterPluginDataContext<ImportObjectContext>(builder, CONTEXT_NAME);
 
-			builder.RegisterType<XmlToXlsConverter>()
-				.As<IXmlToXlsConverter>()
+			builder.RegisterType<ItLinkImportManager>()
+				.As<IItLinkImportManager>()
 				.InstancePerLifetimeScope();
-
-			builder.RegisterType<ItLinkExportManager>()
-				.As<IExportManager>()
-				.InstancePerLifetimeScope();
-
 
 			//override required repository with our custom context
-			builder.RegisterType<EfRepository<InternalToExternal>>()
-				.As<IRepository<InternalToExternal>>()
+			builder.RegisterType<EfRepository<CategoryInternalToExternalMap>>()
+				.As<IRepository<CategoryInternalToExternalMap>>()
 				.WithParameter(ResolvedParameter.ForNamed<IDbContext>(CONTEXT_NAME))
 				.InstancePerLifetimeScope();
 		}

@@ -18,14 +18,19 @@
 	<LocaleResource Name="Plugins.Import.ItLink.ImportButton">
 		<Value>Імпорт с It-Link</Value>
 	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.MapCategoriesPrompt">
+		<Value>
+			Для импорта товаров с It-Link необходимо сопоставить категории из It-Link с категориями этого магазина.
+		</Value>
+	</LocaleResource>
 	<LocaleResource Name="Plugins.Import.ItLink.ImportPrompt">
 		<Value>Усі товарі за It-Link буде скопійовано до системи. Усі існуючі товари будуть оновлені.</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping">
-		<Value>Відповідність категорій товарів Nopcommerce та зовнішнього ресурса</Value>
+		<Value>Відповідність категорій товарів цього магазину та зовнішнього ресурса</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Nopcommerce">
-		<Value>Категорії Nopcommerce</Value>
+		<Value>Категорії цього магазину</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.ExternalResource">
 		<Value>Категорії із ItLink</Value>
@@ -41,5 +46,8 @@
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Imort.ItLink.CategoriesMapping.Alert.CategoryWasNotMapped">
 		<Value>Відсутні відповідності для категорій {0} .Будь ласка додайте їх</Value>
+	</LocaleResource>
+	<LocaleResource Name="Plugins.Imort.ItLink.ImportResultCaption">
+		<Value>Результаты импорта</Value>
 	</LocaleResource>
 </Language>

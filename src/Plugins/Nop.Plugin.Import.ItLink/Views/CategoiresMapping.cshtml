@@ -1,67 +1,45 @@
 ﻿@model List<Nop.Plugin.Import.ItLink.Models.CategoriesMappingViewModel>
 @using Nop.Web.Framework
-@{
-	Layout = "";
-}
 
-	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">@T("Plugins.Import.ItLink.MatchCategoriesButton")</button>
-
-	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h5><strong>@T("Plugins.Imort.ItLink.CategoriesMapping")</strong></h5>
-				</div>
-				<div class="modal-body">
-					@using (Html.BeginForm())
-				{
-						@Html.AntiForgeryToken()
-						<input type="hidden" name="isNew" value="true"/>
-						<table class="table  table-responsive table-bordered">
-							<thead>
-								<tr>
-									<th colspan="2"><h3>@T("Plugins.Imort.ItLink.CategoriesMapping.ExternalResource")</h3></th>
-									<th><h3>@T("Plugins.Imort.ItLink.CategoriesMapping.Nopcommerce")</h3></th>
-								</tr>
-							</thead>
-							<tbody>
-								@for (int i = 0; i < Model.Count; i++)
-								{
-									<tr>
-										@Html.HiddenFor(model => Model[i].Id)
-										<td>
-											@Html.DisplayFor(model => Model[i].ExternalId)
-											@Html.HiddenFor(model => Model[i].ExternalId)
-										</td>
-										<td>
-											@Html.DisplayFor(model => Model[i].ExternalName)
-											@Html.HiddenFor(model => Model[i].ExternalName)
-										</td>
-										<td>
-											@Html.DropDownListFor(model => Model[i].InternalId, Model[i].InternalCategoriesSelectList)
-										</td>
-									</tr>
-								}
-							</tbody>
-						</table>
-						<div class="form-group">
-							<div class="col-md-3">
-								&nbsp;
-							</div>
-							<div class="col-md-9">
-								<input type="submit" name="MapCategories" class="btn bg-blue" value="@T("Admin.Common.Save")"/>
-							</div>
-						</div>
-				}
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-
-		</div>
+<!-- Modal content-->
+<div class="modal-content">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<h5><strong>@T("Plugins.Imort.ItLink.CategoriesMapping")</strong></h5>
 	</div>
+	<div class="modal-body">
+		<table class="table  table-responsive table-bordered">
+			<thead>
+				<tr>
+					<th colspan="2"><h3>@T("Plugins.Imort.ItLink.CategoriesMapping.ExternalResource")</h3></th>
+					<th><h3>@T("Plugins.Imort.ItLink.CategoriesMapping.Nopcommerce")</h3></th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (int i = 0; i < Model.Count; i++)
+					{
+					<tr>
+						@Html.HiddenFor(model => Model[i].Id)
+						<td>
+							@Html.DisplayFor(model => Model[i].ExternalCategoryId)
+							@Html.HiddenFor(model => Model[i].ExternalCategoryId)
+						</td>
+						<td>
+							@Html.DisplayFor(model => Model[i].ExternalCategoryName)
+							@Html.HiddenFor(model => Model[i].ExternalCategoryName)
+						</td>
+						<td>
+							@Html.DropDownListFor(model => Model[i].InternalSelectedCategoryId, Model[i].InternalCategories)
+						</td>
+					</tr>
+					}
+			</tbody>
+		</table>
+
+	</div>
+	<div class="modal-footer">
+		<input type="submit" name="mapcategories" class="btn bg-blue" value="@T("Admin.Common.Save")" />
+		<button type="button" class="btn btn-default" data-dismiss="modal">@T("Admin.Common.Cancel")</button>
+	</div>
+</div>
+

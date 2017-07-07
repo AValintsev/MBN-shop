@@ -1,23 +1,23 @@
 ﻿using Nop.Core;
+using Nop.Core.Data;
 using Nop.Core.Domain.Vendors;
+using Nop.Plugin.Import.ItLink.Data;
+using Nop.Plugin.Import.ItLink.Domain;
 using Nop.Plugin.Import.ItLink.Models;
 using Nop.Plugin.Import.ItLink.Services;
 using Nop.Services.Catalog;
 using Nop.Services.Configuration;
-using Nop.Services.ExportImport;
 using Nop.Services.Localization;
 using Nop.Services.Security;
 using Nop.Services.Stores;
+using Nop.Services.Vendors;
 using Nop.Web.Framework.Controllers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Xml;
-using Nop.Plugin.Import.ItLink.Domain;
-using System.Collections.Generic;
-using Nop.Core.Data;
-using System.Linq;
-using Nop.Plugin.Import.ItLink.Data;
 
 namespace Nop.Plugin.Import.ItLink.Controllers
 {
@@ -28,74 +28,78 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 
 		private readonly IWorkContext _workContext;
 		private readonly IStoreContext _storeContext;
-
 		private readonly IStoreService _storeService;
-
+		private readonly IVendorService _vendorService;
 		private readonly ISettingService _settingService;
 		private readonly VendorSettings _vendorSettings;
-
 		private readonly ILanguageService _languageService;
+		private readonly ICategoryService _categoryService;
+		private readonly IPermissionService _permissionService;
+		private readonly IItLinkImportManager _itLinkImportManager;
 		private readonly ILocalizationService _localizationService;
 		private readonly ILocalizedEntityService _localizedEntityService;
-
-		private readonly IPermissionService _permissionService;
-
-		private readonly IXmlToXlsConverter _xmlToXlsxConverter;
-		private readonly IImportManager _importManager;
-		private readonly ICategoryService _categoryService;
-
-		private readonly IRepository<InternalToExternal> _categoriesMappingrepository;
-
-		private readonly ImportObjectContext _context;
-
-
-
-		//private readonly IXmlToXlsConverter _xmlConverter;
-		//private readonly IXmlImporter _xmlImporter;
-
+		private readonly IRepository<CategoryInternalToExternalMap> _categoriesMappingRepository;
 
 		#endregion
 
+		private int _vendorId = 0;
+		private int VendorId
+		{
+			get
+			{
+				if (this._vendorId == 0)
+				{
+					var vendor = _vendorService.GetAllVendors("ItLink", showHidden: true).FirstOrDefault();
+					if (vendor == null)
+					{
+						vendor = new Vendor
+						{
+							Name = "ItLink",
+							Active = true,
+							AdminComment = "Auto added vendor to map to ItLink provider"
+						};
+						_vendorService.InsertVendor(vendor);
+					}
+					this._vendorId = vendor.Id;
+				}
+
+				return this._vendorId;
+			}
+		}
+
+		#region ctor
+
 		public ImportItLinkController(
 			IWorkContext workContext,
+			IStoreContext storeContext,
 			IStoreService storeService,
+			IVendorService vendorService,
 			VendorSettings vendorSettings,
 			ISettingService settingService,
-			IImportManager importManager,
-			IStoreContext storeContext,
+			ICategoryService categoryService,
 			ILanguageService languageService,
+			IPermissionService permissionService,
+			IItLinkImportManager itLinkImportManager,
 			ILocalizationService localizationService,
 			ILocalizedEntityService localizedEntityService,
-			IPermissionService permissionService,
-			ICategoryService categoryService,
-			IRepository<InternalToExternal> repos,
-			IXmlToXlsConverter xmlToXlsxConverter,
-			ImportObjectContext context
-			)
+			IRepository<CategoryInternalToExternalMap> categoriesMappingRepository)
 		{
 			this._workContext = workContext;
+			this._storeService = storeService;
 			this._storeContext = storeContext;
-
+			this._vendorService = vendorService;
 			this._settingService = settingService;
 			this._vendorSettings = vendorSettings;
-
-			this._storeService = storeService;
-
+			this._categoryService = categoryService;
 			this._languageService = languageService;
+			this._permissionService = permissionService;
+			this._itLinkImportManager = itLinkImportManager;
 			this._localizationService = localizationService;
 			this._localizedEntityService = localizedEntityService;
-
-			this._permissionService = permissionService;
-
-			this._importManager = importManager;
-			this._categoryService = categoryService;
-
-			this._categoriesMappingrepository = repos;
-
-			this._context = context;
-
-			this._xmlToXlsxConverter = xmlToXlsxConverter;
+			this._categoriesMappingRepository = categoriesMappingRepository;
 		}
+
+		#endregion
 
 		[ChildActionOnly]
 		public ActionResult Configure()
@@ -140,36 +144,28 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 			return Configure();
 		}
 
-		[HttpPost, ActionName("Configure")]
-		[ChildActionOnly]
-		[FormValueRequired("ImportFromItLink")]
-		public virtual ActionResult ImportFromItLink()
+		public virtual PartialViewResult ImportFromItLink()
 		{
-
+			var viewPath = "~/Plugins/Import.ItLink/Views/ImportFromItLinkPartialResult.cshtml";
+			var viewModel = new ImportFromItLinkResultViewModel();
 
 			if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
 			{
-				ErrorNotification("Access Denied");
-				return Configure();
+				viewModel.Errors.Add("Access Denied");
+				return PartialView(viewPath, viewModel);
 			}
 
 			//a vendor can not import products
 			if (_workContext.CurrentVendor != null && !_vendorSettings.AllowVendorsToImportProducts)
 			{
-				ErrorNotification("Access Denied");
-				return Configure();
+				viewModel.Errors.Add("Access Denied");
+				return PartialView(viewPath, viewModel);
 			}
 			var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
 			var settings = _settingService.LoadSetting<ImportItLinkSettings>(storeScope);
 
-			if (!settings.AreCategoriesMapped)
-			{
-				ErrorNotification(_localizationService.GetResource("Plugins.Imort.ItLink.CategoriesMapping.Alert.PleaseMapCategories"));
-				return Configure();
-			}
 			try
 			{
-				//Create the credentials
 				var credentials = new NetworkCredential(settings.Username, settings.Password);
 				XmlUrlResolver xmlResolver = new XmlUrlResolver
 				{
@@ -184,226 +180,116 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 						DtdProcessing = DtdProcessing.Ignore
 					});
 
-				var xmlDoc = new XmlDocument();
-				xmlDoc.Load(xmlReader);
+				var itLinkXmlDocument = new XmlDocument();
+				itLinkXmlDocument.Load(xmlReader);
 
-				var file = _xmlToXlsxConverter.XmlToXlsx(xmlDoc);
+				var mappedCategories = this._categoriesMappingRepository.Table
+					.Where(map => map.VendorId == VendorId)
+					.ToDictionary(x => x.ExternalId, s => s.InternalId);
 
-				if (file != null && file.Length > 0)
+				var errors = _itLinkImportManager.Import(itLinkXmlDocument, mappedCategories, VendorId);
+
+				if (errors.Count > 0)
 				{
-					_importManager.ImportProductsFromXlsx(file);
+					viewModel.Errors = errors;
+					return PartialView(viewPath, viewModel);
 				}
-				else
-				{
-					ErrorNotification(_localizationService.GetResource("Admin.Common.UploadFile"));
-					return Configure();
-
-				}
-				SuccessNotification(_localizationService.GetResource("Admin.Catalog.Products.Imported"));
 			}
 			catch (Exception exc)
 			{
-				ErrorNotification(exc);
+				viewModel.Errors.Add(exc.Message);
 			}
 
-			return Configure();
-
-		}
-
-		private Dictionary<string, string> DownloadExternalCategories()
-		{
-			Dictionary<string, string> result = new Dictionary<string, string>();
-
-			try
-			{
-				var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
-				var settings = _settingService.LoadSetting<ImportItLinkSettings>(storeScope);
-
-				//Create the credentials
-				var credentials = new NetworkCredential(settings.Username, settings.Password);
-				XmlUrlResolver xmlResolver = new XmlUrlResolver
-				{
-					Credentials = credentials
-				};
-
-				XmlReader xmlReader = XmlTextReader.Create(
-					settings.XmlUrl,
-					new XmlReaderSettings
-					{
-						XmlResolver = xmlResolver,
-						DtdProcessing = DtdProcessing.Ignore
-					});
-
-				//В этом варианте считывается xml документ
-				var xmlDoc = new XmlDocument();
-				xmlDoc.Load(xmlReader);
-
-				foreach (XmlNode category in xmlDoc.GetElementsByTagName("category"))
-				{
-					result.Add(category.Attributes["id"].Value, category.InnerText);
-
-				}
-
-				return result;
-			}
-			catch (Exception e)
-			{
-				throw e;
-			}
+			viewModel.Messages.Add(_localizationService.GetResource("Admin.Catalog.Products.Imported"));
+			return PartialView(viewPath, viewModel);
 		}
 
 		public PartialViewResult CategoriesMapping()
 		{
 			List<CategoriesMappingViewModel> viewModel = new List<CategoriesMappingViewModel>();
 
-			Dictionary<string, string> externalCategories = DownloadExternalCategories();
+			//Load all categories from It-Link xml
+			var externalCategories = LoadExternalCategories();
 
-			var Internalcategories = _categoryService.GetAllCategories().ToList();
+			//Load already mapped categories from internal database
+			var mappedCategories = this._categoriesMappingRepository.Table
+				.Where(map => map.VendorId == VendorId)
+				.ToList();
 
-			foreach (var extCat in externalCategories)
+			//Load all internal categories
+			var internalCategories = _categoryService.GetAllCategories().ToList();
+
+			//Prepare view model for each external category and map with internal category if exists
+			externalCategories.ForEach(ec =>
 			{
+				var mappedCategory = mappedCategories.FirstOrDefault(mc => mc.ExternalId == ec.ExternalId);
 				viewModel.Add(new CategoriesMappingViewModel
 				{
-					ExternalId = extCat.Key,
-					ExternalName = extCat.Value,
+					ExternalCategoryId = ec.ExternalId,
+					ExternalCategoryName = ec.ExternalName,
+					Id = mappedCategory == null ? 0 : mappedCategory.Id,
+					InternalSelectedCategoryId = mappedCategory == null ? 0 : mappedCategory.InternalId
 				});
+			});
 
-
-			}
-				viewModel.ForEach(item =>
-				{
-					item.InternalCategoriesSelectList.Add(new SelectListItem
-					{
-						Text = "",
-						Value = null,
-						Selected = true
-
-					});
-					Internalcategories.ForEach(cat => item.InternalCategoriesSelectList.Add(new SelectListItem
-					{
-						Text = cat.Name,
-						Value = cat.Id.ToString()
-					}));
-				});
-
+			//Load lists for each view model
+			viewModel.ForEach(vm =>
+			{
+				vm.InternalCategories = internalCategories
+						.Select(c => new SelectListItem
+						{
+							Text = c.Name,
+							Value = c.Id.ToString(),
+							Selected = c.Id == vm.InternalSelectedCategoryId
+						})
+						.ToList();
+				vm.InternalCategories.Insert(0, new SelectListItem { Text = "", Value = "-1" });
+			});
 
 			return PartialView("~/Plugins/Import.ItLink/Views/CategoiresMapping.cshtml", viewModel);
 		}
 
-		[ChildActionOnly]
-		public PartialViewResult EditCategoriesMapped()
-		{
-			//load settings for a chosen store scope
-			var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
-			var settings = _settingService.LoadSetting<ImportItLinkSettings>(storeScope);
-
-			List<CategoriesMappingViewModel> viewModel = new List<CategoriesMappingViewModel>();
-
-			if (settings.AreCategoriesMapped)
-			{
-
-				List<InternalToExternal> entities = _categoriesMappingrepository.Table.ToList();
-
-
-				var Internalcategories = _categoryService.GetAllCategories().ToList();
-
-
-				entities.ForEach(e =>
-				{
-					var internalCategory = _categoryService.GetCategoryById(e.InternalId);
-
-					viewModel.Add(new CategoriesMappingViewModel
-					{
-						Id = e.Id,
-						ExternalId = e.ExternalId,
-						ExternalName = e.ExternalName,
-						InternalId = e.InternalId,
-						InternalName = internalCategory.Name
-					});
-
-
-				});
-
-				viewModel.ForEach(item =>
-				{
-					Internalcategories.ForEach(cat =>
-				   {
-					   item.InternalCategoriesSelectList.Add(new SelectListItem
-					   {
-						   Text = cat.Name,
-						   Value = cat.Id.ToString(),
-						   Selected = cat.Name == item.InternalName
-					   });
-				   });
-				});
-			}
-
-			return PartialView("~/Plugins/Import.ItLink/Views/EditCategoriesMapped.cshtml", viewModel);
-		}
-
 		[HttpPost, ActionName("Configure")]
 		[ChildActionOnly]
-		[FormValueRequired("MapCategories")]
-		public ActionResult CategoriesMapping(List<CategoriesMappingViewModel> viewModel, bool isNew)
+		[FormValueRequired("mapcategories")]
+		public ActionResult MapCategories(List<CategoriesMappingViewModel> viewModel)
 		{
-
-			//load settings for a chosen store scope
-			var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
-			var settings = _settingService.LoadSetting<ImportItLinkSettings>(storeScope);
-
-
-			// Check IF all categories were mapped
-			bool error = false;
-			string NotMappedCategs = "";
+			var newMappings = new List<CategoryInternalToExternalMap>();
+			var existedMappings = new List<CategoryInternalToExternalMap>();
 
 			viewModel.ForEach(item =>
 			{
-				if (item.InternalId == 0)
+				if (item.Id == 0)
 				{
-					error = true;
-					NotMappedCategs = item.ExternalName + "; ";
-				}
-
-			});
-
-			if (error)
-			{
-				ErrorNotification(string.Format(_localizationService.GetResource("Plugins.Imort.ItLink.CategoriesMapping.Alert.CategoryWasNotMapped"), NotMappedCategs));
-				return Configure();
-			}
-
-			//New Categories were downloaded from External Resource and mapped
-			if (isNew)
-			{
-				_context.ExecuteSqlCommand("TRUNCATE TABLE InternalToExternal");
-			}
-
-
-			foreach (var item in viewModel)
-			{
-				var entity = _categoriesMappingrepository.GetById(item.Id);
-				if (entity != null)
-				{
-					entity.InternalId = item.InternalId;
-					entity.ExternalId = item.ExternalId;
-					entity.ExternalName = item.ExternalName;
-					_categoriesMappingrepository.Update(entity);
+					//Insert new
+					newMappings.Add(new CategoryInternalToExternalMap
+					{
+						ExternalId = item.ExternalCategoryId,
+						ExternalName = item.ExternalCategoryName,
+						InternalId = item.InternalSelectedCategoryId,
+						VendorId = VendorId
+					});
 				}
 				else
 				{
-					InternalToExternal newEntity = new InternalToExternal()
+					var map = _categoriesMappingRepository.GetById(item.Id);
+					if (map != null)
 					{
-						InternalId = item.InternalId,
-						ExternalId = item.ExternalId,
-						ExternalName = item.ExternalName
-					};
-					_categoriesMappingrepository.Insert(newEntity);
+						map.InternalId = item.InternalSelectedCategoryId;
+						map.VendorId = VendorId;
+						existedMappings.Add(map);
+					}
 				}
+			});
+
+			if (newMappings.Count > 0)
+			{
+				this._categoriesMappingRepository.Insert(newMappings);
 			}
-
-
-			settings.AreCategoriesMapped = true;
-			_settingService.SaveSetting(settings);
+			if (existedMappings.Count > 0)
+			{
+				this._categoriesMappingRepository.Update(existedMappings);
+			}
 
 			return Configure();
 		}
@@ -415,6 +301,52 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 		protected virtual ActionResult AccessDeniedView()
 		{
 			return RedirectToAction("AccessDenied", "Security", new { pageUrl = this.Request.RawUrl });
+		}
+
+		private List<CategoryInternalToExternalMap> LoadExternalCategories()
+		{
+			var result = new List<CategoryInternalToExternalMap>();
+
+			try
+			{
+				var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
+				var settings = _settingService.LoadSetting<ImportItLinkSettings>(storeScope);
+
+				var credentials = new NetworkCredential(settings.Username, settings.Password);
+				XmlUrlResolver xmlResolver = new XmlUrlResolver
+				{
+					Credentials = credentials
+				};
+
+				using (XmlReader reader = XmlReader.Create(settings.XmlUrl,
+					new XmlReaderSettings
+					{
+						XmlResolver = xmlResolver,
+						DtdProcessing = DtdProcessing.Ignore
+					}))
+				{
+					//Read only category sections from XML
+					while (reader.ReadToFollowing("category"))
+					{
+						if (reader.NodeType == XmlNodeType.Element)
+						{
+							var map = new CategoryInternalToExternalMap
+							{
+								ExternalId = reader.GetAttribute("id"),
+								ExternalName = reader.ReadInnerXml()
+							};
+
+							result.Add(map);
+						}
+					}
+				}
+
+				return result;
+			}
+			catch (Exception e)
+			{
+				throw e;
+			}
 		}
 	}
 }

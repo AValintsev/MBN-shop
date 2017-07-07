@@ -3,11 +3,11 @@ using Nop.Plugin.Import.ItLink.Domain;
 
 namespace Nop.Plugin.Import.ItLink.Data
 {
-	public class CategoriesMap : EntityTypeConfiguration<InternalToExternal>
+	public class CategoriesMap : EntityTypeConfiguration<CategoryInternalToExternalMap>
 	{
 		public CategoriesMap()
 		{
-			ToTable("InternalToExternal");
+			ToTable("CategoryInternalToExternalMap");
 			HasKey(m => m.Id);
 		}
 	}

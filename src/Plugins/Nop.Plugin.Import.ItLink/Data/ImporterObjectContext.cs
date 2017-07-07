@@ -43,7 +43,7 @@ namespace Nop.Plugin.Import.ItLink.Data
 
         public void Uninstall()
         {
-            var dbScript = "DROP TABLE InternalToExternal";
+            var dbScript = "DROP TABLE CategoryInternalToExternalMap";
 
             Database.ExecuteSqlCommand(dbScript);
 			
