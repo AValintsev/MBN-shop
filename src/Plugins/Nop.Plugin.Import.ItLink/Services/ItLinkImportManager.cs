@@ -3,6 +3,7 @@ using Nop.Core.Data;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Media;
 using Nop.Services.Catalog;
+using Nop.Services.Directory;
 using Nop.Services.Localization;
 using Nop.Services.Media;
 using Nop.Services.Seo;
@@ -24,6 +25,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 		private readonly IVendorService _vendorService;
 		private readonly IProductService _productService;
 		private readonly IPictureService _pictureService;
+		private readonly ICurrencyService _currencyService;
 		private readonly IUrlRecordService _urlRecordService;
 		private readonly IManufacturerService _manufacturerService;
 		private readonly ILocalizationService _localizationService;
@@ -37,6 +39,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 			IVendorService vendorService,
 			IProductService productService,
 			IPictureService pictureService,
+			ICurrencyService _currencyService,
 			IUrlRecordService urlRecordService,
 			IManufacturerService manufacturerService,
 			ILocalizationService localizationService)
@@ -47,6 +50,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 			this._vendorService = vendorService;
 			this._productService = productService;
 			this._pictureService = pictureService;
+			this._currencyService = _currencyService;
 			this._urlRecordService = urlRecordService;
 			this._manufacturerService = manufacturerService;
 			this._localizationService = localizationService;
@@ -77,6 +81,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 			try
 			{
 				XmlNodeList offers = xmlDocument.GetElementsByTagName("offer");
+				var rateUsdToUah = _currencyService.GetCurrencyByCode("UAH").Rate;
 
 				List<string> allSku = new List<string>(offers.Count);
 				List<string> manufacturerNames = new List<string>();
@@ -118,7 +123,9 @@ namespace Nop.Plugin.Import.ItLink.Services
 				foreach (XmlNode offer in offers)
 				{
 					var sku = offer["vendorCode"].InnerText;
-					
+					var productName = offer["name"].InnerText;
+					var manufacturerName = offer["vendor"].InnerText;
+
 					var product = allProductsBySku.FirstOrDefault(p => p.Sku == sku);
 
 					try
@@ -135,7 +142,6 @@ namespace Nop.Plugin.Import.ItLink.Services
 
 						#region Setup product
 
-						var productName = offer["name"].InnerText;
 						product.ProductType = ProductType.SimpleProduct;
 						product.VisibleIndividually = true;
 						product.Name = productName;
@@ -144,21 +150,24 @@ namespace Nop.Plugin.Import.ItLink.Services
 						product.VendorId = vendorId;
 						product.ProductTemplateId = 1;
 						product.ShowOnHomePage = false;
-						product.MetaKeywords = string.Format("{0}; {1}", offer["vendor"].InnerText, offer["vendorCode"].InnerText);
+						product.MetaKeywords = string.Format("{0}; {1}", manufacturerName, sku);
 						product.MetaDescription = productName;
 						product.MetaTitle = productName;
 						product.AllowCustomerReviews = true;
 						product.Published = true;
 						product.Sku = sku;
-						product.ManufacturerPartNumber = offer["vendorCode"].InnerText;
+						product.ManufacturerPartNumber = sku;
 						product.IsGiftCard = false;
 						product.RequireOtherProducts = false;
 						product.IsShipEnabled = true;
-						product.StockQuantity = 1;
+						product.StockQuantity = 2;
+						product.OrderMaximumQuantity = 11;
 						product.DisplayStockQuantity = true;
 						product.OldPrice = isNew ? product.OldPrice : product.Price;
-						product.Price = decimal.Parse(offer["param"].FirstChild.Value, CultureInfo.InvariantCulture);
 						product.MarkAsNew = isNew;
+
+						//We use store's internal rate
+						product.Price = decimal.Parse(offer["oldprice"].InnerText) / rateUsdToUah;
 
 						try
 						{
@@ -180,33 +189,41 @@ namespace Nop.Plugin.Import.ItLink.Services
 						{
 							_productService.InsertProduct(product);
 						}
-						else
-						{
-							_productService.UpdateProduct(product);
-						}
+						//Do not update product twice
+						//else
+						//{
+						//	_productService.UpdateProduct(product);
+						//}
 
 						_urlRecordService.SaveSlug(product, product.ValidateSeName(product.GetSeName(), product.Name, true), _workContext.WorkingLanguage.Id);
 
 						#region product Manufacturers
 
+						var productManufacturerExists = false;
 						if (!isNew)
 						{
-							product.ProductManufacturers.ToList().ForEach(pm => _manufacturerService.DeleteProductManufacturer(pm));
+							var productManufacturers = product.ProductManufacturers
+								.Where(pm => pm.Manufacturer.Name == manufacturerName).ToList();
+
+							productManufacturerExists = productManufacturers.Count > 0;
 						}
-						var manufacturer = allManufacturers.Where(m => m.Name == offer["vendor"].InnerText).FirstOrDefault();
-						if (manufacturer != null)
+						if (isNew && !productManufacturerExists)
 						{
-							var productManufacturer = new ProductManufacturer
+							var manufacturer = allManufacturers.Where(m => m.Name == manufacturerName).FirstOrDefault();
+							if (manufacturer != null)
 							{
-								ProductId = product.Id,
-								ManufacturerId = manufacturer.Id,
-								IsFeaturedProduct = false,
-								DisplayOrder = 1
-							};
+								var productManufacturer = new ProductManufacturer
+								{
+									ProductId = product.Id,
+									ManufacturerId = manufacturer.Id,
+									IsFeaturedProduct = false,
+									DisplayOrder = 1
+								};
 
-							_manufacturerService.InsertProductManufacturer(productManufacturer);
+								_manufacturerService.InsertProductManufacturer(productManufacturer);
 
-							product.ProductManufacturers.Add(productManufacturer);
+								product.ProductManufacturers.Add(productManufacturer);
+							}
 						}
 
 						#endregion
@@ -240,7 +257,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 		{
 			var result = new ProductPicture();
 
-			if (pictureNode == null && !string.IsNullOrWhiteSpace(pictureNode.FirstChild.Value))
+			if (pictureNode == null || string.IsNullOrWhiteSpace(pictureNode.FirstChild.Value))
 			{
 				throw new Exception(string.Format(_localizationService.GetResource("Plugins.Import.ItLink.NoImage"), name));
 			}
