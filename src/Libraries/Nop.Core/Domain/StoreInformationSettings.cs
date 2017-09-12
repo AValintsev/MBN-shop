@@ -64,5 +64,10 @@ namespace Nop.Core.Domain
 		/// Gets or sets value of VK page URL
 		/// </summary>
 		public string VKLink { get; set; }
+
+		/// <summary>
+		/// Getst or sets value of Instagram URL
+		/// </summary>
+		public string InstagramLink { get; set; }
     }
 }

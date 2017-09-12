@@ -1726,6 +1726,7 @@ namespace Nop.Admin.Controllers
 			model.StoreInformationSettings.YoutubeLink = storeInformationSettings.YoutubeLink;
 			model.StoreInformationSettings.GooglePlusLink = storeInformationSettings.GooglePlusLink;
 			model.StoreInformationSettings.VKLink = storeInformationSettings.VKLink;
+			model.StoreInformationSettings.InstagramLink = storeInformationSettings.InstagramLink;
 			//contact us
 			model.StoreInformationSettings.SubjectFieldOnContactUsForm = commonSettings.SubjectFieldOnContactUsForm;
 			model.StoreInformationSettings.UseSystemEmailForContactUsForm = commonSettings.UseSystemEmailForContactUsForm;
@@ -1748,6 +1749,7 @@ namespace Nop.Admin.Controllers
 				model.StoreInformationSettings.YoutubeLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.YoutubeLink, storeScope);
 				model.StoreInformationSettings.GooglePlusLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.GooglePlusLink, storeScope);
 				model.StoreInformationSettings.VKLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.VKLink, storeScope);
+				model.StoreInformationSettings.InstagramLink_OverrideForStore = _settingService.SettingExists(storeInformationSettings, x => x.InstagramLink, storeScope);
 				model.StoreInformationSettings.SubjectFieldOnContactUsForm_OverrideForStore = _settingService.SettingExists(commonSettings, x => x.SubjectFieldOnContactUsForm, storeScope);
 				model.StoreInformationSettings.UseSystemEmailForContactUsForm_OverrideForStore = _settingService.SettingExists(commonSettings, x => x.UseSystemEmailForContactUsForm, storeScope);
 				model.StoreInformationSettings.SitemapEnabled_OverrideForStore = _settingService.SettingExists(commonSettings, x => x.SitemapEnabled, storeScope);
@@ -1873,6 +1875,7 @@ namespace Nop.Admin.Controllers
 			storeInformationSettings.YoutubeLink = model.StoreInformationSettings.YoutubeLink;
 			storeInformationSettings.GooglePlusLink = model.StoreInformationSettings.GooglePlusLink;
 			storeInformationSettings.VKLink = model.StoreInformationSettings.VKLink;
+			storeInformationSettings.InstagramLink = model.StoreInformationSettings.InstagramLink;
 			//contact us
 			commonSettings.SubjectFieldOnContactUsForm = model.StoreInformationSettings.SubjectFieldOnContactUsForm;
 			commonSettings.UseSystemEmailForContactUsForm = model.StoreInformationSettings.UseSystemEmailForContactUsForm;
@@ -1893,6 +1896,7 @@ namespace Nop.Admin.Controllers
 			_settingService.SaveSettingOverridablePerStore(storeInformationSettings, x => x.DisplayEuCookieLawWarning, model.StoreInformationSettings.DisplayEuCookieLawWarning_OverrideForStore, storeScope, false);
 			_settingService.SaveSettingOverridablePerStore(storeInformationSettings, x => x.FacebookLink, model.StoreInformationSettings.FacebookLink_OverrideForStore, storeScope, false);
 			_settingService.SaveSettingOverridablePerStore(storeInformationSettings, x => x.VKLink, model.StoreInformationSettings.VKLink_OverrideForStore, storeScope, false);
+			_settingService.SaveSettingOverridablePerStore(storeInformationSettings, x => x.InstagramLink, model.StoreInformationSettings.InstagramLink_OverrideForStore, storeScope, false);
 			_settingService.SaveSettingOverridablePerStore(storeInformationSettings, x => x.TwitterLink, model.StoreInformationSettings.TwitterLink_OverrideForStore, storeScope, false);
 			_settingService.SaveSettingOverridablePerStore(storeInformationSettings, x => x.YoutubeLink, model.StoreInformationSettings.YoutubeLink_OverrideForStore, storeScope, false);
 			_settingService.SaveSettingOverridablePerStore(storeInformationSettings, x => x.GooglePlusLink, model.StoreInformationSettings.GooglePlusLink_OverrideForStore, storeScope, false);

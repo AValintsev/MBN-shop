@@ -60,7 +60,6 @@ namespace Nop.Admin.Models.Settings
 			public int LogoPictureId { get; set; }
 			public bool LogoPictureId_OverrideForStore { get; set; }
 
-
 			[NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.DisplayEuCookieLawWarning")]
 			public bool DisplayEuCookieLawWarning { get; set; }
 			public bool DisplayEuCookieLawWarning_OverrideForStore { get; set; }
@@ -84,6 +83,10 @@ namespace Nop.Admin.Models.Settings
 			[NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.VKLink")]
 			public string VKLink { get; set; }
 			public bool VKLink_OverrideForStore { get; set; }
+
+			[NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.InstagramLink")]
+			public string InstagramLink { get; set; }
+			public bool InstagramLink_OverrideForStore { get; set; }
 
 			[NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.SubjectFieldOnContactUsForm")]
 			public bool SubjectFieldOnContactUsForm { get; set; }

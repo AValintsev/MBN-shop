@@ -88,7 +88,7 @@
 		<Value>Ошибка. Не корректный адрес оплаты</Value>
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Order.QuickOrder.Error.AddressCantBeLoaded">
-		<Value>Адрес не может быть загркужен</Value>C:\Users\Kovalenko\Source\Repos\MBN-shop\src\Plugins\Nop.Plugin.Misc.QuickOrder\App_Data\Translations\ru_order.quickOrder.xml
+		<Value>Адрес не может быть загркужен</Value>C:\Users\Kovalenko\Source\Repos\MBN-shop\src\Plugins\Nop.Plugin.Order.QuickOrder\App_Data\Translations\ru_order.quickOrder.xml
 	</LocaleResource>
 	<LocaleResource Name="Plugins.Order.QuickOrder.Error.OrderConfirmFaild">
 		<Value>Ошибка. Не удалось совершить подтверждение заказа</Value>

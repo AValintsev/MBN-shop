@@ -263,9 +263,9 @@ label, label + * {
 .topic-page p,
 .post-body p,
 .news-body p {
-    margin: 10px 0;
-    padding: 0 15px 5px;
-    font-size: 18px;
+	margin: 10px 0;
+	padding: 0 15px 5px;
+	font-size: 18px;
 }
 
 .category-description h3,
@@ -275,9 +275,9 @@ label, label + * {
 .topic-page h3,
 .post-body h3,
 .news-body h3 {
-    margin: 10px 0;
-    padding: 0 15px 5px;
-    font-size: 22px;
+	margin: 10px 0;
+	padding: 0 15px 5px;
+	font-size: 22px;
 }
 
 
@@ -1029,7 +1029,7 @@ td.product-picture img {
 		display: inline-block;
 		background: #fff;
 		padding: 0;
-        margin: 0;
+		margin: 0;
 		width: 100%;
 		float: right;
 	}
@@ -1058,11 +1058,13 @@ td.product-picture img {
 		color: #fff;
 		text-transform: uppercase;
 	}
-    .search-box input.search-box-text {
-        border: none;
-    }
-		.search-box .search-box-button:hover {
-		}
+
+	.search-box input.search-box-text {
+		border: none;
+	}
+
+	.search-box .search-box-button:hover {
+	}
 
 	.search-box .ui-autocomplete-loading {
 		background: #fff url('../images/ajax-loader-small.gif') right center no-repeat;
@@ -6035,11 +6037,11 @@ pre {
 	/*** CATEGORY ***/
 
 
-    .product-filter {
-        display: block;
-        vertical-align: top;
-        text-align: left;
-    }
+	.product-filter {
+		display: block;
+		vertical-align: top;
+		text-align: left;
+	}
 
 		.product-filter.price-range-filter {
 			width: 100%;
@@ -8178,6 +8180,7 @@ pre {
 
 .our-features {
 	margin-bottom: 70px;
+	padding: 0 14px;
 }
 
 
@@ -8291,11 +8294,6 @@ pre {
 	color: #444;
 }
 
-
-.nivo-slider {
-	padding-left: 0;
-}
-
 .header-logo h1 {
 	font-size: 21px;
 	font-weight: bold;
@@ -8330,57 +8328,59 @@ pre {
 }
 
 .slider.slider-horizontal {
-    width: 100% !important;
-    display: block;
+	width: 100% !important;
+	display: block;
 }
+
 .price-range-container {
-    width: 95%;
-    padding-left: 5%;
+	width: 95%;
+	padding-left: 5%;
 }
 
 
 .about-us {
-
 }
-.about-us h1 {
-    font-size: 44px;
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 0 15%;
-}
-    .about-us h2 {
-        font-size: 36px;
-        text-align: center;
-        margin-bottom: 20px;
-        padding: 0 15%;
-    }
 
-    .about-us h3 {
-        font-size: 26px;
-        text-align: center;
-        margin-bottom: 10px;
-        padding: 0 15%;
-    }
+	.about-us h1 {
+		font-size: 44px;
+		text-align: center;
+		margin-bottom: 20px;
+		padding: 0 15%;
+	}
 
-    .about-us h4 {
-        font-size: 23px;
-        text-align: left;
-        margin-bottom: 10px;
-        padding: 0;
-    }
+	.about-us h2 {
+		font-size: 36px;
+		text-align: center;
+		margin-bottom: 20px;
+		padding: 0 15%;
+	}
 
-    .about-us h5 {
-        font-size: 18px;
-        text-align: center;
-        margin-bottom: 20px;
-        padding: 0 15%;
-    }
+	.about-us h3 {
+		font-size: 26px;
+		text-align: center;
+		margin-bottom: 10px;
+		padding: 0 15%;
+	}
 
-    .about-us p {
-        font-size: 18px;
-        text-align: left;
-        margin-bottom: 10px;
-    }
+	.about-us h4 {
+		font-size: 23px;
+		text-align: left;
+		margin-bottom: 10px;
+		padding: 0;
+	}
+
+	.about-us h5 {
+		font-size: 18px;
+		text-align: center;
+		margin-bottom: 20px;
+		padding: 0 15%;
+	}
+
+	.about-us p {
+		font-size: 18px;
+		text-align: left;
+		margin-bottom: 10px;
+	}
 
 
 
@@ -8541,13 +8541,13 @@ pre {
 		padding: 30px 20px 10px;
 	}
 
-    .side-2 {
-        display: block;
-    }
+	.side-2 {
+		display: block;
+	}
 
-    .home-page-text .topic-block-title h2 {
-        font-size: 36px;
-    }
+	.home-page-text .topic-block-title h2 {
+		font-size: 36px;
+	}
 }
 /* xs */
 @media (min-width: 376px) and (max-width: 767px) {
@@ -8685,10 +8685,10 @@ pre {
 			padding: 10px;
 		}
 
-    .nivo-slider {
-        padding-left: 12px;
-        margin: 15px 0 5px;
-    }
+	.nivo-slider {
+		padding-left: 12px;
+		margin: 15px 0 5px;
+	}
 
 
 	.youtube-slider {
@@ -8716,13 +8716,13 @@ pre {
 		margin-left: 10px;
 	}
 
-    .side-2 {
-        display: block;
-    }
+	.side-2 {
+		display: block;
+	}
 
-    .home-page-text .topic-block-title h2 {
-        font-size: 36px;
-    }
+	.home-page-text .topic-block-title h2 {
+		font-size: 36px;
+	}
 }
 /* sm */
 @media (min-width: 768px) and (max-width: 991px) {
@@ -8885,10 +8885,10 @@ pre {
 			padding: 10px 0;
 		}
 
-    .nivo-slider {
-        padding-left: 12px;
-        margin: 15px 0 5px;
-    }
+	.nivo-slider {
+		padding-left: 12px;
+		margin: 15px 0 5px;
+	}
 
 
 	.youtube-slider {
@@ -8912,9 +8912,9 @@ pre {
 		margin-left: 10px;
 	}
 
-    .side-2 {
-        display: block;
-    }
+	.side-2 {
+		display: block;
+	}
 
 	.container {
 		width: 100%;
@@ -8966,3 +8966,11 @@ pre {
 		margin-right: 0;
 	}
 }
+
+.collapse {
+	display: none;
+}
+
+	.collapse.in {
+		display: block;
+	}

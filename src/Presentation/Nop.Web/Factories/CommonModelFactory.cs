@@ -356,6 +356,7 @@ namespace Nop.Web.Factories
 				YoutubeLink = _storeInformationSettings.YoutubeLink,
 				GooglePlusLink = _storeInformationSettings.GooglePlusLink,
 				VKLink = _storeInformationSettings.VKLink,
+				InstagramLink = _storeInformationSettings.InstagramLink,
 				WorkingLanguageId = _workContext.WorkingLanguage.Id,
 				NewsEnabled = _newsSettings.Enabled,
 			};

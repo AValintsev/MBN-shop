@@ -1,6 +1,10 @@
 ﻿@model Nop.Web.Models.Common.SocialModel
 
-<ul class="networks">
+<ul class="networks">	
+	@if (!string.IsNullOrEmpty(Model.InstagramLink))
+	{
+		<li><a href="@Model.InstagramLink" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+	}
 	@if (!string.IsNullOrEmpty(Model.FacebookLink))
 	{
 		<li><a href="@Model.FacebookLink" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
@@ -9,7 +13,6 @@
 	{
 		<li><a href="@Model.TwitterLink" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
 	}
-
 	@if (!string.IsNullOrEmpty(Model.YoutubeLink))
 	{
 		<li><a href="@Model.YoutubeLink" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
@@ -23,7 +26,3 @@
 		<li><a href="@Model.VKLink" target="_blank"><i class="fa fa-vk" aria-hidden="true"></i></a></li>
 	}
 </ul>
-
-@*
-	instead of <i>
-	@T("Footer.FollowUs.GooglePlus")*@
