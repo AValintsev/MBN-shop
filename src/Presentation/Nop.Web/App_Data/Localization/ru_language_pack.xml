@@ -2748,6 +2748,12 @@
 	<LocaleResource Name="Admin.Catalog.Products.Fields.ProductType.Hint">
 		<Value>Тип товара может быть: простой и сгруппированный. В большинстве случаев вам будет нужен простой тип товаров. Используете сгруппированный тип, когда ваш товар состоит из одного или нескольких уже существующих товаров, которые будут отображаться на одной странице.</Value>
 	</LocaleResource>
+	<LocaleResource Name="Admin.Catalog.Products.Fields.CreatedOn">
+		<Value>Дата создания</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Catalog.Products.Fields.CreatedOn.Hint">
+		<Value>Дата создания товара.</Value>
+	</LocaleResource>
 	<LocaleResource Name="Admin.Catalog.Products.Fields.Published">
 		<Value>Опубликовано</Value>
 	</LocaleResource>
@@ -2954,6 +2960,12 @@
 	</LocaleResource>
 	<LocaleResource Name="Admin.Catalog.Products.List.GoDirectlyToSku.Hint">
 		<Value>Введите артикул товара и нажмите 'Перейти'.</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Catalog.Products.List.OrderByCreatedOn">
+		<Value>Новые вверху</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Catalog.Products.List.OrderByCreatedOn.Hint">
+		<Value>Самые новые товары выводятся первыми</Value>
 	</LocaleResource>
 	<LocaleResource Name="Admin.Catalog.Products.List.ImportFromExcelTip">
 		<Value>Импортируемые товары идентифицируются по SKU. Если SKU товара уже присутствует в базе, то данный товар будет обновлен данные из импортируемого товара.</Value>
@@ -3569,6 +3581,13 @@
 	</LocaleResource>
 	<LocaleResource Name="Admin.Common.ExportToExcel.Selected">
 		<Value>Экспорт в Excel (выбранные)</Value>
+	</LocaleResource>
+
+	<LocaleResource Name="Admin.Common.ExportToXml_PromUA.All">
+		<Value>Prom.UA - Экспорт в XML (все найденные)</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Common.ExportToXml_PromUA.Selected">
+		<Value>Prom.UA - Экспорт в XML (выбранные)</Value>
 	</LocaleResource>
 	<LocaleResource Name="Admin.Common.ExportToXml">
 		<Value>Экспорт в XML</Value>

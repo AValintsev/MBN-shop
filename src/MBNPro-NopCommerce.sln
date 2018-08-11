@@ -530,6 +530,9 @@ Global
 		{4A6D791A-7338-4B5E-B111-E2FB3DC00D1F} = {7881B112-7843-4542-B1F7-F99553FB9BB7}
 		{E9A61365-19D6-4C3E-8C63-F793E32ADBB5} = {7881B112-7843-4542-B1F7-F99553FB9BB7}
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6873D111-DCFA-4D38-8B2E-C610DC729112}
+	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\NopCommerce.ndproj"
 	EndGlobalSection

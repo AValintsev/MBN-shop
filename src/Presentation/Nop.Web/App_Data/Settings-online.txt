@@ -1,0 +1,2 @@
+DataProvider: sqlserver
+DataConnectionString: Data Source=wsp.liteoffice.net;Initial Catalog=MBNPro;Integrated Security=False;Persist Security Info=False;User ID=mbnpro_db;Password=ProjectSpartan63

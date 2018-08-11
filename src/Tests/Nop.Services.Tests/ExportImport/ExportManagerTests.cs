@@ -37,7 +37,8 @@ namespace Nop.Services.Tests.ExportImport
         private INewsLetterSubscriptionService _newsLetterSubscriptionService;
         private IExportManager _exportManager;
         private IStoreService _storeService;
-        private ProductEditorSettings _productEditorSettings;
+		private IStoreContext _storeContext;
+		private ProductEditorSettings _productEditorSettings;
         private IWorkContext _workContext;
         private IVendorService _vendorService;
         private IProductTemplateService _productTemplateService;
@@ -53,6 +54,7 @@ namespace Nop.Services.Tests.ExportImport
         public new void SetUp()
         {
             _storeService = MockRepository.GenerateMock<IStoreService>();
+			_storeContext = MockRepository.GenerateMock<IStoreContext>();
             _categoryService = MockRepository.GenerateMock<ICategoryService>();
             _manufacturerService = MockRepository.GenerateMock<IManufacturerService>();
             _customerService = MockRepository.GenerateMock<ICustomerService>();
@@ -75,7 +77,7 @@ namespace Nop.Services.Tests.ExportImport
             _exportManager = new ExportManager(_categoryService,
                 _manufacturerService, _customerService, _productAttributeService,
                 _pictureService, _newsLetterSubscriptionService,
-                _storeService, _workContext, _productEditorSettings,
+                _storeService, _storeContext, _workContext, _productEditorSettings,
                 _vendorService, _productTemplateService, _dateRangeService,
                 _taxCategoryService, _measureService, _catalogSettings,
                 _genericAttributeService, _customerAttributeFormatter, _orderSettings);

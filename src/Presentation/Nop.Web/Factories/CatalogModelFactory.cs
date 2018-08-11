@@ -406,6 +406,9 @@ namespace Nop.Web.Factories
 			{
 				Id = category.Id,
 				Name = category.GetLocalized(x => x.Name),
+				CustomProperties = new Dictionary<string, object>(){
+					{ "ShowFiltersForCurrentCategory", category.DisplayOrder >= 0 }
+				},
 				Description = category.GetLocalized(x => x.Description),
 				MetaKeywords = category.GetLocalized(x => x.MetaKeywords),
 				MetaDescription = category.GetLocalized(x => x.MetaDescription),
@@ -466,16 +469,16 @@ namespace Nop.Web.Factories
 					_storeContext.CurrentStore.Id,
 					_workContext.WorkingLanguage.Id);
 				model.CategoryBreadcrumb = _cacheManager.Get(breadcrumbCacheKey, () =>
-					category
-					.GetCategoryBreadCrumb(_categoryService, _aclService, _storeMappingService)
-					.Select(catBr => new CategoryModel
-					{
-						Id = catBr.Id,
-						Name = catBr.GetLocalized(x => x.Name),
-						SeName = catBr.GetSeName()
-					})
-					.ToList()
-				);
+									category
+									.GetCategoryBreadCrumb(_categoryService, _aclService, _storeMappingService)
+									.Select(catBr => new CategoryModel
+									{
+										Id = catBr.Id,
+										Name = catBr.GetLocalized(x => x.Name),
+										SeName = catBr.GetSeName()
+									})
+									.ToList()
+								);
 			}
 			#endregion
 
@@ -490,20 +493,20 @@ namespace Nop.Web.Factories
 					_workContext.WorkingLanguage.Id,
 					_webHelper.IsCurrentConnectionSecured());
 			model.SubCategories = _cacheManager.Get(subCategoriesCacheKey, () =>
-				_categoryService.GetAllCategoriesByParentCategoryId(category.Id)
-				.Select(x =>
-				{
-					var subCatModel = new CategoryModel.SubCategoryModel
-					{
-						Id = x.Id,
-						Name = x.GetLocalized(y => y.Name),
-						SeName = x.GetSeName(),
-						Description = x.GetLocalized(y => y.Description)
-					};
+							_categoryService.GetAllCategoriesByParentCategoryId(category.Id)
+							.Select(x =>
+							{
+								var subCatModel = new CategoryModel.SubCategoryModel
+								{
+									Id = x.Id,
+									Name = x.GetLocalized(y => y.Name),
+									SeName = x.GetSeName(),
+									Description = x.GetLocalized(y => y.Description)
+								};
 
-					//prepare picture model
-					var categoryPictureCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_PICTURE_MODEL_KEY, x.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
-					subCatModel.PictureModel = _cacheManager.Get(categoryPictureCacheKey, () =>
+								//prepare picture model
+								var categoryPictureCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_PICTURE_MODEL_KEY, x.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+								subCatModel.PictureModel = _cacheManager.Get(categoryPictureCacheKey, () =>
 					{
 						var picture = _pictureService.GetPictureById(x.PictureId);
 						var pictureModel = new PictureModel
@@ -516,10 +519,10 @@ namespace Nop.Web.Factories
 						return pictureModel;
 					});
 
-					return subCatModel;
-				})
-				.ToList()
-			);
+								return subCatModel;
+							})
+							.ToList()
+						);
 			#endregion
 
 			#region featured products

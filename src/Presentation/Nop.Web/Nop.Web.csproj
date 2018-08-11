@@ -28,6 +28,7 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>f94c814a</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -507,8 +508,12 @@
     </Content>
     <Content Include="App_Data\Install\SqlServer.Indexes.sql" />
     <Content Include="App_Data\Localization\language_pack-ru-official.xml" />
-    <Content Include="App_Data\Localization\ru_language_pack.xml" />
-    <Content Include="App_Data\Localization\ua_language_pack.xml" />
+    <Content Include="App_Data\Localization\ru_language_pack.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Localization\ua_language_pack.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Content\BBEditor\ed.js" />
     <Content Include="Content\BBEditor\images\bold.gif" />
     <Content Include="Content\BBEditor\images\code.gif" />

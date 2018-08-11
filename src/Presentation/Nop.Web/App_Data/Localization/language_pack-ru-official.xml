@@ -3957,6 +3957,12 @@
   <LocaleResource Name="Admin.Common.ExportToExcel.Selected">
     <Value>Экспорт в Excel (выбранные)</Value>
   </LocaleResource>
+	<LocaleResource Name="Admin.Common.ExportToXml_PromUA.All">
+		<Value>Prom.UA - Экспорт в XML (все найденные)</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Common.ExportToXml_PromUA.Selected">
+		<Value>Prom.UA - Экспорт в XML (выбранные)</Value>
+	</LocaleResource>
   <LocaleResource Name="Admin.Common.ExportToXml">
     <Value>Экспорт в XML</Value>
   </LocaleResource>

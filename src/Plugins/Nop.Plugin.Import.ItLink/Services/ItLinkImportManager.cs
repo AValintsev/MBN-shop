@@ -163,11 +163,14 @@ namespace Nop.Plugin.Import.ItLink.Services
 						product.StockQuantity = 2;
 						product.OrderMaximumQuantity = 11;
 						product.DisplayStockQuantity = true;
-						product.OldPrice = isNew ? product.OldPrice : product.Price;
 						product.MarkAsNew = isNew;
+						product.AdminComment = offer.Attributes["id"].Value;
 
+						product.OldPrice = isNew ? product.OldPrice : product.Price;
+						var priceUsdStr = offer.SelectSingleNode("param[@name='priceUSD']").InnerText;
+						product.Price = decimal.Parse(priceUsdStr.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture);
 						//We use store's internal rate
-						product.Price = decimal.Parse(offer["oldprice"].InnerText) / rateUsdToUah;
+						//product.Price = decimal.Parse(offer["oldprice"].InnerText) / rateUsdToUah;
 
 						try
 						{
@@ -237,13 +240,16 @@ namespace Nop.Plugin.Import.ItLink.Services
 
 						#endregion
 
-						_productService.UpdateProduct(product);
+						_productService.UpdateProduct(product);						
 					}
 					catch (Exception e)
 					{
-						result.Add(string.Format("SKU: {0}. Item: {1}. Message: {2}", product.Sku, product.Name, e.Message));
+						result.Add(string.Format("SKU: {0}.<br />Item: {1}.<br />Message: {2}", product.Sku, product.Name, e.Message));
 					}
 				}
+
+				//Hide all products which were not updated. It means that products are not available any more.
+				HideNotUpdatedProducts(allProductsBySku, vendorId);
 			}
 			catch (Exception e)
 			{
@@ -251,6 +257,19 @@ namespace Nop.Plugin.Import.ItLink.Services
 			}
 
 			return result;
+		}
+
+		private void HideNotUpdatedProducts(IList<Product> newellyImportedProducts, int vendorId)
+		{
+			var allProductsByVendor = _productService.SearchProducts(vendorId: vendorId);
+			var productsWereNotUpdated = allProductsByVendor.Except(newellyImportedProducts).ToList();
+
+			if (productsWereNotUpdated.Count > 0)
+			{
+				productsWereNotUpdated.ForEach(p => p.VisibleIndividually = false);
+
+				_productService.UpdateProducts(productsWereNotUpdated);
+			}
 		}
 
 		private ProductPicture DownloadNewPicture(XmlNode pictureNode, string name)

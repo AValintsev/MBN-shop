@@ -3344,6 +3344,12 @@
 	<LocaleResource Name="admin.common.exporttoxml">
 		<Value>Експорт в XML</Value>
 	</LocaleResource>
+	<LocaleResource Name="Admin.Common.ExportToXml_PromUA.All">
+		<Value>Prom.UA - Експорт у XML (усі знайденні)</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Common.ExportToXml_PromUA.Selected">
+		<Value>Prom.UA - Експорт у XML (обранні)</Value>
+	</LocaleResource>
 	<LocaleResource Name="admin.common.exporttoxml.all">
 		<Value>Експорт в XML (всі знайдені)</Value>
 	</LocaleResource>

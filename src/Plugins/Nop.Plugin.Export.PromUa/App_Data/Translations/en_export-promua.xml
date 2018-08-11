@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English" SupportedVersion="3.90">
+	<LocaleResource Name="Admin.Common.ExportToXml_PromUA.All">
+		<Value>Prom.UA - Export to XML (all found)</Value>
+	</LocaleResource>
+	<LocaleResource Name="Admin.Common.ExportToXml_PromUA.Selected">
+		<Value>Prom.UA - Export to XML (selected)</Value>
+	</LocaleResource>	
+</Language>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Directory;
@@ -44,11 +45,13 @@ namespace Nop.Services.ExportImport
         /// <returns>Result in XML format</returns>
         string ExportProductsToXml(IList<Product> products);
 
-        /// <summary>
-        /// Export products to XLSX
-        /// </summary>
-        /// <param name="products">Products</param>
-        byte[] ExportProductsToXlsx(IEnumerable<Product> products);
+		string ExportProductsToXmlPromUa(IList<Product> products, UrlHelper urlHelper);
+
+		/// <summary>
+		/// Export products to XLSX
+		/// </summary>
+		/// <param name="products">Products</param>
+		byte[] ExportProductsToXlsx(IEnumerable<Product> products);
 
         /// <summary>
         /// Export order list to xml

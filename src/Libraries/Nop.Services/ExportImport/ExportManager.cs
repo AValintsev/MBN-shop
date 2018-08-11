@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Mvc;
 using System.Xml;
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
@@ -45,6 +47,7 @@ namespace Nop.Services.ExportImport
 		private readonly IPictureService _pictureService;
 		private readonly INewsLetterSubscriptionService _newsLetterSubscriptionService;
 		private readonly IStoreService _storeService;
+		private readonly IStoreContext _storeContext;
 		private readonly IWorkContext _workContext;
 		private readonly ProductEditorSettings _productEditorSettings;
 		private readonly IVendorService _vendorService;
@@ -68,6 +71,7 @@ namespace Nop.Services.ExportImport
 			IPictureService pictureService,
 			INewsLetterSubscriptionService newsLetterSubscriptionService,
 			IStoreService storeService,
+			IStoreContext storeContext,
 			IWorkContext workContext,
 			ProductEditorSettings productEditorSettings,
 			IVendorService vendorService,
@@ -87,6 +91,7 @@ namespace Nop.Services.ExportImport
 			this._pictureService = pictureService;
 			this._newsLetterSubscriptionService = newsLetterSubscriptionService;
 			this._storeService = storeService;
+			this._storeContext = storeContext;
 			this._workContext = workContext;
 			this._productEditorSettings = productEditorSettings;
 			this._vendorService = vendorService;
@@ -962,6 +967,108 @@ namespace Nop.Services.ExportImport
 			xmlWriter.WriteEndElement();
 			xmlWriter.WriteEndDocument();
 			xmlWriter.Close();
+			return stringWriter.ToString();
+		}
+
+		public virtual string ExportProductsToXmlPromUa(IList<Product> products, UrlHelper urlHelper)
+		{
+			var sb = new StringBuilder();
+			var stringWriter = new StringWriter(sb);
+			var xmlWriter = new XmlTextWriter(stringWriter);
+			xmlWriter.WriteStartDocument();
+
+			xmlWriter.WriteStartElement("price");
+			xmlWriter.WriteAttributeString("date", DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+			xmlWriter.WriteString("name", _storeContext.CurrentStore.Name);
+
+			xmlWriter.WriteStartElement("currency");
+			xmlWriter.WriteAttributeString("code", _workContext.WorkingCurrency.CurrencyCode);
+			xmlWriter.WriteValue(_workContext.WorkingCurrency.Rate);
+			xmlWriter.WriteEndElement();
+
+			xmlWriter.WriteStartElement("catalog");
+
+			#region categories
+
+			var categories = products
+								.Select(p => p.ProductCategories.Select(pc => pc.Category).FirstOrDefault())
+								.ToList()
+								.Distinct();
+
+			foreach (var category in categories)
+			{
+				if (category == null) continue;
+
+				xmlWriter.WriteStartElement("category");
+
+				xmlWriter.WriteAttributeString("id", category.Id.ToString());
+
+				xmlWriter.WriteAttributeString("parentID", category.ParentCategoryId.ToString());
+
+				xmlWriter.WriteValue(category.Name);
+
+				xmlWriter.WriteEndElement();
+			}
+
+			#endregion
+
+			xmlWriter.WriteEndElement();
+
+			xmlWriter.WriteStartElement("items");
+
+			#region product
+
+			foreach (var product in products)
+			{
+				xmlWriter.WriteStartElement("item");
+				xmlWriter.WriteAttributeString("id", product.Id.ToString());
+
+				xmlWriter.WriteString("name", product.Name);
+
+				var pc = product.ProductCategories.FirstOrDefault();
+
+				if (pc != null)
+				{
+					xmlWriter.WriteString("categoryId", pc.Id);
+					xmlWriter.WriteString("price", product.Price);
+				}
+
+				var url = HttpUtility.UrlDecode(
+					string.Format("{0}{1}", urlHelper.RequestContext.HttpContext.Request.Url.Host,
+					urlHelper.RouteUrl("Product", new { SeName = product.GetSeName() }))
+				);
+				xmlWriter.WriteString("url", url);
+
+				if (product.ProductPictures != null && product.ProductPictures.Count > 0)
+				{
+					var pictId = product.ProductPictures.First().PictureId;
+					xmlWriter.WriteString("image", _pictureService.GetPictureUrl(pictId));
+				}
+				
+				xmlWriter.WriteStartElement("description");
+				xmlWriter.WriteCData(product.FullDescription);
+				xmlWriter.WriteEndElement();
+
+				xmlWriter.WriteString("warranty", 12);
+
+				var productManufacturers = _manufacturerService.GetProductManufacturersByProductId(product.Id);
+				if (productManufacturers != null && productManufacturers.Count > 0)
+				{
+					xmlWriter.WriteString("vendor", productManufacturers.First().Manufacturer.Name);
+					xmlWriter.WriteString("vendorCode", product.Sku);
+				}
+
+				xmlWriter.WriteEndElement();
+			}
+
+			#endregion
+
+			xmlWriter.WriteEndElement();
+
+			xmlWriter.WriteEndElement();
+			xmlWriter.WriteEndDocument();
+			xmlWriter.Close();
+
 			return stringWriter.ToString();
 		}
 
