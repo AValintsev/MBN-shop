@@ -1,0 +1,9 @@
+﻿Group: Export
+FriendlyName: Mapping categories
+SystemName: Mapping.Categories
+Version: 1.00
+SupportedVersions: 3.90
+Author: DigitalLeader team
+DisplayOrder: 1
+FileName: Nop.Plugin.Mapping.Categories.dll
+Description: This plugin allows to map categories for export to anoter sites.

@@ -491,7 +491,7 @@
 }
 
 @*export selected (XML). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
-@using (Html.BeginForm("ExportPromUaXmlSelected", "Product", FormMethod.Post, new { id = "promua-export-xml-selected-form" }))
+@using (Html.BeginRouteForm("Plugins.MappingCategories.ExportPromUaXmlSelected", FormMethod.Post, new { id = "promua-export-xml-selected-form" }))
 {
 	@Html.AntiForgeryToken()
 	<input type="hidden" id="selectedIds" name="selectedIds" value="" />
@@ -511,6 +511,14 @@
 			e.preventDefault();
 			var ids = selectedIds.join(",");
 			$('#promua-export-xml-selected-form #selectedIds').val(ids);
+			$('#promua-export-xml-selected-form').submit();
+			return false;
+		});
+
+		$('#exportxml-promua-all').click(function (e) {
+			e.preventDefault();
+			
+			$('#promua-export-xml-selected-form #selectedIds').val(-10);
 			$('#promua-export-xml-selected-form').submit();
 			return false;
 		});

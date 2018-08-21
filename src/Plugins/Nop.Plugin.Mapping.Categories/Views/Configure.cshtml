@@ -1,0 +1,107 @@
+﻿@model Nop.Plugin.Mapping.Categories.Models.ConfigurationModel
+@using Nop.Web.Framework
+
+@{
+	Layout = "";
+}
+
+
+
+<div class="panel-group">
+	<div class="panel panel-default">
+		<div class="panel-body">
+
+			@foreach (var c in Model.MappedCategories)
+			{
+				using (Html.BeginForm())
+				{
+					@Html.ValidationSummary(true);
+
+					@Html.AntiForgeryToken();
+					<div class="form-group col-md-12">
+						<div class="row">
+							<div class="col-md-9">
+								<ul class="list-group">
+									<li class="list-group-item">
+										<h3>@c.OriginalCategory.Name <span class="label label-default">@c.MappedCategoriesRow.Count</span></h3>
+									</li>
+
+									@foreach (var mcr in c.MappedCategoriesRow)
+									{
+									<li class="list-group-item">
+										@mcr.GoupKey | @mcr.ExternalCategoryId
+										<input type="hidden" id="externalId" name="externalId" value="@mcr.ExternalCategoryId" />
+										<input type="hidden" id="externalId" name="groupName" value="@mcr.GoupKey" />
+
+										<button class="btn btn-danger btn-xs" name="remove">Remove</button>
+									</li>
+									}
+
+									<li class="list-group-item">
+										<div class="form-inline">
+											<input type="hidden" name="originalCategoryId" id="originalCategoryId" value="@c.OriginalCategory.Id" />
+											<div class="form-group">
+												<input type="text" class="form-control" id="externalName" name="externalName" placeholder="External group name">
+
+												<input type="text" class="form-control" id="externalId" name="externalId" placeholder="External ID">
+												<button class="btn btn-primary" type="submit" name="save" onclick="addNew('@c.OriginalCategory.Id')">Add new</button>
+											</div>
+
+										</div>
+
+									</li>
+								</ul>
+
+							</div>
+						</div>
+					</div>
+				}
+			}
+		</div>
+		<div class="form-group">
+			<div class="col-md-3">
+				&nbsp;
+			</div>
+			<div class="col-md-9">
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+	function remove(gropKey, externalId) {
+		console.log(gropKey, externalId);
+
+		$('#exportxml-selected').click(function (e) {
+			e.preventDefault();
+			var ids = selectedIds.join(",");
+			$('#export-xml-selected-form #selectedIds').val(ids);
+			$('#export-xml-selected-form').submit();
+			return false;
+		});
+	}
+
+	$(document).ready(function () {
+		$('#categoriesMappingModal').on('show.bs.modal', function (event) {
+			$.get('@Url.Action("CategoriesMapping", "ImportItLink")', function (data) {
+				$('#categoriesMappingModal .modal-content').replaceWith(data);
+			});
+		});
+		$('#categoriesMappingModal').on('hide.bs.modal', function (event) {
+			$('#categoriesMappingModal .modal-content').hide('slow', function () { $(this).html(''); });
+		});
+
+		$('#importResult').on('show.bs.modal', function (event) {
+			$.get('@Url.Action("ImportFromItLink", "ImportItLink")', function (data) {
+				$('#importResult .modal-content').replaceWith(data);
+			});
+		});
+		$('#importResult').on('hide.bs.modal', function (event) {
+			$('#importResult .modal-content').hide("slow", function () { $(this).html(''); });
+		});
+	});
+</script>
+
+
