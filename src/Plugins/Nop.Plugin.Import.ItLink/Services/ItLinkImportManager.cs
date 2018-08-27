@@ -240,7 +240,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 
 						#endregion
 
-						_productService.UpdateProduct(product);						
+						_productService.UpdateProduct(product);
 					}
 					catch (Exception e)
 					{
@@ -266,7 +266,12 @@ namespace Nop.Plugin.Import.ItLink.Services
 
 			if (productsWereNotUpdated.Count > 0)
 			{
-				productsWereNotUpdated.ForEach(p => p.VisibleIndividually = false);
+				productsWereNotUpdated.ForEach(p =>
+				{
+					p.VisibleIndividually = false;
+					p.Deleted = true;
+					p.Published = false;
+				});
 
 				_productService.UpdateProducts(productsWereNotUpdated);
 			}
