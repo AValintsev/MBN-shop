@@ -269,7 +269,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 				productsWereNotUpdated.ForEach(p =>
 				{
 					p.VisibleIndividually = false;
-					p.Deleted = true;
+					//p.Deleted = true;
 					p.Published = false;
 				});
 
