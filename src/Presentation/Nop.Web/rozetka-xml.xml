@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE yml_catalog SYSTEM "shops.dtd">
+<yml_catalog date="2011-07-20 14:58">
+  <shop>
+    <name>неод</name>
+    <company>ФОП Нещадим</company>
+    <url>http://http://www.mbnpro.com.ua/</url>
+    <currencies>
+      <currency id="UAH" rate="1"/>
+    </currencies>
+    <categories>
+      <category id="0">Товары для дому</category>
+      <category id="0" parentId="0">Сучасний дім</category>
+      <category id="0" parentId="0">Управління електроприладами</category>
+      <category id="0" parentId="0">Розумні розетки</category>
+               </categories>
+    <offers>
+      <offer id="19305" available="true">
+        <url></url>
+        <price>390</price>
+        <currencyId>UAH</currencyId>
+        <categoryId>391</categoryId>
+        <picture>http://www.mbnpro.com.ua/content/images/thumbs/0002881_wi-fi-rozetka-sonoff-s20.png</picture>
+        <picture>http://www.mbnpro.com.ua/content/images/thumbs/0002883_wi-fi-rozetka-sonoff-s20.png</picture>
+        <picture>http://www.mbnpro.com.ua/content/images/thumbs/0002882_wi-fi-rozetka-sonoff-s20.jpeg</picture>
+        <picture>http://www.mbnpro.com.ua/content/images/thumbs/0002885_wi-fi-rozetka-sonoff-s20.png</picture>
+        <vendor>Sonoff</vendor>
+        <stock_quantity>100</stock_quantity>
+        <name>Умная wi-fi розетка Sonoff s20</name>
+        <description><![CDATA[<p>Умная wi-fi розетка Sonoff s20-это популярная и надежная модель для Android и iOS под управлением eWeLink<br>Дает возможность удаленно, через смартфон, управлять приборами и техникой<br> Максимальная нагрузка 2200 Ватт<br><p>Виробник: Україна.</p>]]></description>
+        <param name="Керування">Android,iOS</param>
+        <param name="Бездротовий стандарт">Wi-Fi</param>
+        <param name="Кількість розеток">1</param>
+        <param name="Колір">Білий</param>
+        <param name="Живлення">Від мережі</param>
+        <param name="Напруга">220 В</param>
+        <param name="Розміри">95 х 53 х 38 мм</param>
+        <param name="Додаткові характеристики"><![CDATA[Протокол: IEEE 802.11 b/g/n<br/> Радіочастота передавання: 2.4 ГГц<br/> EU разъем<br/> Материал корпуса-огнезащитный материал PC<br/> Рабочая температура: -30-45°C <br/> Максимальный выдаваемый вольтаж: 250В/10A<br/> CE/RoHS сертификат<br/> Есть возможность делиться управлением устройства<br/>]]></param>
+            </offer>
+    </offers>
+  </shop>
+</yml_catalog>

@@ -268,9 +268,10 @@ namespace Nop.Plugin.Import.ItLink.Services
 			{
 				productsWereNotUpdated.ForEach(p =>
 				{
-					p.VisibleIndividually = false;
+					p.StockQuantity = 0;
+					//p.VisibleIndividually = false;
 					//p.Deleted = true;
-					p.Published = false;
+					//p.Published = false;
 				});
 
 				_productService.UpdateProducts(productsWereNotUpdated);

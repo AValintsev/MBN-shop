@@ -236,6 +236,8 @@ namespace Nop.Plugin.Mapping.Categories.Controllers
 				products = products.Where(p => p.VendorId == _workContext.CurrentVendor.Id).ToList();
 			}
 
+			products = products.Where(p => p.StockQuantity > 0).ToList();
+
 			try
 			{
 				var xml = ExportProductsToXmlPromUa(products, Url);
