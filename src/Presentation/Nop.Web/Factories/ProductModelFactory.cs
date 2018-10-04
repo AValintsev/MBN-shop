@@ -1087,6 +1087,7 @@ namespace Nop.Web.Factories
 					Name = product.GetLocalized(x => x.Name),
 					ShortDescription = product.GetLocalized(x => x.ShortDescription),
 					FullDescription = product.GetLocalized(x => x.FullDescription),
+					StockQuantity = product.StockQuantity,
 					SeName = product.GetSeName(),
 					Sku = product.Sku,
 					ProductType = product.ProductType,

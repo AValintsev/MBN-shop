@@ -1005,6 +1005,7 @@
     <Content Include="Plugins\Export.PromUa\Nop.Plugin.Export.PromUa.dll.config" />
     <Content Include="Plugins\Export.PromUa\web.config" />
     <None Include="Properties\PublishProfiles\mbnpro.com.ua - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\mbnpro.com.ua - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />

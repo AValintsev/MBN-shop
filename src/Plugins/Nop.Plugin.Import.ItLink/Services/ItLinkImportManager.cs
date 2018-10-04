@@ -160,7 +160,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 						product.IsGiftCard = false;
 						product.RequireOtherProducts = false;
 						product.IsShipEnabled = true;
-						product.StockQuantity = 2;
+						product.StockQuantity = 50;
 						product.OrderMaximumQuantity = 11;
 						product.DisplayStockQuantity = true;
 						product.MarkAsNew = isNew;

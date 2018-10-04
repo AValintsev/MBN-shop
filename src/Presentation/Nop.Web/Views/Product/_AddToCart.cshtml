@@ -13,6 +13,7 @@
 }
 else if (!Model.DisableBuyButton || Model.CustomerEntersPrice)
 {
+
 	<div class="add-to-cart">
 		@if (Model.CustomerEntersPrice)
 		{
@@ -41,6 +42,7 @@ else if (!Model.DisableBuyButton || Model.CustomerEntersPrice)
 				}
 				else
 				{
+					Model.EnteredQuantity = 1;
 					@Html.TextBoxFor(model => model.EnteredQuantity, new { @class = "qty-input" })
 					//when a customer clicks 'Enter' button we submit the "add to cart" button (if visible)
 					<script type="text/javascript">
