@@ -10,19 +10,19 @@
 
 @helper RenderSliderLine(string pictureUrl, string text, string link, string dataTransition = "")
 {
-if (!string.IsNullOrEmpty(pictureUrl))
-{
-	if (!string.IsNullOrEmpty(link))
+	if (!string.IsNullOrEmpty(pictureUrl))
 	{
+		if (!string.IsNullOrEmpty(link))
+		{
 			<a href="@link">
 				<img src="@pictureUrl" data-thumb="@pictureUrl" data-transition="@dataTransition" alt="" title="@text" />
 			</a>
-	}
-	else
-	{
+		}
+		else
+		{
 			<img src="@pictureUrl" data-thumb="@pictureUrl" data-transition="@dataTransition" alt="" title="@text" />
+		}
 	}
-}
 }
 <div class="slider-wrapper theme-custom">
 	<div id="nivo-slider" class="nivoSlider">
@@ -34,6 +34,10 @@ if (!string.IsNullOrEmpty(pictureUrl))
 </div>
 <script type="text/javascript">
 	$(window).load(function () {
-		$('#nivo-slider').nivoSlider();
+		$('#nivo-slider').nivoSlider({
+			effect: 'slideInRight',
+			slices: 1,
+			animSpeed: 200
+		});
 	});
 </script>

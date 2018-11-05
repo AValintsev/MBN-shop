@@ -2,3 +2,29 @@
 	font-size: 20px;
 	background-color: #FFF;
 }
+
+.quick-order input[type="radio"] {
+	margin-right: 10px;
+}
+
+.quick-order .radio-label {
+	width: 160px !important;
+	margin-bottom: 0px;
+}
+
+.quick-order .shipping-method {
+	float: left;
+}
+
+	.quick-order .shipping-method .shipping-method-input {
+		width: 100% !important;
+		clear: both;
+	}
+
+.shipping-method-address {
+	display: none;
+}
+
+input[name="SelectedShippingMethod"]:checked + label + .shipping-method-address {
+	display: block;
+}

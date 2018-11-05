@@ -16,8 +16,8 @@
 				</div>
 			</div>
 			@*<div class="col-md-6 pull-left youtube-slider">
-					@Html.Partial("_YouTubeSlider")
-				</div>*@
+				@Html.Partial("_YouTubeSlider")
+			</div>*@
 		</div>
 
 		<div class="row categories-and-home-page-text-wrapper">
@@ -37,12 +37,15 @@
 
 		@Html.Widget("home_page_before_products")
 		@Html.Action("HomepageProducts", "Product")
+
 		@Html.Widget("home_page_before_best_sellers")
 		@Html.Action("HomepageBestSellers", "Product")
 
-		<div class="our-features">
+		@Html.Action("HomePageManufacturers", "Home")
+
+		@*<div class="our-features">
 			@Html.Action("TopicBlock", "Topic", new { systemName = "OurFeatures" })
-		</div>
+		</div>*@
 
 
 		@Html.Widget("home_page_before_news")
@@ -50,6 +53,8 @@
 		@Html.Widget("home_page_before_poll")
 		@Html.Action("HomePagePolls", "Poll")
 		@Html.Widget("home_page_bottom")
+
+		@Html.Action("HomePageBlogs", "Blog")
 	</div>
 </div>
 
@@ -57,15 +62,27 @@
 
 	$(window).load(function () {
 		//Carousel
-		$(".owl-carousel").owlCarousel({
-			items: 5,
-			itemsDesktop: [1000, 5],
-			itemsDesktopSmall: [900, 3],
-			itemsTablet: [600, 2],
-			itemsMobile: [479, 1],
+		$(".home-page-product-grid > .owl-carousel").owlCarousel({
+			items: 6,
+			itemsDesktop: [1000, 6],
+			itemsDesktopSmall: [900, 4],
+			itemsTablet: [600, 3],
+			itemsMobile: [479, 2],
 			lazyLoad: true,
 			navigation: true,
 			pagination: false
 		});
+
+		$(".home-page-manufacturers-grid > .owl-carousel")
+			.owlCarousel({
+				items: 10,
+				itemsDesktop: [1000, 10],
+				itemsDesktopSmall: [900, 8],
+				itemsTablet: [600, 6],
+				itemsMobile: [479, 3],
+				lazyLoad: true,
+				navigation: true,
+				pagination: false
+			});
 	});
 </script>

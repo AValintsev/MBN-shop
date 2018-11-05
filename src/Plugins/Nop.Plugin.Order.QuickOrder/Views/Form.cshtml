@@ -3,6 +3,12 @@
 @using Nop.Web.Framework
 @using Nop.Web.Framework.UI
 
+@{
+	Html.AddCssFileParts("~/Plugins/Order.QuickOrder/Styles/quick-order.css");
+}
+
+
+
 <div class="form-horizontal">
 	@using (@Html.BeginForm())
 	{
@@ -35,10 +41,29 @@
 						@Html.ValidationMessageFor(model => model.CustomerPhone)
 					</div>
 				}
+
+				<div class="inputs">
+					<label>Способ доставки:</label>
+					@foreach (var shipMethod in Model.ShippingMethodModel)
+					{
+						@Html.RadioButtonFor(model => model.SelectedShippingMethod, shipMethod.Name, new { @class = "radio", id = shipMethod.Name })
+						<label class="radio-label" for="@shipMethod.Name">
+							@shipMethod.Name
+						</label>
+						if (shipMethod.Name == "Новая Почта")
+						{
+							<div class="shipping-method-address">
+								@Html.TextBoxFor(model => model.City, new { @class = "shipping-method-input pull-right", @style = "font-size:initial" })
+								@Html.TextBoxFor(model => model.PostNumber, new { @class = "shipping-method-input pull-right", @style = "font-size:initial" })
+							</div>
+						}
+					}
+				</div>
 			</div>
 		</div>
+
 		<div class="inputs">
 			<button type="submit" class="button-1 checkout-button" style="margin-left:30px">@T("Plugins.Order.QuickOrder.Button")</button>
 		</div>
-			}
+	}
 </div>

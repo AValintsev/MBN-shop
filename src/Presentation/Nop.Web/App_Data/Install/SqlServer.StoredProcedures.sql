@@ -63,6 +63,15 @@ END
 GO
 
 
+USE [mbnpro]
+GO
+/****** Object:  StoredProcedure [dbo].[ProductLoadAllPaged]    Script Date: 22.10.2018 11:22:30 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
 CREATE PROCEDURE [dbo].[ProductLoadAllPaged]
 (
 	@CategoryIds		nvarchar(MAX) = null,	--a list of category IDs (comma-separated list). e.g. 1,2,3
@@ -658,6 +667,9 @@ BEGIN
 		SET @sql_orderby = @sql_orderby + ' p.[Name] ASC'
 	END
 	
+	/* Add sorting by stock quantity */
+	SET @sql_orderby = ' p.[StockQuantity] desc, ' + @sql_orderby
+
 	SET @sql = @sql + '
 	ORDER BY' + @sql_orderby
 	
@@ -703,6 +715,8 @@ BEGIN
 	
 	DROP TABLE #PageIndex
 END
+
+
 
 GO
 

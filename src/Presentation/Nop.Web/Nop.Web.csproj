@@ -1518,6 +1518,9 @@
     <Content Include="Themes\NopElectro\Views\Common\Social.cshtml" />
     <Content Include="Themes\NopElectro\Views\Customer\Login.cshtml" />
     <Content Include="Themes\NopElectro\Views\ShoppingCart\OrderSummary.cshtml" />
+    <Content Include="Views\Home\HomePageManufacturers.cshtml" />
+    <Content Include="Themes\NopElectro\Views\News\HomePageNews.cshtml" />
+    <Content Include="Views\Blog\HomePageBlogs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Thumbs\" />

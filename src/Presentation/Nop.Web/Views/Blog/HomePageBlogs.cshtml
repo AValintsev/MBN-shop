@@ -1,0 +1,33 @@
+﻿@model IList<BlogPostModel>
+@using Nop.Web.Models.Blogs;
+
+@if (Model.Count > 0)
+{
+	<div class="news-list-homepage">
+		<div class="blue-title">
+			<h2 class="owl-title">
+				@T("Blog")
+			</h2>
+		</div>
+		<div class="news-items">
+			@foreach (var item in Model)
+			{
+				<div class="news-item">
+					<div class="news-head">
+						<a class="news-title" href="@Url.RouteUrl("BlogPost", new { blogPostId = item.Id })">@item.Title</a>
+						<span class="news-date">-@item.CreatedOn.ToString("D")</span>
+					</div>
+					<div class="news-body">
+						@Html.Raw(item.BodyOverview)
+					</div>
+					<div class="buttons">
+						<a href="@Url.RouteUrl("BlogPost", new { SeName = item.SeName })" class="read-more">@T("News.MoreInfo")</a>
+					</div>
+				</div>
+			}
+		</div>
+		<div class="view-all">
+			<a href="@Url.RouteUrl("Blog")">Весь блог</a>
+		</div>
+	</div>
+}

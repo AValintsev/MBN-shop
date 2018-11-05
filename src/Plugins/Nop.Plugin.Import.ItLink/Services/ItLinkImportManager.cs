@@ -137,33 +137,33 @@ namespace Nop.Plugin.Import.ItLink.Services
 						if (isNew)
 						{
 							product.CreatedOnUtc = DateTime.UtcNow;
+							product.ProductType = ProductType.SimpleProduct;
+							product.Name = productName;
+							product.ShortDescription = productName;
+							product.FullDescription = productName;
+							product.MetaKeywords = string.Format("{0}; {1}", manufacturerName, sku);
+							product.MetaDescription = productName;
+							product.MetaTitle = productName;
+							product.Sku = sku;
+							product.ManufacturerPartNumber = sku;
+							product.MarkAsNew = true;
+							product.ShowOnHomePage = false;
+							product.IsGiftCard = false;
+							product.RequireOtherProducts = false;
+							product.IsShipEnabled = true;
+							product.DisplayStockQuantity = true;
+							product.VisibleIndividually = true;
+							product.VendorId = vendorId;
+							product.AllowCustomerReviews = true;
+							product.ProductTemplateId = 1;
 						}
 						product.UpdatedOnUtc = DateTime.UtcNow;
 
 						#region Setup product
 
-						product.ProductType = ProductType.SimpleProduct;
-						product.VisibleIndividually = true;
-						product.Name = productName;
-						product.ShortDescription = productName;
-						product.FullDescription = productName;
-						product.VendorId = vendorId;
-						product.ProductTemplateId = 1;
-						product.ShowOnHomePage = false;
-						product.MetaKeywords = string.Format("{0}; {1}", manufacturerName, sku);
-						product.MetaDescription = productName;
-						product.MetaTitle = productName;
-						product.AllowCustomerReviews = true;
 						product.Published = true;
-						product.Sku = sku;
-						product.ManufacturerPartNumber = sku;
-						product.IsGiftCard = false;
-						product.RequireOtherProducts = false;
-						product.IsShipEnabled = true;
 						product.StockQuantity = 50;
 						product.OrderMaximumQuantity = 11;
-						product.DisplayStockQuantity = true;
-						product.MarkAsNew = isNew;
 						product.AdminComment = offer.Attributes["id"].Value;
 
 						product.OldPrice = isNew ? product.OldPrice : product.Price;

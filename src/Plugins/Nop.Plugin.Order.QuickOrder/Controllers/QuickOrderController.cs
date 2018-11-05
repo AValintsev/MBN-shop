@@ -14,6 +14,7 @@ using Nop.Services.Directory;
 using Nop.Services.Localization;
 using Nop.Services.Orders;
 using Nop.Services.Payments;
+using Nop.Services.Shipping;
 using Nop.Services.Stores;
 using Nop.Web.Extensions;
 using Nop.Web.Factories;
@@ -45,7 +46,10 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 		private readonly ICheckoutModelFactory _checkoutModelFactory;
 		private readonly ICustomerService _customerService;
 		private readonly ICountryService _countryService;
+
+		private readonly IShippingService _shippingService;
 		private readonly ShippingSettings _shippingSettings;
+
 		private readonly IGenericAttributeService _genericAttributeService;
 		private readonly IOrderService _orderService;
 		private readonly HttpContextBase _httpContext;
@@ -56,11 +60,6 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 		private readonly PaymentSettings _paymentSettings;
 		private readonly AddressSettings _addressSettings;
 		private readonly IPluginFinder _pluginFinder;
-
-
-
-
-
 
 		#endregion
 
@@ -99,6 +98,7 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 			ICheckoutModelFactory checkoutModelFactory,
 			ICustomerService customerService,
 			ICountryService countryService,
+			IShippingService shippingService,
 			ShippingSettings shippingSettings,
 			IOrderService orderService,
 			HttpContextBase httpContext,
@@ -125,7 +125,10 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 			this._checkoutModelFactory = checkoutModelFactory;
 			this._customerService = customerService;
 			this._countryService = countryService;
+
+			this._shippingService = shippingService;
 			this._shippingSettings = shippingSettings;
+
 			this._genericAttributeService = genericAttributeService;
 			this._orderService = orderService;
 			this._httpContext = httpContext;
@@ -151,6 +154,15 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 				EmailEnable = qOrderSettings.NameEnabled,
 				PhoneEnable = qOrderSettings.PhoneEnabled
 			};
+
+			foreach (var shippingMethod in _shippingService.GetAllShippingMethods())
+			{
+				model.ShippingMethodModel.Add(new CheckoutShippingMethodModel.ShippingMethodModel
+				{
+					Name = shippingMethod.Name,
+					Description = shippingMethod.Description
+				});
+			}
 
 			if (!qOrderSettings.Enabled)
 				return DONE(_localizationService.GetResource("Plugins.Order.QuickOrder.Error.PluginUnabled"));
@@ -235,7 +247,6 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 			{
 				int id = Process(order);
 				Response.RedirectToRoute("CheckoutCompleted", new { orderId = id });
-
 			}
 			else
 			{
@@ -319,132 +330,70 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 				if (!cart.Any())
 					DONE(_localizationService.GetResource("Plugins.Order.QuickOrder.Error.CartIsEmpty"));
 
-				var billingAddressModel = _checkoutModelFactory.PrepareBillingAddressModel(cart, prePopulateNewAddressWithCustomerFields: true);
+				var model = new CheckoutBillingAddressModel();
 
-				int billingAddressId = billingAddressModel.ExistingAddresses.Count() > 0 ?
-						billingAddressModel.ExistingAddresses.FirstOrDefault().Id : 0;
+				//TryUpdateModel(model.NewAddress, "BillingNewAddress");
+				model.NewAddress.Email = form.CustomerEmail;
+				model.NewAddress.PhoneNumber = form.CustomerPhone;
+				model.NewAddress.FirstName = form.CustomerName;
 
-				if (billingAddressId > 0)
+				model.NewAddress.City = form.City;
+				model.NewAddress.ZipPostalCode = form.PostNumber;
+
+				////custom address attributes
+				var customAttributes = "";
+
+				//try to find an address with the same values (don't duplicate records)
+				var address = _workContext.CurrentCustomer.Addresses.ToList().FindAddress(
+						model.NewAddress.FirstName,
+						model.NewAddress.LastName,
+						model.NewAddress.PhoneNumber,
+						model.NewAddress.Email,
+						model.NewAddress.FaxNumber,
+						model.NewAddress.Company,
+						model.NewAddress.Address1,
+						model.NewAddress.Address2,
+						model.NewAddress.City,
+						model.NewAddress.StateProvinceId,
+						model.NewAddress.ZipPostalCode,
+						model.NewAddress.CountryId,
+						customAttributes);
+				if (address == null)
 				{
-					//existing address
-					var address = _workContext.CurrentCustomer.Addresses.FirstOrDefault(a => a.Id == billingAddressId);
-					if (address == null)
-						throw new Exception(_localizationService.GetResource("Plugins.Order.QuickOrder.Error.AddressCantBeLoaded"));
+					//address is not found. let's create a new one						
+					address = model.NewAddress.ToEntity();
+					address.CustomAttributes = customAttributes;
+					address.CreatedOnUtc = DateTime.UtcNow;
+					//some validation
+					if (address.CountryId == 0)
+						address.CountryId = null;
+					if (address.StateProvinceId == 0)
+						address.StateProvinceId = null;
 
-					_workContext.CurrentCustomer.BillingAddress = address;
-					_customerService.UpdateCustomer(_workContext.CurrentCustomer);
+					_workContext.CurrentCustomer.Addresses.Add(address);
 				}
-				else
-				{
-					//new address    
 
-					var model = new CheckoutBillingAddressModel();
-
-					//?? My Code 
-
-					//TryUpdateModel(model.NewAddress, "BillingNewAddress");
-					model.NewAddress.Email = form.CustomerEmail;
-					model.NewAddress.PhoneNumber = form.CustomerPhone;
-					model.NewAddress.FirstName = form.CustomerName;
-					//?? // My Code
-
-					////custom address attributes
-					var customAttributes = "";
-
-					//validate model
-					if (!ModelState.IsValid)
-					{
-						//model is not valid. redisplay the form with errors
-						billingAddressModel = _checkoutModelFactory.PrepareBillingAddressModel(cart,
-						   selectedCountryId: model.NewAddress.CountryId,
-						   overrideAttributesXml: customAttributes);
-						billingAddressModel.NewAddressPreselected = true;
-
-						//?? My Code 
-						throw new Exception(_localizationService.GetResource("Plugins.Order.QuickOrder.Error.WrongBillingAddress"));
-
-					}
-
-					//try to find an address with the same values (don't duplicate records)
-					var address = _workContext.CurrentCustomer.Addresses.ToList().FindAddress(
-					model.NewAddress.FirstName, model.NewAddress.LastName, model.NewAddress.PhoneNumber,
-					model.NewAddress.Email, model.NewAddress.FaxNumber, model.NewAddress.Company,
-					model.NewAddress.Address1, model.NewAddress.Address2, model.NewAddress.City,
-					model.NewAddress.StateProvinceId, model.NewAddress.ZipPostalCode,
-					model.NewAddress.CountryId, customAttributes);
-					if (address == null)
-					{
-						//address is not found. let's create a new one
-						address = model.NewAddress.ToEntity();
-						address.CustomAttributes = customAttributes;
-						address.CreatedOnUtc = DateTime.UtcNow;
-						//some validation
-						if (address.CountryId == 0)
-							address.CountryId = null;
-						if (address.StateProvinceId == 0)
-							address.StateProvinceId = null;
-						if (address.CountryId.HasValue && address.CountryId.Value > 0)
-						{
-							address.Country = _countryService.GetCountryById(address.CountryId.Value);
-						}
-						_workContext.CurrentCustomer.Addresses.Add(address);
-					}
-					_workContext.CurrentCustomer.BillingAddress = address;
-					_customerService.UpdateCustomer(_workContext.CurrentCustomer);
-				}
+				_workContext.CurrentCustomer.BillingAddress = address;
+				_customerService.UpdateCustomer(_workContext.CurrentCustomer);
 
 				// If Shipping is required => Shipping address is equal to BillingAdderess
-				LoadShippingAddress();
+				LoadShippingAddress(form.SelectedShippingMethod);
 
-				bool isPaymentWorkflowRequired = _orderProcessingService.IsPaymentWorkflowRequired(cart, false);
-				if (isPaymentWorkflowRequired)
-				{
-					//filter by country
-					int filterByCountryId = 0;
-					if (_addressSettings.CountryEnabled &&
-						_workContext.CurrentCustomer.BillingAddress != null &&
-						_workContext.CurrentCustomer.BillingAddress.Country != null)
-					{
-						filterByCountryId = _workContext.CurrentCustomer.BillingAddress.Country.Id;
-					}
+				//We chose  Payments.CashOnDelivery as Payment Method. If there is no such method installed choose first Payment Method
+				var selectedPaymentMethodSystemName = PAYMENT_METHOD;
 
-					//payment is required
-
-
-					//We chose  Payments.CashOnDelivery as Payment Method. If there is no such method installed choose first Payment Method
-
-					var selectedPaymentMethodSystemName = PAYMENT_METHOD;
-
-					var paymentMethodInst = _paymentService.LoadPaymentMethodBySystemName(selectedPaymentMethodSystemName);
-					if (paymentMethodInst == null ||
-						!paymentMethodInst.IsPaymentMethodActive(_paymentSettings) ||
-						!_pluginFinder.AuthenticateStore(paymentMethodInst.PluginDescriptor, _storeContext.CurrentStore.Id) ||
-						!_pluginFinder.AuthorizedForUser(paymentMethodInst.PluginDescriptor, _workContext.CurrentCustomer))
-					{
-						//throw new Exception("Selected payment method can't be parsed");
-
-						var paymentMethodModel = _checkoutModelFactory.PreparePaymentMethodModel(cart, filterByCountryId);
-						selectedPaymentMethodSystemName = paymentMethodModel.PaymentMethods[0].PaymentMethodSystemName;
-
-					}
-
-
-					_genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
-						SystemCustomerAttributeNames.SelectedPaymentMethod,
-						selectedPaymentMethodSystemName, _storeContext.CurrentStore.Id);
-
-
-				}
+				_genericAttributeService.SaveAttribute(
+					_workContext.CurrentCustomer,
+					SystemCustomerAttributeNames.SelectedPaymentMethod,
+					selectedPaymentMethodSystemName,
+					_storeContext.CurrentStore.Id);
 
 				// ?? ORDER CONFITM
-
 				try
 				{
-
 					//prevent 2 orders being placed within an X seconds time frame
 					if (!IsMinimumOrderPlacementIntervalValid(_workContext.CurrentCustomer))
 						throw new Exception(_localizationService.GetResource("Checkout.MinOrderPlacementInterval"));
-
 
 					var processPaymentRequest = new ProcessPaymentRequest()
 					{
@@ -463,7 +412,6 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 							Order = placeOrderResult.PlacedOrder
 						};
 
-
 						var paymentMethod = _paymentService.LoadPaymentMethodBySystemName(placeOrderResult.PlacedOrder.PaymentMethodSystemName);
 
 						_paymentService.PostProcessPayment(postProcessPaymentRequest);
@@ -480,24 +428,16 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 				}
 				catch (Exception exc)
 				{
-					// _logger.Warning(exc.Message, exc, _workContext.CurrentCustomer);
-					// return Json(new { error = 1, message = exc.Message });
-
 					throw exc;
 				}
 			}
 			catch (Exception exc)
 			{
-				//_logger.Warning(exc.Message, exc, _workContext.CurrentCustomer);
-				//return Json(new { error = 1, message = exc.Message
-				//});
-
 				throw exc;
 			}
-
 		}
 
-		private void LoadShippingAddress()
+		private void LoadShippingAddress(string selectedShippingOption)
 		{
 			var cart = _workContext.CurrentCustomer.ShoppingCartItems
 			   .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
@@ -507,20 +447,35 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 			if (cart.RequiresShipping())
 			{
 				//shipping is required
-
 				// ?? SHIPPINGADDRESS IS THE SAME AS BILLINGADDRESS
-
 				var model = new CheckoutBillingAddressModel();
 				TryUpdateModel(model);
 
 				//ship to the same address
 				_workContext.CurrentCustomer.ShippingAddress = _workContext.CurrentCustomer.BillingAddress;
 				_customerService.UpdateCustomer(_workContext.CurrentCustomer);
+
+				var shippingMethod = _shippingService
+					.GetAllShippingMethods()
+					.Where(sm => sm.Name == selectedShippingOption).FirstOrDefault();
+				ShippingOption shippingOption = shippingMethod == null
+					? null
+					: new ShippingOption
+					{
+						Name = shippingMethod.Name,
+						Description = shippingMethod.Description
+					};
+
 				//reset selected shipping method (in case if "pick up in store" was selected)
-				_genericAttributeService.SaveAttribute<ShippingOption>(_workContext.CurrentCustomer, SystemCustomerAttributeNames.SelectedShippingOption, null, _storeContext.CurrentStore.Id);
-				_genericAttributeService.SaveAttribute<PickupPoint>(_workContext.CurrentCustomer, SystemCustomerAttributeNames.SelectedPickupPoint, null, _storeContext.CurrentStore.Id);
+				_genericAttributeService.SaveAttribute<ShippingOption>(_workContext.CurrentCustomer,
+					SystemCustomerAttributeNames.SelectedShippingOption,
+					shippingOption,
+					_storeContext.CurrentStore.Id);
+				_genericAttributeService.SaveAttribute<PickupPoint>(_workContext.CurrentCustomer,
+					SystemCustomerAttributeNames.SelectedPickupPoint,
+					null,
+					_storeContext.CurrentStore.Id);
 				//limitation - "Ship to the same address" doesn't properly work in "pick up in store only" case (when no shipping plugins are available) 
-				//return OpcLoadStepAfterShippingAddress(cart);
 			}
 			else
 			{
@@ -528,7 +483,10 @@ namespace Nop.Plugin.Order.QuickOrder.Controllers
 				_workContext.CurrentCustomer.ShippingAddress = null;
 				_customerService.UpdateCustomer(_workContext.CurrentCustomer);
 
-				_genericAttributeService.SaveAttribute<ShippingOption>(_workContext.CurrentCustomer, SystemCustomerAttributeNames.SelectedShippingOption, null, _storeContext.CurrentStore.Id);
+				_genericAttributeService.SaveAttribute<ShippingOption>(_workContext.CurrentCustomer,
+					SystemCustomerAttributeNames.SelectedShippingOption,
+					null,
+					_storeContext.CurrentStore.Id);
 			}
 		}
 	}

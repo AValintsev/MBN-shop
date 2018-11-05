@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Nop.Admin.Models.Catalog;
 using Nop.Core;
-using Nop.Core.Data;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Vendors;
 using Nop.Plugin.Mapping.Categories.Models;
@@ -21,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -52,7 +49,7 @@ namespace Nop.Plugin.Mapping.Categories.Controllers
 		private readonly IPictureService _pictureService;
 		private readonly IManufacturerService _manufacturerService;
 
-
+		private List<Category> categoriesAreDone = new List<Category>();
 		#endregion
 
 		#region ctor
@@ -307,18 +304,10 @@ namespace Nop.Plugin.Mapping.Categories.Controllers
 								.Select(p => p.ProductCategories.Select(pc => pc.Category).FirstOrDefault())
 								.ToList()
 								.Distinct();
-
+			
 			foreach (var category in categories)
 			{
-				if (category == null) continue;
-
-				xmlWriter.WriteStartElement("category");
-
-				xmlWriter.WriteAttributeString("id", category.Id.ToString());
-				xmlWriter.WriteAttributeString("parentID", category.ParentCategoryId.ToString());
-				xmlWriter.WriteValue(category.Name);
-
-				xmlWriter.WriteEndElement();
+				WriteCategoriesRecurcieve(xmlWriter, category);
 			}
 
 			#endregion
@@ -395,5 +384,30 @@ namespace Nop.Plugin.Mapping.Categories.Controllers
 
 			return stringWriter.ToString();
 		}
+
+		protected virtual void WriteCategoriesRecurcieve(XmlTextWriter xmlTextWriter, Category category)
+		{
+			if (category == null 
+				|| categoriesAreDone.Contains(category)) return;
+
+			categoriesAreDone.Add(category);
+
+			if (category.ParentCategoryId > 0)
+			{
+				WriteCategoriesRecurcieve(xmlTextWriter, _categoryService.GetCategoryById(category.ParentCategoryId));
+			}
+
+			xmlTextWriter.WriteStartElement("category");
+
+			xmlTextWriter.WriteAttributeString("id", category.Id.ToString());
+
+			if (category.ParentCategoryId > 0)
+				xmlTextWriter.WriteAttributeString("parentID", category.ParentCategoryId.ToString());
+
+			xmlTextWriter.WriteValue(category.Name);
+
+			xmlTextWriter.WriteEndElement();
+		}
+
 	}
 }

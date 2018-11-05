@@ -995,19 +995,20 @@ namespace Nop.Services.ExportImport
 								.ToList()
 								.Distinct();
 
+
 			foreach (var category in categories)
 			{
-				if (category == null) continue;
+				//if (category == null) continue;
 
-				xmlWriter.WriteStartElement("category");
+				//xmlWriter.WriteStartElement("category");
 
-				xmlWriter.WriteAttributeString("id", category.Id.ToString());
+				//xmlWriter.WriteAttributeString("id", category.Id.ToString());
 
-				xmlWriter.WriteAttributeString("parentID", category.ParentCategoryId.ToString());
+				//xmlWriter.WriteAttributeString("parentID", category.ParentCategoryId.ToString());
 
-				xmlWriter.WriteValue(category.Name);
+				//xmlWriter.WriteValue(category.Name);
 
-				xmlWriter.WriteEndElement();
+				//xmlWriter.WriteEndElement();
 			}
 
 			#endregion
@@ -1044,7 +1045,7 @@ namespace Nop.Services.ExportImport
 					var pictId = product.ProductPictures.First().PictureId;
 					xmlWriter.WriteString("image", _pictureService.GetPictureUrl(pictId));
 				}
-				
+
 				xmlWriter.WriteStartElement("description");
 				xmlWriter.WriteCData(product.FullDescription);
 				xmlWriter.WriteEndElement();

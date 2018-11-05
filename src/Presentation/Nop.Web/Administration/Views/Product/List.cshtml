@@ -39,7 +39,7 @@
 				</button>
 				<ul class="dropdown-menu" role="menu">
 					<li>
-						<button type="submit" name="exportxml-promua-all">
+						<button type="button" id="promua-exportxml-all">
 							<i class="fa fa-file-code-o"></i>
 							@T("Admin.Common.ExportToXml_PromUA.All")
 						</button>
@@ -515,10 +515,9 @@
 			return false;
 		});
 
-		$('#exportxml-promua-all').click(function (e) {
+		$('#promua-exportxml-all').click(function (e) {
 			e.preventDefault();
-			
-			$('#promua-export-xml-selected-form #selectedIds').val(-10);
+			$('#promua-export-xml-selected-form #selectedIds').val("-10");
 			$('#promua-export-xml-selected-form').submit();
 			return false;
 		});
