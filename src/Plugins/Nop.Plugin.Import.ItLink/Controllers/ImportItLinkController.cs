@@ -112,7 +112,8 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 			{
 				XmlUrl = settings.XmlUrl,
 				Username = settings.Username,
-				Password = settings.Password
+				Password = settings.Password,
+				Percent = settings.Percent
 			};
 
 			return View("~/Plugins/Import.ItLink/Views/Configure.cshtml", viewModel);
@@ -136,6 +137,7 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 			settings.XmlUrl = viewModel.XmlUrl;
 			settings.Username = viewModel.Username;
 			settings.Password = viewModel.Password;
+			settings.Percent = viewModel.Percent;
 
 			_settingService.SaveSetting(settings);
 
@@ -187,7 +189,7 @@ namespace Nop.Plugin.Import.ItLink.Controllers
 					.Where(map => map.VendorId == VendorId)
 					.ToDictionary(x => x.ExternalId, s => s.InternalId);
 
-				var errors = _itLinkImportManager.Import(itLinkXmlDocument, mappedCategories, VendorId);
+				var errors = _itLinkImportManager.Import(itLinkXmlDocument, mappedCategories, VendorId, settings.Percent);
 
 				if (errors.Count > 0)
 				{

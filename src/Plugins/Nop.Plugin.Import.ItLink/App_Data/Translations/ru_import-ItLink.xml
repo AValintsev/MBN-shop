@@ -15,6 +15,9 @@
 	<LocaleResource Name="Plugins.Import.ItLink.Password">
 		<Value>Password для доступа к price.it-link.com.ua</Value>
 	</LocaleResource>
+	<LocaleResource Name="Plugins.Import.ItLink.Percent">
+		<Value>Значение в процентах, на которое будет увеличена цена</Value>
+	</LocaleResource>
 	<LocaleResource Name="Plugins.Import.ItLink.ImportButton">
 		<Value>Импорт с It-Link</Value>
 	</LocaleResource>

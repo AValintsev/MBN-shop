@@ -43,6 +43,17 @@
 						@Html.ValidationMessageFor(model => model.Password)
 					</div>
 				</div>
+
+				<div class="form-group col-md-12">
+					<div class="col-md-3">
+						@Html.NopLabelFor(model => model.Percent)
+					</div>
+					<div class="col-md-9">
+						@Html.NopEditorFor(model => model.Percent)
+						@Html.ValidationMessageFor(model => model.Percent)
+					</div>
+				</div>
+
 			</div>
 			<div class="form-group">
 				<div class="col-md-3">

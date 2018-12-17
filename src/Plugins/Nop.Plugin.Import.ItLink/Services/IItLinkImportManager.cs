@@ -17,6 +17,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 			XmlDocument xmlDocument,
 			Dictionary<string, int> categoriesMap,
 			int vendorId,
+			double pricePercentCoefitient,
 			bool overrideExistedImanges = false);
 	}
 }

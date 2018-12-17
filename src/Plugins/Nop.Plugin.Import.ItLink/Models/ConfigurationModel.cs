@@ -12,5 +12,8 @@ namespace Nop.Plugin.Import.ItLink.Models
 
 		[NopResourceDisplayName("Plugins.Import.ItLink.Password")]
 		public string Password { get; set; }
+
+		[NopResourceDisplayName("Plugins.Import.ItLink.Percent")]
+		public double Percent { get; set; }
 	}
 }

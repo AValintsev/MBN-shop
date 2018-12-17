@@ -69,6 +69,7 @@ namespace Nop.Plugin.Import.ItLink.Services
 			XmlDocument xmlDocument,
 			Dictionary<string, int> categoriesMap,
 			int vendorId,
+			double pricePercentCoefitient,
 			bool overrideExistedImanges = false)
 		{
 			if (categoriesMap == null)
@@ -166,11 +167,20 @@ namespace Nop.Plugin.Import.ItLink.Services
 						product.OrderMaximumQuantity = 11;
 						product.AdminComment = offer.Attributes["id"].Value;
 
-						product.OldPrice = isNew ? product.OldPrice : product.Price;
-						var priceUsdStr = offer.SelectSingleNode("param[@name='priceUSD']").InnerText;
-						product.Price = decimal.Parse(priceUsdStr.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture);
+						//var priceUsdStr = offer.SelectSingleNode("param[@name='priceUSD']").InnerText;
+						//product.Price = decimal.Parse(priceUsdStr.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture);
+
 						//We use store's internal rate
-						//product.Price = decimal.Parse(offer["oldprice"].InnerText) / rateUsdToUah;
+						var priceUsdStr = offer["oldprice"].InnerText;
+						product.Price = decimal.Parse(priceUsdStr.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture) / rateUsdToUah;
+
+						//Increase price if increase percent is set
+						if (pricePercentCoefitient > 0)
+						{
+							product.Price += product.Price * (decimal)(pricePercentCoefitient / 100);
+						}
+
+						product.OldPrice = isNew ? product.OldPrice : product.Price;
 
 						try
 						{
