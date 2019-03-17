@@ -167,15 +167,15 @@ namespace Nop.Plugin.Import.ItLink.Services
 						product.OrderMaximumQuantity = 11;
 						product.AdminComment = offer.Attributes["id"].Value;
 
-						//var priceUsdStr = offer.SelectSingleNode("param[@name='priceUSD']").InnerText;
-						//product.Price = decimal.Parse(priceUsdStr.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture);
+						var priceUsdStr = offer.SelectSingleNode("param[@name='priceUSD']").InnerText;
+						product.Price = decimal.Parse(priceUsdStr.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture);
 
 						//We use store's internal rate
-						var priceUsdStr = offer["oldprice"].InnerText;
-						product.Price = decimal.Parse(priceUsdStr.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture) / rateUsdToUah;
+						//var priceUsdStr = offer["oldprice"].InnerText;
+						//product.Price = decimal.Parse(priceUsdStr.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture) / rateUsdToUah;
 
 						//Increase price if increase percent is set
-						if (pricePercentCoefitient > 0)
+						if (pricePercentCoefitient != 0)
 						{
 							product.Price += product.Price * (decimal)(pricePercentCoefitient / 100);
 						}

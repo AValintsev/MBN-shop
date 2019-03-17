@@ -262,7 +262,8 @@ namespace Nop.Web.Infrastructure.Cache
         /// {4} : is connection SSL secured (included in a category picture URL)
         /// </remarks>
         public const string CATEGORY_SUBCATEGORIES_KEY = "Nop.pres.category.subcategories-{0}-{1}-{2}-{3}-{4}-{5}";
-        public const string CATEGORY_SUBCATEGORIES_PATTERN_KEY = "Nop.pres.category.subcategories";
+		public const string CATEGORY_SUBCATEGORIES_WITH_IMAGE_KEY = "Nop.pres.category.subcategories-with-image-{0}-{1}-{2}-{3}-{4}-{5}";
+		public const string CATEGORY_SUBCATEGORIES_PATTERN_KEY = "Nop.pres.category.subcategories";
 
         /// <summary>
         /// Key for caching of categories displayed on home page

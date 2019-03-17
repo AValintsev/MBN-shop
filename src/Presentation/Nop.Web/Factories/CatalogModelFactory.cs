@@ -338,7 +338,7 @@ namespace Nop.Web.Factories
 			bool loadSubCategories = true, IList<Category> allCategories = null)
 		{
 			var result = new List<CategorySimpleModel>();
-
+			var pictureSize = _mediaSettings.CategoryThumbPictureSize;
 			//little hack for performance optimization.
 			//we know that this method is used to load top and left menu for categories.
 			//it'll load all categories anyway.
@@ -384,8 +384,51 @@ namespace Nop.Web.Factories
 
 				if (loadSubCategories)
 				{
-					var subCategories = PrepareCategorySimpleModels(category.Id, loadSubCategories, allCategories);
-					categoryModel.SubCategories.AddRange(subCategories);
+					//var subCategories = PrepareCategorySimpleModels(category.Id, loadSubCategories, allCategories);
+					//categoryModel.SubCategories.AddRange(subCategories);
+
+					//#region subcategories
+					string subCategoriesWithImageCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_SUBCATEGORIES_WITH_IMAGE_KEY,
+							category.Id,
+							pictureSize,
+							string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
+							_storeContext.CurrentStore.Id,
+							_workContext.WorkingLanguage.Id,
+							_webHelper.IsCurrentConnectionSecured());
+
+					categoryModel.SubCategories = _cacheManager.Get(subCategoriesWithImageCacheKey, () =>
+						_categoryService.GetAllCategoriesByParentCategoryId(category.Id)
+						.Select(x =>
+						{
+							var subCatModel = new CategorySimpleModel
+							{
+								Id = x.Id,
+								Name = x.GetLocalized(y => y.Name),
+								IncludeInTopMenu = true,
+								SeName = x.GetSeName(),
+							};
+
+							//prepare picture model
+							var categoryPictureCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_PICTURE_MODEL_KEY, x.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+							subCatModel.PictureModel = _cacheManager.Get(categoryPictureCacheKey, () =>
+							{
+								var picture = _pictureService.GetPictureById(x.PictureId);
+								var pictureModel = new PictureModel
+								{
+									FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
+									ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize),
+									Title = string.Format(_localizationService.GetResource("Media.Category.ImageLinkTitleFormat"), subCatModel.Name),
+									AlternateText = string.Format(_localizationService.GetResource("Media.Category.ImageAlternateTextFormat"), subCatModel.Name)
+								};
+								return pictureModel;
+							});
+
+							return subCatModel;
+						})
+						.ToList()
+								);
+					//#endregion
+
 				}
 				result.Add(categoryModel);
 			}

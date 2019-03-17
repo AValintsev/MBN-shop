@@ -52,6 +52,20 @@
 					</li>
 					<li class="divider"></li>
 					<li>
+						<button type="button" id="hotline-exportxml-all">
+							<i class="fa fa-file-code-o"></i>
+							@T("Admin.Common.ExportToXml_Hotline.All")
+						</button>
+					</li>
+					<li>
+						<button type="button" id="hotline-exportxml-selected">
+							<i class="fa fa-file-code-o"></i>
+							@T("Admin.Common.ExportToXml_Hotline.Selected")
+						</button>
+					</li>
+					<li class="divider"></li>
+
+					<li>
 						<button type="submit" name="exportxml-all">
 							<i class="fa fa-file-code-o"></i>
 							@T("Admin.Common.ExportToXml.All")
@@ -497,6 +511,13 @@
 	<input type="hidden" id="selectedIds" name="selectedIds" value="" />
 }
 
+@*export selected (XML). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
+@using (Html.BeginRouteForm("Plugins.MappingCategories.ExportHotlineXmlSelected", FormMethod.Post, new { id = "hotline-export-xml-selected-form" }))
+{
+	@Html.AntiForgeryToken()
+	<input type="hidden" id="selectedIds" name="selectedIds" value="" />
+}
+
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('#exportxml-selected').click(function (e) {
@@ -519,6 +540,21 @@
 			e.preventDefault();
 			$('#promua-export-xml-selected-form #selectedIds').val("-10");
 			$('#promua-export-xml-selected-form').submit();
+			return false;
+		});
+
+		$('#hotline-exportxml-selected').click(function (e) {
+			e.preventDefault();
+			var ids = selectedIds.join(",");
+			$('#hotline-export-xml-selected-form #selectedIds').val(ids);
+			$('#hotline-export-xml-selected-form').submit();
+			return false;
+		});
+
+		$('#hotline-exportxml-all').click(function (e) {
+			e.preventDefault();
+			$('#hotline-export-xml-selected-form #selectedIds').val("-10");
+			$('#hotline-export-xml-selected-form').submit();
 			return false;
 		});
 	});

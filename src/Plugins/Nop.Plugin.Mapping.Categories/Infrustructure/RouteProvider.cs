@@ -22,6 +22,20 @@ namespace Nop.Plugin.Mapping.Categories.Infrustructure
 				new[] { "Nop.Plugin.Mapping.Categories.Controllers" }
 			);
 
+			routes.MapRoute(
+				"Plugins.MappingCategories.ExportHotlineXmlAll",
+				"Plugins/MappingCategories/ExportHotlineXmlAll",
+				new { controller = "MappingCategories", action = "ExportHotlineXmlAll" },
+				new[] { "Nop.Plugin.Mapping.Categories.Controllers" }
+			);
+
+			routes.MapRoute(
+				"Plugins.MappingCategories.ExportHotlineXmlSelected",
+				"Plugins/MappingCategories/ExportHotlineXmlSelected",
+				new { controller = "MappingCategories", action = "ExportHotlineXmlSelected" },
+				new[] { "Nop.Plugin.Mapping.Categories.Controllers" }
+			);
+
 		}
 		public int Priority
 		{

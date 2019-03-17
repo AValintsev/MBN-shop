@@ -31,8 +31,6 @@
 @media (min-width: 1001px) {
 
 	.header-menu .sublist li:hover > a {
-		background-color: #1e90ff;
-		color: #fff;
 		text-decoration: none;
 	}
 

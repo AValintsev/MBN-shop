@@ -5,7 +5,15 @@
 {
 	<li>
 		<a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
-			@category.Name
+			@if (level == 1)
+			{
+				<img src="@category.PictureModel.ImageUrl"
+					 alt="@category.PictureModel.AlternateText"
+					 title="@category.PictureModel.Title" />
+			}
+			<span>
+				@category.Name
+			</span>
 			@if (category.NumberOfProducts.HasValue)
 			{
 				<text> </text>@T("Categories.TotalProducts", category.NumberOfProducts.Value)
@@ -24,6 +32,7 @@
 			{
 				levelClass = "first-level";
 			}
+
 			if (subCategories.Count > 0)
 			{
 				<div class="sublist-toggle"></div>
@@ -50,7 +59,7 @@
 	<li>
 		<a href="#"><i class="fa fa-info-circle"></i></a>
 		<div class="sublist-toggle"></div>
-		<ul class="sublist first-level">
+		<ul class="sublist first-level info">
 			@if (Model.NewsEnabled)
 			{
 				<li><a href="@Url.RouteUrl("NewsArchive")">@T("News")</a></li>

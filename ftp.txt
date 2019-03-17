@@ -1,0 +1,3 @@
+host:mbnpro.com.ua
+user:mbn_pro_ftp
+pwd:sbiqluwn0xgckfrvoyth
